@@ -25,9 +25,9 @@ int	main(int argc, char **argv, char **envp)
 		usleep(50000);
 	printf("%s", "           |   |                                             |    |\n");
 		usleep(50000);
-	printf("%s", "           |   |                                             |    |\n");
-		usleep(50000);
 	printf("%s", "           |   |                 $>MINISHELL                 |    |\n");
+		usleep(50000);
+	printf("%s", "           |   |                                             |    |\n");
 		usleep(50000);
 	printf("%s", "           |   |                                             |    |\n");
 		usleep(50000);
@@ -62,8 +62,12 @@ int	main(int argc, char **argv, char **envp)
 	printf("%s", ":-----------------------------------------------------------------------------:\n");
 		usleep(50000);
 	printf("%s", "|---._.-----------------------------------------------------------------._.---_|\n");
-	// set_env(envp);
-	// print_env();
+		usleep(10000);
+	printf("\n");
+	printf("%s", "An Rbony & Alakhdar collaboration.\n");
+	printf("\n");
+	//  set_envp(envp);
+	//  print_env();
 	// while (envp[i])
 	// {
 	// 	printf("%s\n", envp[i]);

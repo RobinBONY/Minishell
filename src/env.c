@@ -6,14 +6,14 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:30:39 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/03/17 13:52:36 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/03/24 15:07:04 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <stdio.h>
 
-void	print_env(void)
+void	print_envp(void)
 {
 	int	i;
 
@@ -25,7 +25,7 @@ void	print_env(void)
 	}
 }
 
-int	env_len(char **envp)
+int	envp_len(char **envp)
 {
 	int	i;
 
@@ -35,55 +35,55 @@ int	env_len(char **envp)
 	return (i);
 }
 
-void	set_env(char **envp)
+int	set_envp(char **envp)
 {
 	int	i;
 
 	i = -1;
-	g_env = malloc(sizeof(char *) * (env_len(envp) + 1));
+	g_env = malloc(sizeof(char *) * (envp_len(envp) + 1));
 	while (envp[++i])
 	{
 		g_env[i] = ft_strdup(envp[i]);
-		printf("Test");
 		if (!g_env[i])
 			exit(0);
 	}
+	return (0);
 }
 
-// char	*get_env(char *var, char **env, int n)
-// {
-// 	int	i;
-// 	int	n2;
+char	*get_envp(char *var, char **envp, int n)
+{
+	int	i;
+	int	n2;
 
-// 	i = 0;
-// 	if (n < 0)
-// 		n = ft_strlen(var);
-// 	while (!ft_strchr(var, '=') && env && env[i])
-// 	{
-// 		n2 = n;
-// 		if (n2 < ft_strchr(env[i], '='))
-// 			n2 = ft_strchr(env[i], '=');
-// 		if (!ft_strncmp(env[i], var, n2))
-// 			return (ft_substr(env[i], n2 + 1, ft_strlen(env[i])));
-// 		i++;
-// 	}
-// 	return (NULL);
-// }
+	i = 0;
+	if (n < 0)
+		n = ft_strlen(var);
+	while (!ft_strchr(var, '=') && envp && envp[i])
+	{
+		n2 = n;
+		if (n2 < ft_strchr(envp[i], '='))
+			n2 = ft_strchr(envp[i], '=');
+		if (!ft_strncmp(envp[i], var, n2))
+			return (ft_substr(envp[i], n2 + 1, ft_strlen(envp[i])));
+		i++;
+	}
+	return (NULL);
+}
 
-// void	unset_envvar(int envvar_index)
-// {
-// 	int	i;
-// 	int	count;
+void	unset_envp(int envp_index)
+{
+	int	i;
+	int	count;
 
-// 	i = envvar_index;
-// 	count = envvar_index + 1;
-// 	free(g_env[envvar_index]);
-// 	while (g_env[i + 1])
-// 	{
-// 		g_env[i] = ft_strdup(g_env[i + 1]);
-// 		free(g_env[i + 1]);
-// 		i++;
-// 		count++;
-// 	}
-// 	g_env = ft_realloc(count - 1);
-// }
+	i = envp_index;
+	count = envp_index + 1;
+	free(g_env[envp_index]);
+	while (g_env[i + 1])
+	{
+		g_env[i] = ft_strdup(g_env[i + 1]);
+		free(g_env[i + 1]);
+		i++;
+		count++;
+	}
+	g_env = ft_realloc(count - 1);
+}

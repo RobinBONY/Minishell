@@ -1,5 +1,5 @@
 NAME = Minishell
-SRCS		= 	src/main.c src/env.c
+SRCS		= 	src/main.c src/builtins/echo.c
 HEADER		=	includes/minishell.h
 OBJS		= ${SRCS:.c=.o}
 
@@ -12,7 +12,6 @@ all: lib ${NAME}
 $(NAME) : ${SRCS} $(HEADER) Makefile
 	@$(CC) $(CFLAGS) $(SRCS) libft/libft.a -o ${NAME}
 	@echo "\033[92m\n[- COMPILATION COMPLETE -]\n\033[0m"
-	@echo "\033[94m\n[- PLEASE LAUNCH FDF WITH A MAP AS AN ARGUMENT -]\n\033[0m"
 
 %.o : %.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@

@@ -6,11 +6,11 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:42:05 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/03/24 15:03:20 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/03/29 11:29:41 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int	ft_pwd(void)
 {

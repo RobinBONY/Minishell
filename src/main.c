@@ -2,9 +2,13 @@
 
 int	main(int argc, char **argv, char **envp)
 {
+	char **buf;
+	int		i;
 	(void)envp;
-	(void)argv;
+	// (void)argv;
 	(void)argc;
+	i = 1;
+	buf = malloc(sizeof(char *) * argc + 1);
 	printf("%s", "             ____________________________________________________\n");
 	usleep(50000);
 	printf("%s", "            /                                                     \\\n");
@@ -66,6 +70,12 @@ int	main(int argc, char **argv, char **envp)
 	printf("\n");
 	printf("%s", "An Rbony & Alakhdar collaboration.\n");
 	printf("\n");
+	while (i <= argc)
+	{
+		buf[i] = argv[i];
+		ft_echo(buf);
+		i++;
+	}
 	//  set_envp(envp);
 	//  print_env();
 	// while (envp[i])

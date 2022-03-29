@@ -6,38 +6,44 @@
 #    By: rbony <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/28 08:34:54 by rbony             #+#    #+#              #
-#    Updated: 2022/03/15 17:31:34 by rbony            ###   ########lyon.fr    #
+#    Updated: 2022/03/29 13:24:54 by rbony            ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS = 	prompt.c
-		
+SRCS = 	prompt.c 		\
+		ft_cmd_split.c 	\
+		ft_divlen.c
 
 OBJS = ${SRCS:.c=.o}
 
-HEADERS = libft.h
+HEADERS = minishell.h
 
-CC = gcc
+CC = gcc -g #-fsanitize=address
 RM = rm -f
 
 FLAGS = -Wall -Wextra -Werror
 
-all: ${NAME}
+all: lib ${NAME}
 
 $(NAME): ${OBJS}
-	${CC} ${OBJS} -lreadline -I./readline/include -L./readline/lib -lncurses libft.a -o ${NAME}
+	${CC} ${OBJS} -lreadline -I./readline/include -L./readline/lib -lncurses libft/libft.a -o ${NAME}
 
 %.o : %.c ${HEADERS} Makefile
-	${CC} ${FLAGS} -I headers -c $< -o ${<:.c=.o}
+	${CC} ${FLAGS} -I libft -c $< -o ${<:.c=.o}
 
 clean:
 	${RM} ${OBJS}
+	make clean -C libft
 
 fclean:	clean
 	${RM} ${NAME}
+	make fclean -C libft
 
 re:	fclean all
-         
+
+lib:
+	make bonus -C libft
+
 .PHONY: all clean fclean re 

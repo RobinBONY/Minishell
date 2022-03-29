@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/28 14:46:10 by rbony             #+#    #+#             */
-/*   Updated: 2022/03/28 14:58:22 by rbony            ###   ########lyon.fr   */
+/*   Created: 2022/03/24 14:42:05 by alakhdar          #+#    #+#             */
+/*   Updated: 2022/03/29 11:29:41 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define    MINISHELL_H
+#include "../../includes/minishell.h"
 
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "libft.h"
+int	ft_pwd(void)
+{
+	char	str[PATH_MAX];
 
-char	**ft_cmd_split(const char *s);
-size_t	ft_divlen(char *s);
-
-#endif
+	if (getcwd(str, sizeof(str)) == NULL)
+		return (1);
+	printf("%s\n", str);
+	return (0);
+}

@@ -1,32 +1,49 @@
-NAME = Minishell
-SRCS		= 	src/main.c src/builtins/echo.c
-HEADER		=	includes/minishell.h
-OBJS		= ${SRCS:.c=.o}
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: rbony <marvin@42.fr>                       +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/01/28 08:34:54 by rbony             #+#    #+#              #
+#    Updated: 2022/03/29 13:55:01 by rbony            ###   ########lyon.fr    #
+#                                                                              #
+# **************************************************************************** #
 
-CFLAGS = -Wall -Wextra -Werror
-CC = cc
-RM = rm -rf
+NAME = minishell
+
+SRCS = 	src/prompt.c 		\
+		src/ft_cmd_split.c 	\
+		src/ft_divlen.c
+
+OBJS = ${SRCS:.c=.o}
+
+HEADERS = minishell.h
+
+CC = gcc -g #-fsanitize=address
+RM = rm -f
+
+FLAGS = -Wall -Wextra -Werror
 
 all: lib ${NAME}
 
-$(NAME) : ${SRCS} $(HEADER) Makefile
-	@$(CC) $(CFLAGS) $(SRCS) libft/libft.a -o ${NAME}
-	@echo "\033[92m\n[- COMPILATION COMPLETE -]\n\033[0m"
+$(NAME): ${OBJS}
+	${CC} ${OBJS} -lreadline -I./readline/include -L./readline/lib -lncurses libft/libft.a -o ${NAME}
 
-%.o : %.c $(HEADER)
-	$(CC) $(CFLAGS) -c $< -o $@
+%.o : %.c ${HEADERS} Makefile
+	${CC} ${FLAGS} -c $< -o ${<:.c=.o}
+
+clean:
+	${RM} ${OBJS}
+	make clean -C libft
+
+fclean:	clean
+	${RM} ${NAME}
+	make fclean -C libft
+
+re:	fclean all
 
 lib:
-	@make -C libft
+	make bonus -C libft
 
-clean :
-	$(RM) Minishell
-	$(RM) src/*.o
-	$(RM) libft/*.o
-	@echo "\033[91m\n[- FILES DELETED -]\n\033[0m"
-
-fclean : clean
-
-re : fclean all
-
-.PHONY : all clean bonus fclean re
+.PHONY: all clean fclean re 

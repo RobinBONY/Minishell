@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 11:12:54 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/03/29 13:55:17 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/03/31 14:54:04 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,13 @@ void		print_envp(void);
 // static int	pwd_store(void);
 // static int	cd_home(void);
 // static int	cd_args(char *args);
+
+int			not_interpreted(char *line);
+int			unmanaged_character_error(char c);
+int			check_quotes(char *str);
+int			replace_needed(char *str);
 char		**ft_cmd_split(const char *s);
-size_t		ft_divlen(char *s);
+int			unmanaged_character_error(char c);
+int			place_env_var(char **words);
 
 #endif

@@ -6,52 +6,11 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 14:59:05 by rbony             #+#    #+#             */
-/*   Updated: 2022/03/29 13:54:38 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/03/31 14:50:52 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	unmanaged_character_error(char c)
-{
-	printf("%s%c\n", "Unmanaged character : ", c);
-	return (1);
-}
-
-int	check_quotes(char *str)
-{
-	char	*tmp;
-
-	tmp = str;
-	while (*tmp)
-	{
-		if (*tmp == '\'')
-		{
-			tmp = ft_strchr(tmp, '\'');
-			if (!tmp)
-				return (unmanaged_character_error('\''));
-		}
-		else if (*tmp == '"')
-		{
-			tmp = ft_strchr(tmp, '"');
-			if (!tmp)
-				return (unmanaged_character_error('"'));
-		}
-		tmp++;
-	}
-	return (0);
-}
-
-int	not_interpreted(char *line)
-{
-	if (check_quotes(line))
-		return (1);
-	if (ft_strchr(line, ';'))
-		return (unmanaged_character_error(';'));
-	if (ft_strchr(line, '\\'))
-		return (unmanaged_character_error('\\'));
-	return (0);
-}
 
 void	free_tab(char **tab)
 {
@@ -75,8 +34,11 @@ int	parse_line(char *line)
 	words = ft_cmd_split(line);
 	if (!words)
 		return (1);
-	while (words[++i])
-		printf("%s\n", words[i]);
+	if (place_env_var(words) == 0)
+	{
+		while (words[++i])
+			printf("%s\n", words[i]);
+	}
 	free_tab(words);
 	return (0);
 }

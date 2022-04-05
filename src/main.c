@@ -1,96 +1,97 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/01 13:03:12 by alakhdar          #+#    #+#             */
+/*   Updated: 2022/04/05 11:30:24 by alakhdar         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 int	main(int argc, char **argv, char **envp)
 {
-	char **buf;
-	int		i;
-	(void)envp;
-	// (void)argv;
+	t_env	*head;
+	char	*line_buffer;
+
 	(void)argc;
-	i = 1;
-	buf = malloc(sizeof(char *) * argc + 1);
 	printf("%s", "             ____________________________________________________\n");
 	usleep(50000);
 	printf("%s", "            /                                                     \\\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", "           |    _____________________________________________     |\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", "           |   |                                             |    |\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", "           |   |                                             |    |\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", "           |   |  C:\\> _                                     |    |\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", "           |   |                                             |    |\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", "           |   |                                             |    |\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", "           |   |                                             |    |\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", "           |   |                                             |    |\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", "           |   |                 $>MINISHELL                 |    |\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", "           |   |                                             |    |\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", "           |   |                                             |    |\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", "           |   |                                             |    |\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", "           |   |                                             |    |\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", "           |   |                                             |    |\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", "           |   |                                             |    |\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", "           |   |_____________________________________________|    |\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", "           |                                                      |\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", "           \\_____________________________________________________/\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", "                   \\_______________________________________/\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", "                _______________________________________________\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", "             _-    .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.  --- `-_\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", "          _-.-.-. .---.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.--.  .-.-.`-_\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", "       _-.-.-.-. .---.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-`__`. .-.-.-.`-_\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", "    _-.-.-.-.-. .-----.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-----. .-.-.-.-.`-_\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", " _-.-.-.-.-.-. .---.-. .-----------------------------. .-.---. .---.-.-.-.`-_\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", ":-----------------------------------------------------------------------------:\n");
-		usleep(50000);
+	usleep(50000);
 	printf("%s", "|---._.-----------------------------------------------------------------._.---_|\n");
-		usleep(10000);
+	usleep(10000);
 	printf("\n");
 	printf("%s", "An Rbony & Alakhdar collaboration.\n");
 	printf("\n");
-	while (i <= argc)
+	head = init_envp_list(envp);
+	while (1)
 	{
-		buf[i] = argv[i];
-		ft_echo(buf);
-		i++;
+		line_buffer = readline("$> ");
+		if (line_buffer && *line_buffer)
+		{
+			add_history(line_buffer);
+			if (parse_line(line_buffer, head) == 2)
+				print_envp(head);
+			else if (parse_line(line_buffer, head) == 1)
+				printf("%s/n", "Error");
+		}
+		free(line_buffer);
 	}
-	//  set_envp(envp);
-	//  print_env();
-	// while (envp[i])
-	// {
-	// 	printf("%s\n", envp[i]);
-	// 	i++;
-	// }
-	// wuhile (50000)
-	// {
-	// 	prompt_msg();
-	// 	//parse input
-	// 	//exec cmd
-	// 	//free
-	// 	//if (problem) break;
-	// }
-	//free
 	return (0);
 }

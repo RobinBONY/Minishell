@@ -6,17 +6,21 @@
 #    By: rbony <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/28 08:34:54 by rbony             #+#    #+#              #
-#    Updated: 2022/03/31 14:55:34 by rbony            ###   ########lyon.fr    #
+#    Updated: 2022/04/06 10:33:04 by rbony            ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS = 	src/prompt.c 		\
+SRCS = 	src/main.c \
+		src/prompt.c 		\
 		src/ft_cmd_split.c 	\
 		src/errors.c		\
 		src/place_env_var.c \
-		src/pre_checking.c
+		src/pre_checking.c  \
+		src/builtins/env_utils.c \
+		src/builtins/env.c 
+		
 
 OBJS = ${SRCS:.c=.o}
 

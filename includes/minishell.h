@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 11:12:54 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/06 11:10:42 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/06 15:02:39 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,13 @@ char		*get_value(char *envp);
 // static int	pwd_store(void);
 // static int	cd_home(void);
 // static int	cd_args(char *args);
+
+int			not_interpreted(char *line);
+int			unmanaged_character_error(char c);
+int			check_quotes(char *str);
+int			replace_needed(char *str);
 char		**ft_cmd_split(const char *s);
-size_t		ft_divlen(char *s);
+int			unmanaged_character_error(char c);
+int			place_env_var(char **words);
 
 #endif

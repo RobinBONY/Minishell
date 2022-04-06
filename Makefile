@@ -6,13 +6,21 @@
 #    By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/28 08:34:54 by rbony             #+#    #+#              #
-#    Updated: 2022/04/06 14:52:02 by alakhdar         ###   ########lyon.fr    #
+#    Updated: 2022/04/06 15:02:44 by alakhdar         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS = 	src/main.c src/builtins/env.c src/ft_cmd_split.c src/ft_divlen.c src/prompt.c src/builtins/env_utils.c
+SRCS = 	src/main.c \
+		src/prompt.c 		\
+		src/ft_cmd_split.c 	\
+		src/errors.c		\
+		src/place_env_var.c \
+		src/pre_checking.c  \
+		src/builtins/env_utils.c \
+		src/builtins/env.c 
+		
 
 OBJS = ${SRCS:.c=.o}
 

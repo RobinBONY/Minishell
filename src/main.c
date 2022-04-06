@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 13:03:12 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/06 11:09:37 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/06 16:40:54 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_list	*head;
+	t_var	*head_env;
+	t_var	*head_exp;
 	char	*line_buffer;
 
 	(void)argc;
@@ -79,14 +80,15 @@ int	main(int argc, char **argv, char **envp)
 	printf("\n");
 	printf("%s", "An Rbony & Alakhdar collaboration.\n");
 	printf("\n");
-	head = init_list(envp);
+	head_env = init_env(envp);
+	head_exp = init_export(envp);
 	while (1)
 	{
 		line_buffer = readline("$> ");
 		if (line_buffer && *line_buffer)
 		{
 			add_history(line_buffer);
-			if (parse_line(line_buffer, head) == 1)
+			if (parse_line(line_buffer, head_env, head_exp) == 1)
 				printf("%s/n", "Error");
 		}
 		free(line_buffer);

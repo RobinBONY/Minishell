@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:25:05 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/06 15:02:42 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/06 16:28:33 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,12 @@ void	print_var(t_var *head)
 	current_node = head;
 	while (current_node != NULL)
 	{
-		printf("%s", current_node->key);
-		printf("%c", '=');
-		printf("%s\n", current_node->value);
+		if (current_node->printable == 1)
+		{
+			printf("%s", current_node->key);
+			printf("%c", '=');
+			printf("%s\n", current_node->value);
+		}
 		current_node = current_node->next;
 	}
 }
@@ -69,4 +72,20 @@ char	*get_value(char *envp)
 	}
 	buf[i] = '\0';
 	return (buf);
+}
+
+int	is_occurring(char *envp)
+{
+	int	i;
+	int	flag;
+
+	i = 0;
+	flag = 0;
+	while (envp[i])
+	{
+		if (envp[i] == '=')
+			flag = 1;
+		i++;
+	}
+	return (flag);
 }

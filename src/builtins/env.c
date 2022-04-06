@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:30:39 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/06 11:12:15 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/06 16:41:04 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_var	*create_node(t_var *next, char *envp)
 	}
 	new_env->key = get_key(envp);
 	new_env->value = get_value(envp);
+	new_env->printable = is_occurring(envp);
 	new_env->next = next;
 	return (new_env);
 }
@@ -42,7 +43,7 @@ t_var	*append_to_list(t_var *head, char *envp)
 	return (head);
 }
 
-t_var	*init_list(char **envp)
+t_var	*init_env(char **envp)
 {
 	int		i;
 	t_var	*head;

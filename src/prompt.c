@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 10:25:52 by rbony             #+#    #+#             */
-/*   Updated: 2022/04/06 10:28:45 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/04/06 14:28:38 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ int	parse_line(char *line, t_env *head)
 	{	
 		while (words[++i])
 		{
-			if (ft_strncmp(words[i], "env", ft_strlen("env")) == 0)
+			if (ft_strcmp(words[i], "env") == 0)
 				return (2);
-			if (ft_strncmp(words[i], "unset", ft_strlen("unset")) == 0)
+			if (ft_strcmp(words[i], "unset") == 0)
 				ft_unset(head, words[i + 1]);
-			if (ft_strncmp(words[i], "set", ft_strlen("set")) == 0)
+			if (ft_strcmp(words[i], "set") == 0)
 				append_to_envp(head, words[i + 1]);
 			else
 				printf("%s\n", words[i]);

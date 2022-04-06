@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 14:59:05 by rbony             #+#    #+#             */
-/*   Updated: 2022/04/05 14:43:17 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/06 14:51:53 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	free_tab(char **tab)
 		free(tab);
 }
 
-int	parse_line(char *line, t_env *head)
+int	parse_line(char *line, t_var *head)
 {
 	int		i;
 	char	**words;
@@ -78,11 +78,11 @@ int	parse_line(char *line, t_env *head)
 	while (words[++i])
 	{
 		if (ft_strncmp(words[i], "env", ft_strlen("env")) == 0)
-			return (2);
+			print_var(head);
 		if (ft_strncmp(words[i], "unset", ft_strlen("unset")) == 0)
 			ft_unset(head, words[i + 1]);
 		if (ft_strncmp(words[i], "set", ft_strlen("set")) == 0)
-			append_to_envp(head, words[i + 1]);
+			append_to_list(head, words[i + 1]);
 		else
 			printf("%s\n", words[i]);
 	}

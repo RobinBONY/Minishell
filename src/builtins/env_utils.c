@@ -6,15 +6,15 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:25:05 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/05 11:25:21 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/06 14:52:19 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	print_envp(t_env *head)
+void	print_var(t_var *head)
 {
-	t_env	*current_node;
+	t_var	*current_node;
 
 	current_node = head;
 	while (current_node != NULL)

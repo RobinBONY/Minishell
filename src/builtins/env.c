@@ -6,18 +6,18 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:30:39 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/05 14:47:41 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/06 11:12:15 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include <stdio.h>
 
-t_env	*create_env_node(t_env *next, char *envp)
+t_var	*create_node(t_var *next, char *envp)
 {
-	t_env	*new_env;
+	t_var	*new_env;
 
-	new_env = (t_env *)malloc(sizeof(t_env));
+	new_env = (t_var *)malloc(sizeof(t_var));
 	if (!new_env)
 	{
 		printf("Error in adding new environment variable\n");
@@ -29,35 +29,35 @@ t_env	*create_env_node(t_env *next, char *envp)
 	return (new_env);
 }
 
-t_env	*append_to_envp(t_env *head, char *envp)
+t_var	*append_to_list(t_var *head, char *envp)
 {
-	t_env	*cursor;
-	t_env	*new_env;
+	t_var	*cursor;
+	t_var	*new_env;
 
 	cursor = head;
 	while (cursor->next != NULL)
 		cursor = cursor->next;
-	new_env = create_env_node(NULL, envp);
+	new_env = create_node(NULL, envp);
 	cursor->next = new_env;
 	return (head);
 }
 
-t_env	*init_envp_list(char **envp)
+t_var	*init_list(char **envp)
 {
 	int		i;
-	t_env	*head;
+	t_var	*head;
 
 	i = 0;
-	head = create_env_node(NULL, envp[i]);
+	head = create_node(NULL, envp[i]);
 	while (envp[++i])
-		append_to_envp(head, envp[i]);
+		append_to_list(head, envp[i]);
 	return (head);
 }
 
-void	ft_unset(t_env *head, char *key)
+void	ft_unset(t_var *head, char *key)
 {
-	t_env	*cursor;
-	t_env	*prev;
+	t_var	*cursor;
+	t_var	*prev;
 
 	cursor = head;
 	if (cursor != NULL && ft_strncmp(cursor->key, key, ft_strlen(key)) == 0)

@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 11:12:54 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/05 14:43:41 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/06 11:10:42 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,27 +21,28 @@
 # include "../libft/libft.h"
 # include <limits.h>
 
-typedef struct s_env
+typedef struct s_var
 {
 	char			*key;
 	char			*value;
-	struct s_env	*next;
-}	t_env;
+	struct t_var	*next;
+}	t_var;
 
 int			g_exit;
 
 char		*get_env(char *var, char **env, int n);
 int			env_len(char **env);
-int			set_envp(t_env *head, char *key, char *value);
+int			set_envp(t_var *head, char *key, char *value);
 int			ft_echo(char **arg);
 int			check_new_line(char *str);
-int			parse_line(char *line, t_env *head);
+int			parse_line(char *line, t_var *head);
 // int			ft_pwd(void);
 // int			ft_cd(char *args);
-void		ft_unset(t_env *head, char *key);
-void		print_envp(t_env *envp);
-t_env		*init_envp_list(char **envp);
-t_env		*append_to_envp(t_env *head, char *envp);
+void		ft_unset(t_var *head, char *key);
+void		print_var(t_var *head);
+t_var		*init_var(char **envp);
+t_var		*append_to_list(t_var *head, char *envp);
+t_var		*init_export(char **envp);
 char		*get_key(char *envp);
 char		*get_value(char *envp);
 

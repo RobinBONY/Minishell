@@ -3,18 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rbony <marvin@42.fr>                       +#+  +:+       +#+         #
+#    By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/28 08:34:54 by rbony             #+#    #+#              #
-#    Updated: 2022/03/29 13:55:01 by rbony            ###   ########lyon.fr    #
+#    Updated: 2022/04/06 14:52:02 by alakhdar         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS = 	src/prompt.c 		\
-		src/ft_cmd_split.c 	\
-		src/ft_divlen.c
+SRCS = 	src/main.c src/builtins/env.c src/ft_cmd_split.c src/ft_divlen.c src/prompt.c src/builtins/env_utils.c
 
 OBJS = ${SRCS:.c=.o}
 

@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 16:33:13 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/07 14:14:36 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/12 15:09:29 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,53 +44,145 @@ t_var	*init_export(char **envp)
 int	ft_list_len(t_var *head)
 {
 	int		i;
-	t_var	*current_node;
+	t_var	*current_node_node;
 
 	i = 0;
-	current_node = head;
-	while (current_node)
+	current_node_node = head;
+	while (current_node_node)
 	{
-		current_node = current_node->next;
+		current_node_node = current_node_node->next;
 		i++;
 	}
 	return (i);
 }
 
-void	print_export(t_var *head)
+static void	export_print(t_var *head_exp)
+{
+	t_var	*cursor;
+
+	cursor = head_exp->next;
+	while (cursor)
+	{
+		printf("declare -x %s", cursor->key);
+		if (cursor->value)
+			printf("=\"%s\"\n", cursor->value);
+		else
+			printf("\n");
+		cursor = cursor->next;
+	}
+}
+
+int	node_count(t_var *head)
+{
+	int		i;
+	t_var	*cursor;
+
+	if (!head)
+		return (-1);
+	i = 1;
+	cursor = head->next;
+	while (cursor)
+	{
+		cursor = cursor->next;
+		i++;
+	}
+	return (i);
+}
+
+char	*join_key_val(t_var *node)
+{
+	char	*buffer;
+
+	buffer = malloc(((ft_strlen(node->key) + (ft_strlen(node->value)) * sizeof(char)) + 2));
+	if (!buffer)
+		return (NULL);
+	ft_strcpy(buffer, node->key);
+	if (node->value)
+	{
+		ft_strcat(buffer, "=");
+		ft_strcat(buffer, node->value);
+	}
+	return (buffer);
+}
+
+// int	tab_is_sorted(char **tab)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (tab[i])
+// 	{
+// 		if (ft_strcmp(tab[i], tab[i + 1]) > 0)
+// 			return (1);
+// 		i++;
+// 	}
+// 	return (0);
+// }
+
+void	sort_char_tab(char	**str, int len)
+{
+	char	*buffer;
+	int		i;
+	int		j;
+
+	i = 0;
+	while (i <= len)
+	{
+		j = i + 1;
+		while (j <= len)
+		{
+			if (strcmp(str[i], str[j]) > 0)
+			{
+				strcpy(buffer, str[i]);
+				strcpy(str[i], str[j]);
+				strcpy(str[j], buffer);
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+void	free_list(t_var	*head)
 {
 	t_var	*current_node;
+	t_var	*next;
 
 	current_node = head;
 	while (current_node != NULL)
 	{
-		printf("%s", "declare -x ");
-		printf("%s", current_node->key);
-		printf("%c", '=');
-		printf("%s\n", current_node->value);
-		current_node = current_node->next;
+		next = current_node->next;
+		free(current_node);
+		current_node = next;
 	}
+	head = NULL;
 }
 
-void	sort_list(t_var *head)
+/* Passer la liste exp en tableau de char
+	Trier le tableau de char
+	Passer le tableau en nouvelle liste exp
+	 free l'ancienne liste exp
+	Return la nouvelle liste triée */
+t_var	*sort_export(t_var *head_exp)
 {
-	t_var	*next_node;
-	t_var	*current_node;
-	t_var	*tmp;
+	t_var	*cursor;
+	t_var	*new_head;
+	char	**export;
+	int		i;
+	int		len;
 
-	current_node = head;
-	next_node = current_node->next;
-	while (current_node)
+	i = 0;
+	len = node_count(head_exp);
+	export = malloc(sizeof(char *) * len);
+	cursor = head_exp->next;
+	while (cursor)
 	{
-		while (next_node)
-		{
-			if (ft_strcmp(current_node->key, next_node->key) < 0)
-			{
-				tmp = current_node;
-				current_node = next_node;
-				next_node = tmp;
-			}
-			next_node = next_node->next;
-		}
-		current_node = current_node->next;
+		export[i] = join_key_val(cursor);
+		i++;
+		cursor = cursor->next;
 	}
+	sort_char_tab(export, len);
+	new_head = init_export(export);
+	free_list(head_exp);
+	return (new_head);
 }

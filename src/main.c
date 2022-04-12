@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 13:03:12 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/06 16:40:54 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/07 14:12:46 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int	main(int argc, char **argv, char **envp)
 	printf("\n");
 	head_env = init_env(envp);
 	head_exp = init_export(envp);
+	sort_list(head_exp);
 	while (1)
 	{
 		line_buffer = readline("$> ");

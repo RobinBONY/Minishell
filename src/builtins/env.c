@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:30:39 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/06 16:41:04 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/12 10:32:47 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,27 +53,4 @@ t_var	*init_env(char **envp)
 	while (envp[++i])
 		append_to_list(head, envp[i]);
 	return (head);
-}
-
-void	ft_unset(t_var *head, char *key)
-{
-	t_var	*cursor;
-	t_var	*prev;
-
-	cursor = head;
-	if (cursor != NULL && ft_strncmp(cursor->key, key, ft_strlen(key)) == 0)
-	{
-		head = cursor->next;
-		free(cursor);
-		return ;
-	}
-	while (cursor != NULL && ft_strncmp(cursor->key, key, ft_strlen(key)) != 0)
-	{
-		prev = cursor;
-		cursor = cursor->next;
-	}
-	if (cursor == NULL)
-		return ;
-	prev->next = cursor->next;
-	free(cursor);
 }

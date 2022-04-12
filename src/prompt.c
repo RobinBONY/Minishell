@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 14:59:05 by rbony             #+#    #+#             */
-/*   Updated: 2022/04/06 16:39:27 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/07 14:15:40 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,16 @@ int	parse_line(char *line, t_var *head_env, t_var *head_exp)
 		while (words[++i])
 		{
 			if (ft_strcmp(words[i], "env") == 0)
-				print_var(head);
-			if (ft_strcmp(words[i], "unset") == 0)
-				ft_unset(head, words[i + 1]);
-			if (ft_strcmp(words[i], "export") == 0)
-				append_to_list(head, words[i + 1]);
+				print_env(head_env);
+			else if (ft_strcmp(words[i], "unset") == 0)
+				ft_unset(head_env, words[i + 1]);
+			else if (ft_strcmp(words[i], "export") == 0)
+			{
+				if (words[i + 1])
+					append_to_list(head_exp, words[i + 1]);
+				else
+					print_export(head_exp);
+			}
 				//Si la variable est occurrente, l'ajouter à env ET export
 				//Si la variable n'a pas de valeur, add dans export
 			else
@@ -53,4 +58,3 @@ int	parse_line(char *line, t_var *head_env, t_var *head_exp)
 	free_tab(words);
 	return (0);
 }
-

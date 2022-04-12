@@ -6,13 +6,13 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:25:05 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/06 16:28:33 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/07 11:49:19 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	print_var(t_var *head)
+void	print_env(t_var *head)
 {
 	t_var	*current_node;
 

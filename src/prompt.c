@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 14:59:05 by rbony             #+#    #+#             */
-/*   Updated: 2022/04/07 14:15:40 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/12 15:30:27 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int	parse_line(char *line, t_var *head_env, t_var *head_exp)
 		{
 			if (ft_strcmp(words[i], "env") == 0)
 				print_env(head_env);
-			else if (ft_strcmp(words[i], "unset") == 0)
-				ft_unset(head_env, words[i + 1]);
+			// else if (ft_strcmp(words[i], "unset") == 0)
+			// 	ft_unset(head_env, words[i + 1]);
 			else if (ft_strcmp(words[i], "export") == 0)
 			{
 				if (words[i + 1])

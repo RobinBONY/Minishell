@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 16:33:13 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/12 15:09:29 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/12 16:37:20 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	ft_list_len(t_var *head)
 	return (i);
 }
 
-static void	export_print(t_var *head_exp)
+void	print_export(t_var *head_exp)
 {
 	t_var	*cursor;
 
@@ -93,7 +93,10 @@ char	*join_key_val(t_var *node)
 {
 	char	*buffer;
 
-	buffer = malloc(((ft_strlen(node->key) + (ft_strlen(node->value)) * sizeof(char)) + 2));
+	if (node->value)
+		buffer = malloc((ft_strlen(node->key) + (ft_strlen(node->value)) * sizeof(char)) + 2);
+	else
+		buffer = malloc(ft_strlen(node->key) * sizeof(char) + 1);
 	if (!buffer)
 		return (NULL);
 	ft_strcpy(buffer, node->key);
@@ -131,11 +134,11 @@ void	sort_char_tab(char	**str, int len)
 		j = i + 1;
 		while (j <= len)
 		{
-			if (strcmp(str[i], str[j]) > 0)
+			if (ft_strcmp(str[i], str[j]) > 0)
 			{
-				strcpy(buffer, str[i]);
-				strcpy(str[i], str[j]);
-				strcpy(str[j], buffer);
+				ft_strcpy(buffer, str[i]);
+				ft_strcpy(str[i], str[j]);
+				ft_strcpy(str[j], buffer);
 			}
 			j++;
 		}

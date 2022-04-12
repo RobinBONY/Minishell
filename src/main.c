@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 13:03:12 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/12 15:12:04 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/12 15:34:45 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ int	main(int argc, char **argv, char **envp)
 	printf("%s", "An Rbony & Alakhdar collaboration.\n");
 	printf("\n");
 	head_env = init_env(envp);
-	head_exp = sort_export(envp);
+	head_exp = init_export(envp);
+	head_exp = sort_export(head_exp);
 	while (1)
 	{
 		line_buffer = readline("$> ");

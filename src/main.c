@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 13:03:12 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/12 15:34:45 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/14 10:37:55 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_var	*head_env;
-	t_var	*head_exp;
+	t_exp	*head_exp;
 	char	*line_buffer;
 
 	(void)argc;

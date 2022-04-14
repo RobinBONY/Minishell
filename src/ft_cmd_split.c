@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cmd_split.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 13:12:29 by rbony             #+#    #+#             */
-/*   Updated: 2022/03/31 14:31:20 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/04/14 13:21:58 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	ft_divlen(char *s)
 	char	*tmp;
 
 	tmp = s;
-	while (*tmp && *tmp == *s)
+	while (*tmp && tmp == s)
 	{
 		if (*tmp == ' ')
 			return (tmp - s);
@@ -26,9 +26,15 @@ size_t	ft_divlen(char *s)
 			tmp = ft_strchr(tmp, *tmp);
 			return ((tmp - s) + 1);
 		}
-		while (ft_isalpha(*tmp) || ft_isdigit(*tmp) || *tmp == '$')
+		if (*tmp == '$')
+		{
 			tmp++;
-		if (*tmp != *s)
+			if (*tmp == '?')
+				tmp++;
+		}
+		while (ft_isalnum(*tmp) || *tmp == '=')
+			tmp++;
+		if (tmp != s)
 			return (tmp - s);
 		tmp++;
 	}

@@ -6,21 +6,21 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 10:33:01 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/12 15:09:39 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/13 11:52:10 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	unset_env(t_var *head_env, char *key)
+void	unset(t_var *head, char *key)
 {
 	t_var	*cursor;
 	t_var	*prev;
 
-	cursor = head_env;
+	cursor = head;
 	if (cursor != NULL && ft_strncmp(cursor->key, key, ft_strlen(key)) == 0)
 	{
-		head_env = cursor->next;
+		head = cursor->next;
 		free(cursor);
 		return ;
 	}

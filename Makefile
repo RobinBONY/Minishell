@@ -6,7 +6,7 @@
 #    By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/28 08:34:54 by rbony             #+#    #+#              #
-#    Updated: 2022/04/06 16:05:28 by alakhdar         ###   ########lyon.fr    #
+#    Updated: 2022/04/14 14:39:40 by alakhdar         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,16 @@ SRCS = 	src/main.c \
 		src/pre_checking.c  \
 		src/builtins/env_utils.c \
 		src/builtins/env.c \
+		src/builtins/export.c	\
+		src/builtins/export_utils.c	\
+		src/builtins/sort_export.c
 		
 
 OBJS = ${SRCS:.c=.o}
 
 HEADERS = minishell.h
 
-CC = gcc -g #-fsanitize=address
+CC = gcc -g -fsanitize=address
 RM = rm -f
 
 FLAGS = -Wall -Wextra -Werror

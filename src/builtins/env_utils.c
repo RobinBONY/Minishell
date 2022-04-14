@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:25:05 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/07 11:49:19 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/13 15:48:48 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ char	*get_value(char *envp)
 	i = 0;
 	while (envp[i] && envp[i] != '=')
 		i++;
-	i++;
+	if (envp[i])
+		i++;
 	j = i;
 	while (envp[i])
 		i++;

@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:30:39 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/12 10:32:47 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/13 12:54:41 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,18 @@ t_var	*init_env(char **envp)
 	while (envp[++i])
 		append_to_list(head, envp[i]);
 	return (head);
+}
+
+char	*get_var(t_var *head, char *key)
+{
+	t_var	*cursor;
+
+	cursor = head;
+	while (cursor)
+	{
+		if (ft_strcmp(key, cursor->key) == 0)
+			return (cursor->value);
+		cursor = cursor->next;
+	}
+	return (NULL);
 }

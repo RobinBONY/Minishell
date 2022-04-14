@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 14:59:05 by rbony             #+#    #+#             */
-/*   Updated: 2022/04/12 15:30:27 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/14 13:23:02 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	free_tab(char **tab)
 		free(tab);
 }
 
-int	parse_line(char *line, t_var *head_env, t_var *head_exp)
+int	parse_line(char *line, t_var *head_env, t_exp *head_exp)
 {
 	int		i;
 	char	**words;
@@ -42,12 +42,19 @@ int	parse_line(char *line, t_var *head_env, t_var *head_exp)
 				print_env(head_env);
 			// else if (ft_strcmp(words[i], "unset") == 0)
 			// 	ft_unset(head_env, words[i + 1]);
-			else if (ft_strcmp(words[i], "export") == 0)
+			else if (ft_strncmp(words[i], "export", 6) == 0)
 			{
 				if (words[i + 1])
-					append_to_list(head_exp, words[i + 1]);
+				{
+					append_to_exp(head_exp, words[i + 1]);
+					sort_export(head_exp);
+				}
 				else
 					print_export(head_exp);
+			}
+			else if (ft_strcmp(words[i], "setenv") == 0)
+			{
+				append_to_list(head_env, words[i + 1]);
 			}
 				//Si la variable est occurrente, l'ajouter à env ET export
 				//Si la variable n'a pas de valeur, add dans export

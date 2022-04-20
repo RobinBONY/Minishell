@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 14:59:05 by rbony             #+#    #+#             */
-/*   Updated: 2022/04/14 13:23:02 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/20 15:28:29 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ int	parse_line(char *line, t_var *head_env, t_exp *head_exp)
 		{
 			if (ft_strcmp(words[i], "env") == 0)
 				print_env(head_env);
-			// else if (ft_strcmp(words[i], "unset") == 0)
-			// 	ft_unset(head_env, words[i + 1]);
 			else if (ft_strncmp(words[i], "export", 6) == 0)
 			{
 				if (words[i + 1])
@@ -56,6 +54,15 @@ int	parse_line(char *line, t_var *head_env, t_exp *head_exp)
 			{
 				append_to_list(head_env, words[i + 1]);
 			}
+			else if (ft_strcmp(words[i], "unset") == 0 && words[i + 1])
+				ft_unset(head_exp, head_env, words[i + 1]);
+			else if (ft_strcmp(words[i], "pwd") == 0)
+				ft_pwd(head_env);
+			else if (ft_strcmp(words[i], "cd") == 0)
+				if (words[i + 1])
+					ft_cd(words[i + 1], head_env);
+				else
+					ft_cd(NULL, head_env);
 				//Si la variable est occurrente, l'ajouter à env ET export
 				//Si la variable n'a pas de valeur, add dans export
 			else

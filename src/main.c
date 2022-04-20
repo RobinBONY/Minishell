@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 13:03:12 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/14 10:37:55 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/20 15:35:37 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,9 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		line_buffer = readline("$> ");
+		//SI PROMPT VIDE -> signal(ctrl D) + set g_exit
+		// signal(SIGINT, handler);
+		// signal(SIGQUIT, SIG_IGN);
 		if (line_buffer && *line_buffer)
 		{
 			add_history(line_buffer);

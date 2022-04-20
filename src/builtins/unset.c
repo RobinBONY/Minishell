@@ -6,25 +6,25 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 10:33:01 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/13 11:52:10 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/18 16:03:51 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	unset(t_var *head, char *key)
+void	unset_exp(t_exp *head_exp, char *key)
 {
-	t_var	*cursor;
-	t_var	*prev;
+	t_exp	*cursor;
+	t_exp	*prev;
 
-	cursor = head;
-	if (cursor != NULL && ft_strncmp(cursor->key, key, ft_strlen(key)) == 0)
+	cursor = head_exp;
+	if (cursor != NULL && ft_strcmp(cursor->key, key) == 0)
 	{
-		head = cursor->next;
+		head_exp = cursor->next;
 		free(cursor);
 		return ;
 	}
-	while (cursor != NULL && ft_strncmp(cursor->key, key, ft_strlen(key)) != 0)
+	while (cursor != NULL && ft_strcmp(cursor->key, key) != 0)
 	{
 		prev = cursor;
 		cursor = cursor->next;
@@ -35,7 +35,33 @@ void	unset(t_var *head, char *key)
 	free(cursor);
 }
 
-// void	unset_export(t_var *head_exp, char *key)
-// {
-	
-// }
+void	unset_env(t_var *head_env, char *key)
+{
+	t_var	*cursor;
+	t_var	*prev;
+
+	cursor = head_env;
+	if (cursor != NULL && ft_strcmp(cursor->key, key) == 0)
+	{
+		head_env = cursor->next;
+		free(cursor);
+		return ;
+	}
+	while (cursor != NULL && ft_strcmp(cursor->key, key) != 0)
+	{
+		prev = cursor;
+		cursor = cursor->next;
+	}
+	if (cursor == NULL)
+		return ;
+	prev->next = cursor->next;
+	free(cursor);
+}
+
+int	ft_unset(t_exp *head_exp, t_var *head_env, char *key)
+{
+	//g_exit return
+	unset_env(head_env, key);
+	unset_exp(head_exp, key);
+	return (0);
+}

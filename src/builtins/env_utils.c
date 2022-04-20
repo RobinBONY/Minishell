@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:25:05 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/13 15:48:48 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/18 14:58:55 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,26 @@ void	print_env(t_var *head)
 
 char	*get_key(char *envp)
 {
-	int		i;
-	int		j;
-	char	*key;
+	// int		i;
+	// int		j;
+	// char	*key;
 
-	i = 0;
-	j = 0;
-	while (envp[i] && envp[i] != '=')
-	{
-		i++;
-	}
-	key = ft_substr(envp, j, ft_strlen(envp) - i);
+	// i = 0;
+	// j = 0;
+	// while (envp[i] && envp[i] != '=')
+	// 	i++;
+	// key = ft_substr(envp, j, ft_strlen(envp) - i);
+	// if (!key)
+	// 	return (NULL);
+	// return (key);
+
+	char	*key;
+	char	*tmp;
+
+	tmp = ft_strchr(envp, '=');
+	key = ft_substr(envp, 0, tmp - envp);
+	if (!key)
+		return (NULL);
 	return (key);
 }
 

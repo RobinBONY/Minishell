@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 10:25:52 by rbony             #+#    #+#             */
-/*   Updated: 2022/04/06 14:28:38 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/04/06 16:12:33 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ int	parse_line(char *line, t_env *head)
 	words = ft_cmd_split(line);
 	if (!words)
 		return (1);
-	if (place_env_var(words) == 0)
+	if (place_env_var(words, head) == 0)
 	{	
 		while (words[++i])
 		{
 			if (ft_strcmp(words[i], "env") == 0)
-				return (2);
+				print_envp(head);
 			if (ft_strcmp(words[i], "unset") == 0)
 				ft_unset(head, words[i + 1]);
 			if (ft_strcmp(words[i], "set") == 0)

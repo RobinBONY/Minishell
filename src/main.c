@@ -3,19 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 13:03:12 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/05 11:30:24 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/13 15:52:29 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+void	sig_handler(int sig)
+{
+	kill(0, 1);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_env	*head;
 	char	*line_buffer;
+	int		pid;
 
 	(void)argc;
 	printf("%s", "             ____________________________________________________\n");
@@ -80,18 +86,29 @@ int	main(int argc, char **argv, char **envp)
 	printf("%s", "An Rbony & Alakhdar collaboration.\n");
 	printf("\n");
 	head = init_envp_list(envp);
+	signal(SIGINT, sig_handler);
+	g_exit = 0;
 	while (1)
 	{
-		line_buffer = readline("$> ");
-		if (line_buffer && *line_buffer)
+		pid = fork();
+		if (pid == -1)
 		{
-			add_history(line_buffer);
-			if (parse_line(line_buffer, head) == 2)
-				print_envp(head);
-			else if (parse_line(line_buffer, head) == 1)
-				printf("%s/n", "Error");
+			perror("fork");
+			return (EXIT_FAILURE);
 		}
-		free(line_buffer);
+		else if (pid == 0)
+		{
+			line_buffer = readline("$> ");
+			if (line_buffer && *line_buffer)
+			{
+				add_history(line_buffer);
+				if (parse_line(line_buffer, head) == 1)
+					printf("%s/n", "Error");
+			}
+			free(line_buffer);
+		}
+		else
+			waitpid(pid, &g_exit, WCONTINUED);
 	}
 	return (0);
 }

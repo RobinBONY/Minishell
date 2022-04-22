@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 10:25:38 by rbony             #+#    #+#             */
-/*   Updated: 2022/04/06 10:25:45 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/04/14 09:25:31 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,15 @@
 # include <readline/history.h>
 # include "../libft/libft.h"
 # include <limits.h>
+# include <sys/types.h>
+# include <signal.h>
 
 typedef struct s_env
 {
 	char			*key;
 	char			*value;
 	struct s_env	*next;
+	struct s_env	*prev;
 }	t_env;
 
 int			g_exit;
@@ -55,6 +58,6 @@ int			check_quotes(char *str);
 int			replace_needed(char *str);
 char		**ft_cmd_split(const char *s);
 int			unmanaged_character_error(char c);
-int			place_env_var(char **words);
+int			place_env_var(char **words, t_env *env);
 
 #endif

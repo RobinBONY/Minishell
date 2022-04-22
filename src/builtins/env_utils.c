@@ -6,39 +6,51 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:25:05 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/05 11:25:21 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/18 14:58:55 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	print_envp(t_env *head)
+void	print_env(t_var *head)
 {
-	t_env	*current_node;
+	t_var	*current_node;
 
 	current_node = head;
 	while (current_node != NULL)
 	{
-		printf("%s", current_node->key);
-		printf("%c", '=');
-		printf("%s\n", current_node->value);
+		if (current_node->printable == 1)
+		{
+			printf("%s", current_node->key);
+			printf("%c", '=');
+			printf("%s\n", current_node->value);
+		}
 		current_node = current_node->next;
 	}
 }
 
 char	*get_key(char *envp)
 {
-	int		i;
-	int		j;
-	char	*key;
+	// int		i;
+	// int		j;
+	// char	*key;
 
-	i = 0;
-	j = 0;
-	while (envp[i] && envp[i] != '=')
-	{
-		i++;
-	}
-	key = ft_substr(envp, j, ft_strlen(envp) - i);
+	// i = 0;
+	// j = 0;
+	// while (envp[i] && envp[i] != '=')
+	// 	i++;
+	// key = ft_substr(envp, j, ft_strlen(envp) - i);
+	// if (!key)
+	// 	return (NULL);
+	// return (key);
+
+	char	*key;
+	char	*tmp;
+
+	tmp = ft_strchr(envp, '=');
+	key = ft_substr(envp, 0, tmp - envp);
+	if (!key)
+		return (NULL);
 	return (key);
 }
 
@@ -52,7 +64,8 @@ char	*get_value(char *envp)
 	i = 0;
 	while (envp[i] && envp[i] != '=')
 		i++;
-	i++;
+	if (envp[i])
+		i++;
 	j = i;
 	while (envp[i])
 		i++;
@@ -69,4 +82,20 @@ char	*get_value(char *envp)
 	}
 	buf[i] = '\0';
 	return (buf);
+}
+
+int	is_occurring(char *envp)
+{
+	int	i;
+	int	flag;
+
+	i = 0;
+	flag = 0;
+	while (envp[i])
+	{
+		if (envp[i] == '=')
+			flag = 1;
+		i++;
+	}
+	return (flag);
 }

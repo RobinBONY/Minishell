@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/01 13:03:12 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/13 15:52:29 by rbony            ###   ########lyon.fr   */
+/*   Created: 2022/04/22 14:14:46 by rbony             #+#    #+#             */
+/*   Updated: 2022/04/22 14:17:56 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	sig_handler(int sig)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_env	*head;
+	t_var	*head_env;
+	t_exp	*head_exp;
 	char	*line_buffer;
 	int		pid;
 
@@ -85,27 +86,20 @@ int	main(int argc, char **argv, char **envp)
 	printf("\n");
 	printf("%s", "An Rbony & Alakhdar collaboration.\n");
 	printf("\n");
-	head = init_envp_list(envp);
-	signal(SIGINT, sig_handler);
-	g_exit = 0;
+	head_env = init_env(envp);
+	head_exp = init_export(envp);
+	head_exp = sort_export(head_exp);
 	while (1)
 	{
-		pid = fork();
-		if (pid == -1)
+		line_buffer = readline("$> ");
+		//SI PROMPT VIDE -> signal(ctrl D) + set g_exit
+		// signal(SIGINT, handler);
+		// signal(SIGQUIT, SIG_IGN);
+		if (line_buffer && *line_buffer)
 		{
-			perror("fork");
-			return (EXIT_FAILURE);
-		}
-		else if (pid == 0)
-		{
-			line_buffer = readline("$> ");
-			if (line_buffer && *line_buffer)
-			{
-				add_history(line_buffer);
-				if (parse_line(line_buffer, head) == 1)
-					printf("%s/n", "Error");
-			}
-			free(line_buffer);
+			add_history(line_buffer);
+			if (parse_line(line_buffer, head_env, head_exp) == 1)
+				printf("%s/n", "Error");
 		}
 		else
 			waitpid(pid, &g_exit, WCONTINUED);

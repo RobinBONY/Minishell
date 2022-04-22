@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/06 10:25:52 by rbony             #+#    #+#             */
-/*   Updated: 2022/04/06 16:12:33 by rbony            ###   ########lyon.fr   */
+/*   Created: 2022/03/15 14:59:05 by rbony             #+#    #+#             */
+/*   Updated: 2022/04/22 14:18:50 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	free_tab(char **tab)
 		free(tab);
 }
 
-int	parse_line(char *line, t_env *head)
+int	parse_line(char *line, t_var *head_env, t_exp *head_exp)
 {
 	int		i;
 	char	**words;
@@ -34,16 +34,37 @@ int	parse_line(char *line, t_env *head)
 	words = ft_cmd_split(line);
 	if (!words)
 		return (1);
-	if (place_env_var(words, head) == 0)
+	if (place_env_var(words, head_env) == 0)
 	{	
 		while (words[++i])
 		{
 			if (ft_strcmp(words[i], "env") == 0)
-				print_envp(head);
-			if (ft_strcmp(words[i], "unset") == 0)
-				ft_unset(head, words[i + 1]);
-			if (ft_strcmp(words[i], "set") == 0)
-				append_to_envp(head, words[i + 1]);
+				print_env(head_env);
+			else if (ft_strncmp(words[i], "export", 6) == 0)
+			{
+				if (words[i + 1])
+				{
+					append_to_exp(head_exp, words[i + 1]);
+					sort_export(head_exp);
+				}
+				else
+					print_export(head_exp);
+			}
+			else if (ft_strcmp(words[i], "setenv") == 0)
+			{
+				append_to_list(head_env, words[i + 1]);
+			}
+			else if (ft_strcmp(words[i], "unset") == 0 && words[i + 1])
+				ft_unset(head_exp, head_env, words[i + 1]);
+			else if (ft_strcmp(words[i], "pwd") == 0)
+				ft_pwd(head_env);
+			else if (ft_strcmp(words[i], "cd") == 0)
+				if (words[i + 1])
+					ft_cd(words[i + 1], head_env);
+				else
+					ft_cd(NULL, head_env);
+				//Si la variable est occurrente, l'ajouter à env ET export
+				//Si la variable n'a pas de valeur, add dans export
 			else
 				printf("%s\n", words[i]);
 		}

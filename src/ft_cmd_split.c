@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 13:12:29 by rbony             #+#    #+#             */
-/*   Updated: 2022/04/07 12:58:59 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/04/22 14:18:25 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ size_t	ft_divlen(char *s)
 			if (*tmp == '?')
 				tmp++;
 		}
-		while (ft_isalnum(*tmp) || *tmp == '=' || *tmp == ' ')
+		while (ft_isalnum(*tmp) || *tmp == '=')
 			tmp++;
 		if (tmp != s)
 			return (tmp - s);

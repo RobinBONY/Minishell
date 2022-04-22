@@ -6,13 +6,13 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:48:03 by rbony             #+#    #+#             */
-/*   Updated: 2022/04/07 13:00:35 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/04/22 14:17:43 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static char	*ft_strcat(char *dest, char *src)
+char	*ft_strcat(char *dest, char *src)
 {
 	int	i;
 	int	next;
@@ -64,9 +64,9 @@ static char	*replace_string(char *str, int start, int len, char *replace)
 	return (new);
 }
 
-char	*find_var(char *str, int len, t_env *head)
+char	*find_var(char *str, int len, t_var *head)
 {
-	t_env	*tmp;
+	t_var	*tmp;
 
 	tmp = head;
 	while (tmp)
@@ -91,7 +91,7 @@ char	*last_exit(char *str, int start, int len)
 	return (result);
 }
 
-static char	*replace_var(char *str, t_env *head)
+static char	*replace_var(char *str, t_var *head)
 {
 	int		len;
 	char	*tmp;
@@ -113,7 +113,7 @@ static char	*replace_var(char *str, t_env *head)
 	return (str);
 }
 
-int	place_env_var(char **words, t_env *head)
+int	place_env_var(char **words, t_var *head)
 {
 	int	i;
 

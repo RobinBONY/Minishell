@@ -6,7 +6,7 @@
 #    By: rbony <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/28 08:34:54 by rbony             #+#    #+#              #
-#    Updated: 2022/04/07 08:11:48 by rbony            ###   ########lyon.fr    #
+#    Updated: 2022/04/22 14:16:43 by rbony            ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,13 @@ SRCS = 	src/main.c \
 		src/place_env_var.c \
 		src/pre_checking.c  \
 		src/builtins/env_utils.c \
-		src/builtins/env.c 
+		src/builtins/env.c \
+		src/builtins/export.c	\
+		src/builtins/export_utils.c	\
+		src/builtins/sort_export.c	\
+		src/builtins/unset.c \
+		src/builtins/cd.c	\
+		src/builtins/signals.c
 		
 
 OBJS = ${SRCS:.c=.o}

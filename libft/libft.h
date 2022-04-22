@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 15:58:45 by rbony             #+#    #+#             */
-/*   Updated: 2022/04/06 14:28:01 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/04/06 15:02:53 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void		ft_putstr_fd(char *str, int fd);
 void		ft_putendl_fd(char *s, int fd);
 void		ft_putnbr_fd(int nb, int fd);
 
-// partie bonus
+//partie bonus
 typedef struct s_list
 {
 	void			*content;

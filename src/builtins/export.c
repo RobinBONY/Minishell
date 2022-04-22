@@ -1,70 +1,73 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/17 10:30:39 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/13 12:54:41 by alakhdar         ###   ########lyon.fr   */
+/*   Created: 2022/04/06 16:33:13 by alakhdar          #+#    #+#             */
+/*   Updated: 2022/04/14 14:39:03 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include <stdio.h>
 
-t_var	*create_node(t_var *next, char *envp)
+t_exp	*create_exp_node(char *envp)
 {
-	t_var	*new_env;
+	t_exp	*new_env;
 
-	new_env = (t_var *)malloc(sizeof(t_var));
+	new_env = (t_exp *)malloc(sizeof(t_exp));
 	if (!new_env)
 	{
-		printf("Error in adding new environment variable\n");
+		printf("Error in adding new export variable\n");
+		g_exit = 0;
 		exit (0);
 	}
 	new_env->key = get_key(envp);
 	new_env->value = get_value(envp);
-	new_env->printable = is_occurring(envp);
-	new_env->next = next;
+	new_env->next = NULL;
+	new_env->prev = NULL;
 	return (new_env);
 }
 
-t_var	*append_to_list(t_var *head, char *envp)
+t_exp	*append_to_exp(t_exp *head, char *envp)
 {
-	t_var	*cursor;
-	t_var	*new_env;
+	t_exp	*cursor;
+	t_exp	*new_env;
 
 	cursor = head;
 	while (cursor->next != NULL)
 		cursor = cursor->next;
-	new_env = create_node(NULL, envp);
+	new_env = create_exp_node(envp);
 	cursor->next = new_env;
+	new_env->prev = cursor;
 	return (head);
 }
 
-t_var	*init_env(char **envp)
+t_exp	*init_export(char **envp)
 {
 	int		i;
-	t_var	*head;
+	t_exp	*head;
 
 	i = 0;
-	head = create_node(NULL, envp[i]);
+	head = create_exp_node(envp[i]);
 	while (envp[++i])
-		append_to_list(head, envp[i]);
+		append_to_exp(head, envp[i]);
 	return (head);
 }
 
-char	*get_var(t_var *head, char *key)
+void	print_export(t_exp *head_exp)
 {
-	t_var	*cursor;
+	t_exp	*cursor;
 
-	cursor = head;
+	cursor = head_exp->next;
 	while (cursor)
 	{
-		if (ft_strcmp(key, cursor->key) == 0)
-			return (cursor->value);
+		printf("declare -x %s", cursor->key);
+		if (cursor->value)
+			printf("=\"%s\"\n", cursor->value);
+		else
+			printf("\n");
 		cursor = cursor->next;
 	}
-	return (NULL);
 }

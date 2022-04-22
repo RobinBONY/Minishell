@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 11:12:54 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/14 14:35:18 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/20 15:28:15 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,16 @@ int			check_new_line(char *str);
 int			parse_line(char *line, t_var *head_env, t_exp *head_exp);
 int			is_occurring(char *envp);
 int			validate_arg(char *arg);
-// int			ft_pwd(void);
-// int			ft_cd(char *args);
-void		unset_env(t_var *head_env, t_var *head_exp, char *key);
+int			ft_pwd(t_var *head);
+int			ft_cd(char *args, t_var *head);
+int			ft_unset(t_exp *head_exp, t_var *head_env, char *key);
 void		print_env(t_var *head);
 void		print_export(t_exp *head);
 void		sort_list(t_var *head);
 void		free_list(t_var	*head);
 void		sort_char_tab(char	**str, int len);
 void		swap_node(t_exp	**env);
+void		handler(int signo);
 t_var		*init_env(char **envp);
 t_exp		*init_export(char **envp);
 t_var		*append_to_list(t_var *head, char *envp);

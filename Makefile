@@ -6,7 +6,7 @@
 #    By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/28 08:34:54 by rbony             #+#    #+#              #
-#    Updated: 2022/04/14 14:39:40 by alakhdar         ###   ########lyon.fr    #
+#    Updated: 2022/04/20 13:55:52 by alakhdar         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,10 @@ SRCS = 	src/main.c \
 		src/builtins/env.c \
 		src/builtins/export.c	\
 		src/builtins/export_utils.c	\
-		src/builtins/sort_export.c
+		src/builtins/sort_export.c	\
+		src/builtins/unset.c \
+		src/builtins/cd.c	\
+		src/builtins/signals.c
 		
 
 OBJS = ${SRCS:.c=.o}

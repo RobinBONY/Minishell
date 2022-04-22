@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/24 14:42:05 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/03/29 11:29:41 by alakhdar         ###   ########lyon.fr   */
+/*   Created: 2022/03/31 14:32:05 by rbony             #+#    #+#             */
+/*   Updated: 2022/03/31 14:55:58 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
-int	ft_pwd(void)
+int	unmanaged_character_error(char c)
 {
-	char	str[PATH_MAX];
-
-	if (getcwd(str, sizeof(str)) == NULL)
-		return (1);
-	printf("%s\n", str);
-	return (0);
+	printf("%s%c\n", "Unmanaged character : ", c);
+	return (1);
 }

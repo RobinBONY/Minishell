@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 13:03:12 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/05 11:30:24 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/20 15:35:37 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_env	*head;
+	t_var	*head_env;
+	t_exp	*head_exp;
 	char	*line_buffer;
 
 	(void)argc;
@@ -79,16 +80,19 @@ int	main(int argc, char **argv, char **envp)
 	printf("\n");
 	printf("%s", "An Rbony & Alakhdar collaboration.\n");
 	printf("\n");
-	head = init_envp_list(envp);
+	head_env = init_env(envp);
+	head_exp = init_export(envp);
+	head_exp = sort_export(head_exp);
 	while (1)
 	{
 		line_buffer = readline("$> ");
+		//SI PROMPT VIDE -> signal(ctrl D) + set g_exit
+		// signal(SIGINT, handler);
+		// signal(SIGQUIT, SIG_IGN);
 		if (line_buffer && *line_buffer)
 		{
 			add_history(line_buffer);
-			if (parse_line(line_buffer, head) == 2)
-				print_envp(head);
-			else if (parse_line(line_buffer, head) == 1)
+			if (parse_line(line_buffer, head_env, head_exp) == 1)
 				printf("%s/n", "Error");
 		}
 		free(line_buffer);

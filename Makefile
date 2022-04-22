@@ -3,24 +3,36 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rbony <marvin@42.fr>                       +#+  +:+       +#+         #
+#    By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/28 08:34:54 by rbony             #+#    #+#              #
-#    Updated: 2022/03/29 13:55:01 by rbony            ###   ########lyon.fr    #
+#    Updated: 2022/04/20 13:55:52 by alakhdar         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS = 	src/prompt.c 		\
+SRCS = 	src/main.c \
+		src/prompt.c 		\
 		src/ft_cmd_split.c 	\
-		src/ft_divlen.c
+		src/errors.c		\
+		src/place_env_var.c \
+		src/pre_checking.c  \
+		src/builtins/env_utils.c \
+		src/builtins/env.c \
+		src/builtins/export.c	\
+		src/builtins/export_utils.c	\
+		src/builtins/sort_export.c	\
+		src/builtins/unset.c \
+		src/builtins/cd.c	\
+		src/builtins/signals.c
+		
 
 OBJS = ${SRCS:.c=.o}
 
 HEADERS = minishell.h
 
-CC = gcc -g #-fsanitize=address
+CC = gcc -g -fsanitize=address
 RM = rm -f
 
 FLAGS = -Wall -Wextra -Werror

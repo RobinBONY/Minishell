@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 11:12:54 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/05 14:43:41 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/04/20 15:28:15 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,34 +21,65 @@
 # include "../libft/libft.h"
 # include <limits.h>
 
-typedef struct s_env
+typedef struct s_var
 {
 	char			*key;
 	char			*value;
-	struct s_env	*next;
-}	t_env;
+	struct s_var	*next;
+	int				printable;
+}	t_var;
+
+typedef struct s_exp
+{
+	char			*key;
+	char			*value;
+	struct s_exp	*next;
+	struct s_exp	*prev;
+}	t_exp;
 
 int			g_exit;
 
 char		*get_env(char *var, char **env, int n);
 int			env_len(char **env);
-int			set_envp(t_env *head, char *key, char *value);
+int			ft_export(t_var *head, char *key, char *value);
 int			ft_echo(char **arg);
 int			check_new_line(char *str);
-int			parse_line(char *line, t_env *head);
-// int			ft_pwd(void);
-// int			ft_cd(char *args);
-void		ft_unset(t_env *head, char *key);
-void		print_envp(t_env *envp);
-t_env		*init_envp_list(char **envp);
-t_env		*append_to_envp(t_env *head, char *envp);
+int			parse_line(char *line, t_var *head_env, t_exp *head_exp);
+int			is_occurring(char *envp);
+int			validate_arg(char *arg);
+int			ft_pwd(t_var *head);
+int			ft_cd(char *args, t_var *head);
+int			ft_unset(t_exp *head_exp, t_var *head_env, char *key);
+void		print_env(t_var *head);
+void		print_export(t_exp *head);
+void		sort_list(t_var *head);
+void		free_list(t_var	*head);
+void		sort_char_tab(char	**str, int len);
+void		swap_node(t_exp	**env);
+void		handler(int signo);
+t_var		*init_env(char **envp);
+t_exp		*init_export(char **envp);
+t_var		*append_to_list(t_var *head, char *envp);
+t_exp		*append_to_exp(t_exp *head, char *envp);
+t_exp		*init_export(char **envp);
+t_exp		*sort_export(t_exp *head_exp);
 char		*get_key(char *envp);
 char		*get_value(char *envp);
+char		*ft_strcpy(char *dest, char *src);
+char		*ft_strcat(char *dest, char *src);
+char		*get_var(t_var *head, char *key);
+int			list_is_sorted(t_exp *head);
 
 // static int	pwd_store(void);
 // static int	cd_home(void);
 // static int	cd_args(char *args);
+
+int			not_interpreted(char *line);
+int			unmanaged_character_error(char c);
+int			check_quotes(char *str);
+int			replace_needed(char *str);
 char		**ft_cmd_split(const char *s);
-size_t		ft_divlen(char *s);
+int			unmanaged_character_error(char c);
+int			place_env_var(char **words);
 
 #endif

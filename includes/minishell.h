@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:19:41 by rbony             #+#    #+#             */
-/*   Updated: 2022/04/22 14:19:43 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/04/25 16:36:10 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,34 @@
 # include <limits.h>
 # include <sys/types.h>
 # include <signal.h>
+
+typedef struct s_cmd
+{
+	char			*path;
+	char			**argv;
+	struct s_cmd	*next;
+}	t_cmd;
+
+typedef struct s_heredoc
+{
+	char				delim;
+	struct s_heredoc	*next;
+}	t_heredoc;
+
+typedef struct s_redirect
+{
+	int					is_input;
+	int					is_output;
+	char				*filename;
+	struct s_redirect	*next;
+}	t_redirect;
+
+typedef struct s_input
+{
+	struct s_cmd		*cmds;
+	struct s_heredoc	*heredocs;
+	struct s_redirect	*redirects;
+}	t_input;
 
 typedef struct s_var
 {
@@ -83,5 +111,15 @@ int			replace_needed(char *str);
 char		**ft_cmd_split(const char *s);
 int			unmanaged_character_error(char c);
 int			place_env_var(char **words, t_var *env);
+
+t_cmd		*ft_cmdnew(char *path, char **argv);
+void		ft_cmdadd_back(t_cmd **alst, t_cmd *new);
+void		ft_cmdclear(t_cmd **lst);
+t_heredoc	*ft_docnew(char content);
+void		ft_docadd_back(t_heredoc **alst, t_heredoc *new);
+void		ft_docclear(t_heredoc **lst);
+t_redirect	*ft_rednew(int input, int output, char *filename);
+void		ft_redadd_back(t_redirect **alst, t_redirect *new);
+void		ft_redclear(t_redirect **lst);
 
 #endif

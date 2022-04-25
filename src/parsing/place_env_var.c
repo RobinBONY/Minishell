@@ -6,11 +6,11 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:48:03 by rbony             #+#    #+#             */
-/*   Updated: 2022/04/22 14:17:43 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/04/25 15:00:29 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 char	*ft_strcat(char *dest, char *src)
 {

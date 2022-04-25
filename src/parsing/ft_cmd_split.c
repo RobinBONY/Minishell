@@ -6,11 +6,11 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 13:12:29 by rbony             #+#    #+#             */
-/*   Updated: 2022/04/22 14:18:25 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/04/25 15:00:20 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 size_t	ft_divlen(char *s)
 {

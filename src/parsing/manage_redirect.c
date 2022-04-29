@@ -6,21 +6,24 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 16:05:03 by rbony             #+#    #+#             */
-/*   Updated: 2022/04/25 16:34:55 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/04/28 23:47:35 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_redirect	*ft_rednew(int input, int output, char *filename)
+t_redirect	*ft_rednew(int input, int output, int append, char *filename)
 {
 	t_redirect	*newred;
 
+	if (!filename)
+		return (NULL);
 	newred = malloc(sizeof(t_redirect));
 	if (!newred)
 		return (NULL);
 	newred->is_input = input;
 	newred->is_output = output;
+	newred->is_append = append;
 	newred->filename = filename;
 	newred->next = NULL;
 	return (newred);
@@ -51,6 +54,7 @@ void	ft_redclear(t_redirect **lst)
 	while (*lst)
 	{
 		last = (*lst)->next;
+		free((*lst)->filename);
 		free(*lst);
 		*lst = last;
 	}

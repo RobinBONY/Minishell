@@ -6,16 +6,18 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 16:05:31 by rbony             #+#    #+#             */
-/*   Updated: 2022/04/25 16:35:00 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/04/28 23:47:51 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_heredoc	*ft_docnew(char content)
+t_heredoc	*ft_docnew(char *content)
 {
 	t_heredoc	*newdoc;
 
+	if (!content)
+		return (NULL);
 	newdoc = malloc(sizeof(t_heredoc));
 	if (!newdoc)
 		return (NULL);
@@ -49,6 +51,7 @@ void	ft_docclear(t_heredoc **lst)
 	while (*lst)
 	{
 		last = (*lst)->next;
+		free((*lst)->delim);
 		free(*lst);
 		*lst = last;
 	}

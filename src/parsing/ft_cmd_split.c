@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 13:12:29 by rbony             #+#    #+#             */
-/*   Updated: 2022/04/25 15:00:20 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/04/29 03:39:24 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ size_t	ft_divlen(char *s)
 	tmp = s;
 	while (*tmp && tmp == s)
 	{
+		if (*tmp == ' ')
+			return (tmp - s);
 		if (*tmp == '\'' || *tmp == '"')
 		{
 			tmp = ft_strchr(tmp, *tmp);

@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 16:05:38 by rbony             #+#    #+#             */
-/*   Updated: 2022/04/25 16:12:05 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/04/29 01:39:16 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	ft_cmdclear(t_cmd **lst)
 	while (*lst)
 	{
 		last = (*lst)->next;
+		free_tab((*lst)->argv);
 		free((*lst)->path);
-		free((*lst)->argv);
 		free(*lst);
 		*lst = last;
 	}

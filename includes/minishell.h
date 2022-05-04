@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/17 11:12:54 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/20 15:28:15 by alakhdar         ###   ########lyon.fr   */
+/*   Created: 2022/04/22 14:19:41 by rbony             #+#    #+#             */
+/*   Updated: 2022/04/29 01:25:05 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,37 @@
 # include <readline/history.h>
 # include "../libft/libft.h"
 # include <limits.h>
+# include <sys/types.h>
+# include <signal.h>
+
+typedef struct s_cmd
+{
+	char			*path;
+	char			**argv;
+	struct s_cmd	*next;
+}	t_cmd;
+
+typedef struct s_heredoc
+{
+	char				*delim;
+	struct s_heredoc	*next;
+}	t_heredoc;
+
+typedef struct s_redirect
+{
+	int					is_input;
+	int					is_output;
+	int					is_append;
+	char				*filename;
+	struct s_redirect	*next;
+}	t_redirect;
+
+typedef struct s_input
+{
+	struct s_cmd		*cmds;
+	struct s_heredoc	*heredocs;
+	struct s_redirect	*redirects;
+}	t_input;
 
 typedef struct s_var
 {
@@ -39,6 +70,7 @@ typedef struct s_exp
 
 int			g_exit;
 
+void		free_tab(char **tab);
 char		*get_env(char *var, char **env, int n);
 int			env_len(char **env);
 int			ft_export(t_var *head, char *key, char *value);
@@ -80,6 +112,16 @@ int			check_quotes(char *str);
 int			replace_needed(char *str);
 char		**ft_cmd_split(const char *s);
 int			unmanaged_character_error(char c);
-int			place_env_var(char **words);
+int			place_env_var(char **words, t_var *env);
+
+t_cmd		*ft_cmdnew(char *path, char **argv);
+void		ft_cmdadd_back(t_cmd **alst, t_cmd *new);
+void		ft_cmdclear(t_cmd **lst);
+t_heredoc	*ft_docnew(char *content);
+void		ft_docadd_back(t_heredoc **alst, t_heredoc *new);
+void		ft_docclear(t_heredoc **lst);
+t_redirect	*ft_rednew(int input, int output, int append, char *filename);
+void		ft_redadd_back(t_redirect **alst, t_redirect *new);
+void		ft_redclear(t_redirect **lst);
 
 #endif

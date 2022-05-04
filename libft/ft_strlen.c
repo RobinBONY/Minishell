@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/06 12:07:47 by rbony             #+#    #+#             */
-/*   Updated: 2021/11/03 10:19:22 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/04/07 08:00:01 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ size_t	ft_strlen(const char *str)
 	int		i;
 
 	i = 0;
+	if (!str)
+		return(1);
 	while (str[i])
 	{
 		i++;

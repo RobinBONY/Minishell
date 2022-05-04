@@ -6,11 +6,11 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:33:27 by rbony             #+#    #+#             */
-/*   Updated: 2022/03/31 14:56:01 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/04/25 15:00:34 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int	replace_needed(char *str)
 {

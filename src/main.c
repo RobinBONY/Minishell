@@ -3,20 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/01 13:03:12 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/20 15:35:37 by alakhdar         ###   ########lyon.fr   */
+/*   Created: 2022/04/22 14:14:46 by rbony             #+#    #+#             */
+/*   Updated: 2022/04/22 14:17:56 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	sig_handler(int sig)
+{
+	kill(0, 1);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_var	*head_env;
 	t_exp	*head_exp;
 	char	*line_buffer;
+	int		pid;
 
 	(void)argc;
 	printf("%s", "             ____________________________________________________\n");
@@ -95,7 +101,8 @@ int	main(int argc, char **argv, char **envp)
 			if (parse_line(line_buffer, head_env, head_exp) == 1)
 				printf("%s/n", "Error");
 		}
-		free(line_buffer);
+		else
+			waitpid(pid, &g_exit, WCONTINUED);
 	}
 	return (0);
 }

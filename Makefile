@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+         #
+#    By: rbony <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/28 08:34:54 by rbony             #+#    #+#              #
-#    Updated: 2022/04/20 13:55:52 by alakhdar         ###   ########lyon.fr    #
+#    Updated: 2022/04/29 01:38:46 by rbony            ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,10 +14,10 @@ NAME = minishell
 
 SRCS = 	src/main.c \
 		src/prompt.c 		\
-		src/ft_cmd_split.c 	\
+		src/parsing/ft_cmd_split.c 	\
 		src/errors.c		\
-		src/place_env_var.c \
-		src/pre_checking.c  \
+		src/parsing/place_env_var.c \
+		src/parsing/pre_checking.c  \
 		src/builtins/env_utils.c \
 		src/builtins/env.c \
 		src/builtins/export.c	\
@@ -25,7 +25,10 @@ SRCS = 	src/main.c \
 		src/builtins/sort_export.c	\
 		src/builtins/unset.c \
 		src/builtins/cd.c	\
-		src/builtins/signals.c
+		src/builtins/signals.c \
+		src/parsing/manage_cmd.c \
+		src/parsing/manage_heredoc.c \
+		src/parsing/manage_redirect.c
 		
 
 OBJS = ${SRCS:.c=.o}

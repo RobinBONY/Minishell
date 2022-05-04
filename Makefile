@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rbony <marvin@42.fr>                       +#+  +:+       +#+         #
+#    By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/28 08:34:54 by rbony             #+#    #+#              #
-#    Updated: 2022/04/29 01:38:46 by rbony            ###   ########lyon.fr    #
+#    Updated: 2022/05/04 13:22:16 by alakhdar         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,6 @@ NAME = minishell
 
 SRCS = 	src/main.c \
 		src/prompt.c 		\
-		src/parsing/ft_cmd_split.c 	\
 		src/errors.c		\
 		src/parsing/place_env_var.c \
 		src/parsing/pre_checking.c  \

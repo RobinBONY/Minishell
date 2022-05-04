@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rbony <marvin@42.fr>                       +#+  +:+       +#+         #
+#    By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/03 09:27:22 by rbony             #+#    #+#              #
-#    Updated: 2022/04/06 14:27:37 by rbony            ###   ########lyon.fr    #
+#    Updated: 2022/05/04 13:38:00 by alakhdar         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,9 @@ SRCS = ft_calloc.c 		\
 		ft_strdup.c 	\
 		ft_strlcpy.c 	\
 		ft_strnstr.c 	\
-		ft_tolower.c
+		ft_tolower.c	\
+		ft_strncpy.c	\
+		ft_strndup.c
 		
 
 SRCS_BONUS = ft_lstnew.c 	\

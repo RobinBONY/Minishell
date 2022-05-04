@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 16:05:31 by rbony             #+#    #+#             */
-/*   Updated: 2022/04/28 23:47:51 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/03 10:17:36 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ t_heredoc	*ft_docnew(char *content)
 
 void	ft_docadd_back(t_heredoc **alst, t_heredoc *new)
 {
-	t_heredoc	*last;
-
 	if (!*alst)
 	{
 		*alst = new;
@@ -39,7 +37,7 @@ void	ft_docadd_back(t_heredoc **alst, t_heredoc *new)
 	{
 		*alst = (*alst)->next;
 	}
-	last->next = new;
+	(*alst)->next = new;
 }
 
 void	ft_docclear(t_heredoc **lst)

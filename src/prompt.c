@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 14:59:05 by rbony             #+#    #+#             */
-/*   Updated: 2022/04/29 03:31:18 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/03 10:32:13 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,34 +121,41 @@ void	test_parsing(t_input input)
 {
 	int	i;
 
-	printf("%s\n", "Input :");
-	printf("%s\n", "Heredocs :");
+	printf("%s\n", "Input :\n{");
+	printf("%s\n", "\tHeredocs :\n\t{");
 	while (input.heredocs)
 	{
-		printf("%s%s\n", "Delimiteur : ", input.heredocs->delim);
+		printf("%s%s\n", "\t\tDelimiteur : ", input.heredocs->delim);
+		printf("%s\n", "\t\t_______________");
 		input.heredocs = input.heredocs->next;
 	}
-	printf("%s\n", "Redirections :");
+	printf("%s\n", "\t}");
+	printf("%s\n", "\tRedirections :\n\t{");
 	while (input.redirects)
 	{
-		printf("%s%s\n", "Filename : ", input.redirects->filename);
-		printf("%s%d\n", "Input : ", input.redirects->is_input);
-		printf("%s%d\n", "Output : ", input.redirects->is_output);
-		printf("%s%d\n", "Append : ", input.redirects->is_append);
+		printf("%s%s\n", "\t\tFilename : ", input.redirects->filename);
+		printf("%s%d\n", "\t\tInput : ", input.redirects->is_input);
+		printf("%s%d\n", "\t\tOutput : ", input.redirects->is_output);
+		printf("%s%d\n", "\t\tAppend : ", input.redirects->is_append);
+		printf("%s\n", "\t\t_______________");
 		input.redirects = input.redirects->next;
 	}
-	printf("%s\n", "Commandes :");
+	printf("%s\n", "\t}");
+	printf("%s\n", "\tCommandes :\n\t{");
 	while (input.cmds)
 	{
-		printf("%s%s\n", "Cmd : ", input.cmds->path);
+		printf("%s%s\n", "\t\tCmd : ", input.cmds->path);
 		i = 0;
 		while (input.cmds->argv[i])
 		{
-			printf("%s\n", input.cmds->argv[i]);
+			printf("\t\t%s\n", input.cmds->argv[i]);
 			i++;
 		}
+		printf("%s\n", "\t\t_______________");
 		input.cmds = input.cmds->next;
 	}
+	printf("%s\n", "\t}");
+	printf("%s\n", "}");
 }
 
 int	parsing(char **words, t_var *head_env)

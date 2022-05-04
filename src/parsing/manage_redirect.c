@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 16:05:03 by rbony             #+#    #+#             */
-/*   Updated: 2022/04/28 23:47:35 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/03 10:17:49 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ t_redirect	*ft_rednew(int input, int output, int append, char *filename)
 
 void	ft_redadd_back(t_redirect **alst, t_redirect *new)
 {
-	t_redirect	*last;
-
 	if (!*alst)
 	{
 		*alst = new;
@@ -42,7 +40,7 @@ void	ft_redadd_back(t_redirect **alst, t_redirect *new)
 	{
 		*alst = (*alst)->next;
 	}
-	last->next = new;
+	(*alst)->next = new;
 }
 
 void	ft_redclear(t_redirect **lst)

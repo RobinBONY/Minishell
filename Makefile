@@ -6,7 +6,7 @@
 #    By: rbony <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/28 08:34:54 by rbony             #+#    #+#              #
-#    Updated: 2022/04/29 01:38:46 by rbony            ###   ########lyon.fr    #
+#    Updated: 2022/05/04 14:29:25 by rbony            ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,6 @@ NAME = minishell
 
 SRCS = 	src/main.c \
 		src/prompt.c 		\
-		src/parsing/ft_cmd_split.c 	\
 		src/errors.c		\
 		src/parsing/place_env_var.c \
 		src/parsing/pre_checking.c  \
@@ -28,8 +27,8 @@ SRCS = 	src/main.c \
 		src/builtins/signals.c \
 		src/parsing/manage_cmd.c \
 		src/parsing/manage_heredoc.c \
-		src/parsing/manage_redirect.c
-		
+		src/parsing/manage_redirect.c \
+		src/parsing/ft_cmd_split.c
 
 OBJS = ${SRCS:.c=.o}
 

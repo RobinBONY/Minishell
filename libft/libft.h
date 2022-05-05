@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 15:58:45 by rbony             #+#    #+#             */
-/*   Updated: 2022/04/06 15:02:53 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/05/04 13:38:40 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ char		*ft_strnstr(const char *haystack, const char *needle, size_t n);
 int			ft_atoi(const char *str);
 void		*ft_calloc(size_t count, size_t size);
 char		*ft_strdup(const char *src);
+char		*ft_strndup(const char *src, unsigned int n);
+char		*ft_strncpy(char *dest, char *src, unsigned int n);
 
 // partie 2
 char		*ft_substr(char const *s, unsigned int start, size_t len);

@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 14:59:05 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/03 10:32:13 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/04 14:31:00 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,10 +163,10 @@ int	parsing(char **words, t_var *head_env)
 	int		i;
 	t_input	input;
 
+	i = 0;
 	input.cmds = NULL;
 	input.heredocs = NULL;
 	input.redirects = NULL;
-	i = 0;
 	while (words[i])
 	{
 		if (is_operator(words[i]))

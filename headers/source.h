@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   source.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 13:46:55 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/10 14:23:50 by rbony            ###   ########lyon.fr   */
+/*   Created: 2022/05/05 14:13:16 by rbony             #+#    #+#             */
+/*   Updated: 2022/05/05 14:28:12 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/executor.h"
+#ifndef SOURCE_H
+# define SOURCE_H
 
-void	handler(int signo)
+typedef struct s_source
 {
-	if (signo == SIGINT)
-	{
-		write(2, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 1);
-		rl_redisplay();
-		g_exit = 1;
-	}
-}
+	char	*buffer;
+	long	bufsize;
+	long	curpos;
+}	t_source;
 
-void	proc_signal_handler(int signo)
-{
-	if (signo == SIGINT)
-	{
-		printf("\n");
-		signal(SIGINT, proc_signal_handler);
-	}
-}
+char	next_char(t_source *src);
+void	unget_char(t_source *src);
+char	peek_char(t_source *src);
+void	skip_white_spaces(t_source *src);
+
+#endif 

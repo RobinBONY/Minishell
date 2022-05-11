@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 16:33:13 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/14 14:39:03 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/05/10 13:24:51 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../headers/executor.h"
 
 t_exp	*create_exp_node(char *envp)
 {

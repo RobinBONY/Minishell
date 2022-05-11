@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 13:46:55 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/10 14:23:50 by rbony            ###   ########lyon.fr   */
+/*   Created: 2021/08/06 12:07:47 by rbony             #+#    #+#             */
+/*   Updated: 2022/05/10 09:05:56 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/executor.h"
+#include "libft.h"
 
-void	handler(int signo)
+size_t	ft_strlen(const char *str)
 {
-	if (signo == SIGINT)
-	{
-		write(2, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 1);
-		rl_redisplay();
-		g_exit = 1;
-	}
-}
+	int		i;
 
-void	proc_signal_handler(int signo)
-{
-	if (signo == SIGINT)
+	i = 0;
+	if (!str)
+		return (1);
+	while (str[i])
 	{
-		printf("\n");
-		signal(SIGINT, proc_signal_handler);
+		i++;
 	}
+	return (i);
 }

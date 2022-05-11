@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   scanner.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 13:46:55 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/10 14:23:50 by rbony            ###   ########lyon.fr   */
+/*   Created: 2022/05/05 14:43:59 by rbony             #+#    #+#             */
+/*   Updated: 2022/05/09 16:03:13 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/executor.h"
+#ifndef SCANNER_H
+# define SCANNER_H
 
-void	handler(int signo)
-{
-	if (signo == SIGINT)
-	{
-		write(2, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 1);
-		rl_redisplay();
-		g_exit = 1;
-	}
-}
+# include "source.h"
 
-void	proc_signal_handler(int signo)
+typedef struct s_token
 {
-	if (signo == SIGINT)
-	{
-		printf("\n");
-		signal(SIGINT, proc_signal_handler);
-	}
-}
+	struct s_source	*src;
+	int				text_len;
+	char			*text;
+}	t_token;
+
+typedef struct s_tokenizer
+{
+	char	*tok_buf;
+	int		tok_bufsize;
+	int		tok_bufindex;
+}	t_tokenizer;
+
+t_token	*tokenize(t_source *src);
+void	free_token(t_token *tok);
+void	init_tokenizer(t_tokenizer *tokenizer, t_source *src);
+
+#endif 

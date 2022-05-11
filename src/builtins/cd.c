@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:40:58 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/18 15:04:38 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/05/10 13:29:37 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../headers/executor.h"
 
 int	ft_pwd(t_var *head)
 {
@@ -52,7 +52,6 @@ static int	cd_args(char *args)
 	hold = chdir(path);
 	if (hold < 0)
 	{
-		//error_print("cd error.\n", 1);
 		free(path);
 		return (1);
 	}

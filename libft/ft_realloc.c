@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 13:46:55 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/20 15:28:55 by alakhdar         ###   ########lyon.fr   */
+/*   Created: 2022/05/10 10:13:04 by alakhdar          #+#    #+#             */
+/*   Updated: 2022/05/10 10:30:27 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-void	handler(int signo)
+void	*ft_realloc(void *ptr, size_t newsize)
 {
-	if (signo == SIGINT)
-	{
-		write(2, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 1);
-		rl_redisplay();
-		g_exit = 1;
-	}
-}
+	char	*newptr;
+	size_t	current_size;
 
-void	proc_signal_handler(int signo)
-{
-	if (signo == SIGINT)
-	{
-		printf("\n");
-		signal(SIGINT, proc_signal_handler);
-	}
+	if (ptr == 0)
+		return (malloc(newsize));
+	current_size = sizeof(ptr);
+	if (newsize <= current_size)
+		return (ptr);
+	newptr = malloc(newsize);
+	ft_memcpy(ptr, newptr, current_size);
+	free(ptr);
+	return (newptr);
 }

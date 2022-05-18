@@ -6,11 +6,11 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:53:53 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/10 13:33:53 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 16:33:51 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/executor.h"
+#include "../../headers/minishell.h"
 
 int	list_is_sorted(t_exp *head)
 {

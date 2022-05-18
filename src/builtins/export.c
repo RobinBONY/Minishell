@@ -6,11 +6,11 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 16:33:13 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/10 13:24:51 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 16:33:44 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/executor.h"
+#include "../../headers/minishell.h"
 
 t_exp	*create_exp_node(char *envp)
 {

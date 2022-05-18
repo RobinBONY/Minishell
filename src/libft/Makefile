@@ -6,7 +6,7 @@
 #    By: rbony <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/03 09:27:22 by rbony             #+#    #+#              #
-#    Updated: 2022/05/10 14:49:36 by rbony            ###   ########lyon.fr    #
+#    Updated: 2022/05/18 11:41:27 by rbony            ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,10 @@ SRCS = 	ft_strchr.c 	\
 		ft_isalnum.c	\
 		ft_isdigit.c	\
 		ft_strdup.c		\
-		ft_strncmp.c
+		ft_strncmp.c	\
+		ft_cmd_split.c	\
+		ft_src_split.c	\
+		ft_isoperator.c
 
 OBJS = ${SRCS:.c=.o}
 

@@ -6,11 +6,11 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 11:28:49 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/10 13:32:48 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 16:33:21 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/executor.h"
+#include "../../headers/minishell.h"
 
 int	check_new_line(char *str)
 {

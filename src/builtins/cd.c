@@ -6,11 +6,11 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:40:58 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/10 13:29:37 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 16:33:13 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/executor.h"
+#include "../../headers/minishell.h"
 
 int	ft_pwd(t_var *head)
 {

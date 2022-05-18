@@ -6,19 +6,13 @@
 #    By: rbony <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/28 08:34:54 by rbony             #+#    #+#              #
-#    Updated: 2022/05/10 14:48:28 by rbony            ###   ########lyon.fr    #
+#    Updated: 2022/05/16 16:36:08 by rbony            ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 SRCS = 	src/main.c \
-		src/executor.c \
-		src/executor_utils.c \
-		src/node.c \
-		src/parser.c \
-		src/scanner.c \
-		src/scanner_utils.c \
 		src/source.c	\
 		src/builtins/env.c	\
 		src/builtins/env_utils.c \
@@ -39,7 +33,7 @@ HEADERS = 	minishell.h \
 			node.h \
 			executor.h
 
-CC = gcc -g #-fsanitize=address
+CC = gcc -g -fsanitize=address
 RM = rm -f
 
 FLAGS = -Wall -Wextra -Werror

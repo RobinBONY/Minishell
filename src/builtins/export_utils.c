@@ -6,11 +6,11 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 10:37:00 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/10 13:26:19 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 16:33:41 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/executor.h"
+#include "../../headers/minishell.h"
 
 int	validate_arg(char *arg)
 {

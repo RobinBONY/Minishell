@@ -6,57 +6,94 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:14:46 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/10 13:35:59 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/18 14:51:45 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-int	parse_and_execute(t_source *src, t_var	*head_env, t_exp *head_exp)
+void	free_tab(char **tab)
 {
-	t_token	*tok;
-	t_node	*cmd;
+	int	i;
 
-	skip_white_spaces(src);
-	tok = tokenize(src);
-	if (tok == 0)
+	i = -1;
+	while (tab[++i])
+		free(tab[i]);
+	free(tab);
+}
+
+int	parse_error(t_source *head)
+{
+	t_source	*node;
+
+	node = head;
+	while (node->next)
 	{
-		return (0);
-	}
-	while (tok && tok != 0)
-	{
-		cmd = parse_simple_command(tok);
-		if (!cmd)
+		if (node->next && node->type == OPERATOR
+			&& node->next->type == OPERATOR)
 		{
-			break ;
+			if (ft_strcmp(node->str, "|") == 0)
+				return (0);
+			printf("%s\n", "minishell : syntax error");
+			return (1);
 		}
-		do_simple_command(cmd, head_env, head_exp);
-		free_node_tree(cmd);
-		tok = tokenize(src);
+		node = node->next;
 	}
-	return (1);
+	return (0);
+}
+
+void	assign_type(t_source *source)
+{
+	t_source	*src;
+
+	src = source;
+	while (src)
+	{
+		if (ft_isoperator(src->str[0]))
+			src->type = OPERATOR;
+		else
+			src->type = STRING;
+		src = src->next;
+	}
+}
+
+int	parse_and_execute(t_env *env, char *line_buffer)
+{
+	t_source	*source;
+	t_source	*tmp;
+
+	source = make_source(line_buffer);
+	if (!source)
+		return (1);
+	assign_type(source);
+	if (parse_error(source))
+		return (1);
+	tmp = source;
+	while (tmp)
+	{
+		printf("%d %s\n", tmp->type, tmp->str);
+		tmp = tmp->next;
+	}
+	return (0);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_source	src;
-	t_var		*head_env;
-	t_exp		*head_exp;
+	t_env		env;
 	char		*line_buffer;
 
-	head_env = init_env(envp);
-	head_exp = init_export(envp);
-	head_exp = sort_export(head_exp);
+	env.head_var = init_env(envp);
+	env.head_exp = init_export(envp);
+	if (!env.head_exp)
+		return (1);
+	env.head_exp = sort_export(env.head_exp);
 	while (1)
 	{
 		line_buffer = readline("minishell2.0$> ");
 		if (line_buffer && *line_buffer)
 		{
 			add_history(line_buffer);
-			src.buffer = line_buffer;
-			src.bufsize = ft_strlen(line_buffer);
-			src.curpos = -2;
-			parse_and_execute(&src, head_env, head_exp);
+			parse_and_execute(&env, line_buffer);
 		}
 	}
 	return (0);

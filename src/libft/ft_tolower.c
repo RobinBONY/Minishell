@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 13:46:55 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/16 16:33:47 by rbony            ###   ########lyon.fr   */
+/*   Created: 2021/11/02 13:22:50 by rbony             #+#    #+#             */
+/*   Updated: 2022/05/11 15:06:50 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/minishell.h"
+#include "libft.h"
 
-void	handler(int signo)
+void	ft_tolower(char *str)
 {
-	if (signo == SIGINT)
-	{
-		write(2, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 1);
-		rl_redisplay();
-		g_exit = 1;
-	}
-}
+	int	i;
 
-void	proc_signal_handler(int signo)
-{
-	if (signo == SIGINT)
+	i = 0;
+	while (str[i])
 	{
-		printf("\n");
-		signal(SIGINT, proc_signal_handler);
+		if (str[i] >= 'A' && str[i] <= 'Z')
+		{
+			str[i] += 32;
+		}
+		i++;
 	}
 }

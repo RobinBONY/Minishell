@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   ft_strjoin_cmd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 13:46:55 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/16 16:33:47 by rbony            ###   ########lyon.fr   */
+/*   Created: 2022/05/10 08:53:45 by rbony             #+#    #+#             */
+/*   Updated: 2022/05/10 08:54:38 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/minishell.h"
+#include "libft.h"
 
-void	handler(int signo)
+char	*ft_strjoin_cmd(const char *s1, const char *s2)
 {
-	if (signo == SIGINT)
-	{
-		write(2, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 1);
-		rl_redisplay();
-		g_exit = 1;
-	}
-}
+	char	*concat;
+	int		i;
 
-void	proc_signal_handler(int signo)
-{
-	if (signo == SIGINT)
-	{
-		printf("\n");
-		signal(SIGINT, proc_signal_handler);
-	}
+	i = 0;
+	if (!s1 || !s2)
+		return (NULL);
+	concat = malloc((ft_strlen(s1) + ft_strlen(s2)) * sizeof(char) + 2);
+	if (!concat)
+		return (NULL);
+	concat[0] = '\0';
+	ft_strcat(concat, (char *)s1);
+	ft_strcat(concat, "/");
+	ft_strcat(concat, (char *)s2);
+	return (concat);
 }

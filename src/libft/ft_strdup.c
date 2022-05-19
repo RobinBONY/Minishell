@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 13:46:55 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/16 16:33:47 by rbony            ###   ########lyon.fr   */
+/*   Created: 2021/11/03 16:06:47 by rbony             #+#    #+#             */
+/*   Updated: 2022/05/10 14:50:12 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/minishell.h"
+#include "libft.h"
 
-void	handler(int signo)
+char	*ft_strdup(const char *src)
 {
-	if (signo == SIGINT)
-	{
-		write(2, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 1);
-		rl_redisplay();
-		g_exit = 1;
-	}
-}
+	char	*str;
 
-void	proc_signal_handler(int signo)
-{
-	if (signo == SIGINT)
-	{
-		printf("\n");
-		signal(SIGINT, proc_signal_handler);
-	}
+	str = malloc(ft_strlen(src) * sizeof(char) + 1);
+	if (!str)
+		return (NULL);
+	return (ft_strcpy(str, (char *)src));
 }

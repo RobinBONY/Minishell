@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:25:05 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/18 14:58:55 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 16:33:33 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../headers/minishell.h"
 
-void	print_env(t_var *head)
+int	print_env(t_var *head)
 {
 	t_var	*current_node;
 
@@ -27,23 +27,11 @@ void	print_env(t_var *head)
 		}
 		current_node = current_node->next;
 	}
+	return (0);
 }
 
 char	*get_key(char *envp)
 {
-	// int		i;
-	// int		j;
-	// char	*key;
-
-	// i = 0;
-	// j = 0;
-	// while (envp[i] && envp[i] != '=')
-	// 	i++;
-	// key = ft_substr(envp, j, ft_strlen(envp) - i);
-	// if (!key)
-	// 	return (NULL);
-	// return (key);
-
 	char	*key;
 	char	*tmp;
 
@@ -56,32 +44,15 @@ char	*get_key(char *envp)
 
 char	*get_value(char *envp)
 {
-	char	*buf;
-	int		i;
-	int		j;
-	int		len;
+	char	*value;
+	char	*tmp;
 
-	i = 0;
-	while (envp[i] && envp[i] != '=')
-		i++;
-	if (envp[i])
-		i++;
-	j = i;
-	while (envp[i])
-		i++;
-	len = i;
-	buf = malloc(sizeof(char) * len + 1);
-	if (!buf)
-		exit (0);
-	i = 0;
-	while (envp[j])
-	{
-		buf[i] = envp[j];
-		i++;
-		j++;
-	}
-	buf[i] = '\0';
-	return (buf);
+	tmp = ft_strchr(envp, '=');
+	tmp++;
+	value = ft_substr(envp, tmp - envp, ft_strlen(tmp));
+	if (!value)
+		return (NULL);
+	return (value);
 }
 
 int	is_occurring(char *envp)
@@ -98,4 +69,14 @@ int	is_occurring(char *envp)
 		i++;
 	}
 	return (flag);
+}
+
+void	free_params(char **split)
+{
+	int	i;
+
+	i = -1;
+	while (split[++i])
+		free(split[i]);
+	free(split);
 }

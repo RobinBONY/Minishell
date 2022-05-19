@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 10:37:00 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/04/13 15:12:04 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 16:33:41 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../headers/minishell.h"
 
 int	validate_arg(char *arg)
 {
@@ -28,33 +28,3 @@ int	validate_arg(char *arg)
 	else
 		return (1);
 }
-
-char	*ft_strcpy(char *dest, char *src)
-{
-	int	i;
-
-	i = 0;
-	while (src[i])
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = src[i];
-	return (dest);
-}
-
-// char	*ft_strcat(char *dest, char *src)
-// {
-// 	int	i;
-// 	int	next;
-
-// 	i = 0;
-// 	next = ft_strlen(dest);
-// 	while (src[i])
-// 	{
-// 		dest[i + next] = src[i];
-// 		i++;
-// 	}
-// 	dest[i + next] = '\0';
-// 	return (dest);
-// }

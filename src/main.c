@@ -6,103 +6,95 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:14:46 by rbony             #+#    #+#             */
-/*   Updated: 2022/04/22 14:17:56 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/19 10:44:06 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../headers/minishell.h"
 
-void	sig_handler(int sig)
+void	free_tab(char **tab)
 {
-	kill(0, 1);
+	int	i;
+
+	i = -1;
+	while (tab[++i])
+		free(tab[i]);
+	free(tab);
+}
+
+int	parse_error(t_source *head)
+{
+	t_source	*node;
+
+	node = head;
+	while (node->next)
+	{
+		if (node->next && node->type == OPERATOR
+			&& node->next->type == OPERATOR)
+		{
+			if (ft_strcmp(node->str, "|") == 0)
+				return (0);
+			printf("%s\n", "minishell : syntax error");
+			return (1);
+		}
+		node = node->next;
+	}
+	return (0);
+}
+
+void	assign_type(t_source *source)
+{
+	t_source	*src;
+
+	src = source;
+	while (src)
+	{
+		if (ft_isoperator(src->str[0]))
+			src->type = OPERATOR;
+		else
+			src->type = STRING;
+		src = src->next;
+	}
+}
+
+int	parse_and_execute(t_env *env, char *line_buffer)
+{
+	t_source	*source;
+	t_source	*tmp;
+
+	source = make_source(line_buffer);
+	if (!source)
+		return (1);
+	assign_type(source);
+	if (parse_error(source))
+		return (1);
+	tmp = source;
+	while (tmp)
+	{
+		printf("%d %s\n", tmp->type, tmp->str);
+		tmp = tmp->next;
+	}
+	return (0);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_var	*head_env;
-	t_exp	*head_exp;
-	char	*line_buffer;
-	int		pid;
+	t_env		env;
+	char		*line_buffer;
 
-	(void)argc;
-	printf("%s", "             ____________________________________________________\n");
-	usleep(50000);
-	printf("%s", "            /                                                     \\\n");
-	usleep(50000);
-	printf("%s", "           |    _____________________________________________     |\n");
-	usleep(50000);
-	printf("%s", "           |   |                                             |    |\n");
-	usleep(50000);
-	printf("%s", "           |   |                                             |    |\n");
-	usleep(50000);
-	printf("%s", "           |   |  C:\\> _                                     |    |\n");
-	usleep(50000);
-	printf("%s", "           |   |                                             |    |\n");
-	usleep(50000);
-	printf("%s", "           |   |                                             |    |\n");
-	usleep(50000);
-	printf("%s", "           |   |                                             |    |\n");
-	usleep(50000);
-	printf("%s", "           |   |                                             |    |\n");
-	usleep(50000);
-	printf("%s", "           |   |                 $>MINISHELL                 |    |\n");
-	usleep(50000);
-	printf("%s", "           |   |                                             |    |\n");
-	usleep(50000);
-	printf("%s", "           |   |                                             |    |\n");
-	usleep(50000);
-	printf("%s", "           |   |                                             |    |\n");
-	usleep(50000);
-	printf("%s", "           |   |                                             |    |\n");
-	usleep(50000);
-	printf("%s", "           |   |                                             |    |\n");
-	usleep(50000);
-	printf("%s", "           |   |                                             |    |\n");
-	usleep(50000);
-	printf("%s", "           |   |_____________________________________________|    |\n");
-	usleep(50000);
-	printf("%s", "           |                                                      |\n");
-	usleep(50000);
-	printf("%s", "           \\_____________________________________________________/\n");
-	usleep(50000);
-	printf("%s", "                   \\_______________________________________/\n");
-	usleep(50000);
-	printf("%s", "                _______________________________________________\n");
-	usleep(50000);
-	printf("%s", "             _-    .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.  --- `-_\n");
-	usleep(50000);
-	printf("%s", "          _-.-.-. .---.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.--.  .-.-.`-_\n");
-	usleep(50000);
-	printf("%s", "       _-.-.-.-. .---.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-`__`. .-.-.-.`-_\n");
-	usleep(50000);
-	printf("%s", "    _-.-.-.-.-. .-----.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-----. .-.-.-.-.`-_\n");
-	usleep(50000);
-	printf("%s", " _-.-.-.-.-.-. .---.-. .-----------------------------. .-.---. .---.-.-.-.`-_\n");
-	usleep(50000);
-	printf("%s", ":-----------------------------------------------------------------------------:\n");
-	usleep(50000);
-	printf("%s", "|---._.-----------------------------------------------------------------._.---_|\n");
-	usleep(10000);
-	printf("\n");
-	printf("%s", "An Rbony & Alakhdar collaboration.\n");
-	printf("\n");
-	head_env = init_env(envp);
-	head_exp = init_export(envp);
-	head_exp = sort_export(head_exp);
+	env.head_var = init_env(envp);
+	env.head_exp = init_export(envp);
+	if (!env.head_exp)
+		return (1);
+	env.head_exp = sort_export(env.head_exp);
 	while (1)
 	{
-		line_buffer = readline("$> ");
-		//SI PROMPT VIDE -> signal(ctrl D) + set g_exit
-		// signal(SIGINT, handler);
-		// signal(SIGQUIT, SIG_IGN);
+		line_buffer = readline("Minishell2.0$> ");
 		if (line_buffer && *line_buffer)
 		{
 			add_history(line_buffer);
-			if (parse_line(line_buffer, head_env, head_exp) == 1)
-				printf("%s/n", "Error");
+			parse_and_execute(&env, line_buffer);
 		}
-		else
-			waitpid(pid, &g_exit, WCONTINUED);
 	}
 	return (0);
 }

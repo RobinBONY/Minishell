@@ -1,34 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   ft_isoperator.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 13:46:55 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/16 16:33:47 by rbony            ###   ########lyon.fr   */
+/*   Created: 2022/05/18 11:04:33 by rbony             #+#    #+#             */
+/*   Updated: 2022/05/18 11:06:53 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/minishell.h"
+#include "libft.h"
 
-void	handler(int signo)
+int	ft_isoperator(char c)
 {
-	if (signo == SIGINT)
-	{
-		write(2, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 1);
-		rl_redisplay();
-		g_exit = 1;
-	}
-}
-
-void	proc_signal_handler(int signo)
-{
-	if (signo == SIGINT)
-	{
-		printf("\n");
-		signal(SIGINT, proc_signal_handler);
-	}
+	if (c == '<' || c == '>' || c == '|')
+		return (1);
+	return (0);
 }

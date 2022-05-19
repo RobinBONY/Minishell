@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:14:46 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/18 14:51:45 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/19 10:44:06 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	main(int argc, char **argv, char **envp)
 	env.head_exp = sort_export(env.head_exp);
 	while (1)
 	{
-		line_buffer = readline("minishell2.0$> ");
+		line_buffer = readline("Minishell2.0$> ");
 		if (line_buffer && *line_buffer)
 		{
 			add_history(line_buffer);

@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:19:41 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/18 14:21:10 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/19 10:46:32 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,29 @@ typedef struct s_exp
 	struct s_exp	*prev;
 }	t_exp;
 
-int	g_exit;
+typedef struct s_heredoc
+{
+	char				*str;
+	struct s_heredoc	*next;
+}	t_heredoc;
+
+typedef struct s_cmd
+{
+	char			*path;
+	char			**argv;
+	struct s_cmd	*next;
+}	t_cmd;
+
+typedef struct s_executor
+{
+	char				*input;
+	char				*output;
+	int					append_mode;
+	struct s_heredoc	*heredocs;
+	struct s_cmd		*commands;
+}	t_executor;
+
+int			g_exit;
 
 void		free_tab(char **tab);
 int			parse_and_execute(t_env *env, char *line_buffer);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:14:46 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/19 14:57:46 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 11:00:18 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,7 @@ void	pop(t_source **source, t_source *used)
 	else
 	{
 		while (&(*tmp).next != &(*used))
-		{
 			tmp = tmp->next;
-		}
 		tmp->next = used->next->next;
 		tmp = used->next;
 	}
@@ -134,7 +132,7 @@ int	find_heredocs(t_executor *exec, t_source **source)
 				new = new_heredoc(tmp->str);
 				if (!new)
 					return (1);
-				ft_docadd_front(exec->heredocs, new);
+				ft_docadd_front(&exec->heredocs, new);
 				pop(source, tmp);
 			}
 			else
@@ -228,10 +226,10 @@ int	make_commands(t_executor *exec, t_source **source)
 			return (1);
 		ft_cmdadd_back(&exec->commands, new);
 		i = -1;
-		while (++i <= cmd_len)
+		while (++i < cmd_len)
 		{
 			tmp = *source;
-			*source = (*source)->next;
+			(*source) = (*source)->next;
 			free(tmp->str);
 			free(tmp);
 		}

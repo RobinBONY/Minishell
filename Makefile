@@ -6,7 +6,7 @@
 #    By: rbony <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/28 08:34:54 by rbony             #+#    #+#              #
-#    Updated: 2022/05/16 16:36:08 by rbony            ###   ########lyon.fr    #
+#    Updated: 2022/05/20 15:23:41 by rbony            ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = minishell
 
 SRCS = 	src/main.c \
 		src/source.c	\
+		src/place_env_var.c \
 		src/builtins/env.c	\
 		src/builtins/env_utils.c \
 		src/builtins/cd.c	\
@@ -33,7 +34,7 @@ HEADERS = 	minishell.h \
 			node.h \
 			executor.h
 
-CC = gcc -g -fsanitize=address
+CC = gcc #-g -fsanitize=address
 RM = rm -f
 
 FLAGS = -Wall -Wextra -Werror

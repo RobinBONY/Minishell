@@ -6,7 +6,7 @@
 #    By: rbony <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/03 09:27:22 by rbony             #+#    #+#              #
-#    Updated: 2022/05/18 11:41:27 by rbony            ###   ########lyon.fr    #
+#    Updated: 2022/05/20 15:19:20 by rbony            ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ SRCS = 	ft_strchr.c 	\
 		ft_strncmp.c	\
 		ft_cmd_split.c	\
 		ft_src_split.c	\
-		ft_isoperator.c
+		ft_isoperator.c	\
+		ft_itoa.c
 
 OBJS = ${SRCS:.c=.o}
 

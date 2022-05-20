@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:19:41 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/19 10:46:32 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 15:16:12 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <limits.h>
 # include <sys/types.h>
 # include <signal.h>
+# include <fcntl.h>
 # include "../src/libft/libft.h"
 
 enum e_type
@@ -33,6 +34,7 @@ typedef struct s_source
 {
 	char			*str;
 	enum e_type		type;
+	int				used;
 	struct s_source	*next;
 }	t_source;
 
@@ -73,8 +75,8 @@ typedef struct s_cmd
 
 typedef struct s_executor
 {
-	char				*input;
-	char				*output;
+	int					input;
+	int					output;
 	int					append_mode;
 	struct s_heredoc	*heredocs;
 	struct s_cmd		*commands;
@@ -96,5 +98,6 @@ t_exp		*init_export(char **envp);
 int			validate_arg(char *arg);
 void		print_export(t_exp *head_exp);
 t_exp		*sort_export(t_exp *env);
+int			place_env_var(t_source *source, t_var *head);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/28 08:34:54 by rbony             #+#    #+#              #
-#    Updated: 2022/05/24 14:58:29 by alakhdar         ###   ########lyon.fr    #
+#    Updated: 2022/05/25 13:02:43 by alakhdar         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,8 @@ NAME = minishell
 
 SRCS = 	src/main.c \
 		src/source.c	\
+		src/quotes.c	\
+		src/execution.c	\
 		src/place_env_var.c \
 		src/builtins/env.c	\
 		src/builtins/env_utils.c \

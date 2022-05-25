@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:19:41 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/24 14:58:28 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/05/25 13:03:24 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,11 @@ typedef struct s_cmd
 {
 	char			*path;
 	char			**argv;
+	pid_t			pid;
+	int				pipex[2];
+	int				index;
+	int				is_builtin;
+	struct s_cmd	*prev;
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -77,7 +82,6 @@ typedef struct s_executor
 {
 	int					input;
 	int					output;
-	int					append_mode;
 	struct s_heredoc	*heredocs;
 	struct s_cmd		*commands;
 }	t_executor;
@@ -98,7 +102,8 @@ t_exp		*init_export(char **envp);
 int			validate_arg(char *arg);
 void		print_export(t_exp *head_exp);
 t_exp		*sort_export(t_exp *env);
+int			remove_quotes(t_source *source);
 int			place_env_var(t_source *source, t_var *head);
-void		handler(int signo);
+void		execution(t_env *env, t_executor *exec);
 
 #endif

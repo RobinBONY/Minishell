@@ -1,6 +1,0 @@
-Makefile
-a.out
-headers
-readline
-src
-test.txt

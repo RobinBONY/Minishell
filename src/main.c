@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:14:46 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/20 15:17:28 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/25 11:11:24 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,24 @@ int	open_outfile(char *outfile)
 	return (fd_file);
 }
 
+int	open_append(char *outfile)
+{
+	int	fd_file;
+
+	if (access(outfile, F_OK) == 0 && access(outfile, W_OK) == -1)
+	{
+		perror("Error");
+		return (-1);
+	}
+	else
+	{
+		fd_file = open(outfile, O_CREAT | O_APPEND | O_WRONLY, 0644);
+		if (fd_file == -1)
+			return (-1);
+	}
+	return (fd_file);
+}
+
 void	set_input(t_executor *exec, t_source *tmp)
 {
 	exec->input = open_infile(tmp->next->str);
@@ -166,9 +184,12 @@ void	set_input(t_executor *exec, t_source *tmp)
 	tmp->next->used = 0;
 }
 
-void	set_output(t_executor *exec, t_source *tmp)
+void	set_output(t_executor *exec, t_source *tmp, int mode)
 {
-	exec->output = open_outfile(tmp->next->str);
+	if (mode)
+		exec->output = open_append(tmp->next->str);
+	else
+		exec->output = open_outfile(tmp->next->str);
 	tmp->used = 0;
 	tmp->next->used = 0;
 }
@@ -185,16 +206,10 @@ int	find_redirects(t_executor *exec, t_source **source)
 			set_input(exec, tmp);
 		else if (tmp->type == OPERATOR && tmp->used
 			&& ft_strcmp(tmp->str, ">") == 0)
-		{
-			set_output(exec, tmp);
-			exec->append_mode = 0;
-		}
+			set_output(exec, tmp, 0);
 		else if (tmp->type == OPERATOR && tmp->used
 			&& ft_strcmp(tmp->str, ">>") == 0)
-		{
-			set_output(exec, tmp);
-			exec->append_mode = 1;
-		}
+			set_output(exec, tmp, 1);
 		tmp = tmp->next;
 	}
 	if (exec->input == -1 || exec->output == -1)
@@ -202,7 +217,26 @@ int	find_redirects(t_executor *exec, t_source **source)
 	return (0);
 }
 
-t_cmd	*new_cmd(t_source **source, int len)
+int	is_builtin(char *cmd)
+{
+	if (ft_strcmp(cmd, "echo") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "cd") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "pwd") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "env") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "export") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "unset") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "exit") == 0)
+		return (1);
+	return (0);
+}
+
+t_cmd	*new_cmd(t_source **source, t_cmd *prev, int len)
 {
 	t_cmd		*new;
 	int			i;
@@ -225,8 +259,9 @@ t_cmd	*new_cmd(t_source **source, int len)
 		*source = (*source)->next;
 	}
 	new->argv[i] = NULL;
-	new->path = ft_strdup(new->argv[0]);
+	new->is_builtin = is_builtin(new->argv[0]);
 	new->next = NULL;
+	new->prev = prev;
 	return (new);
 }
 
@@ -248,6 +283,21 @@ int	get_len(t_source *src)
 	return (i);
 }
 
+void	index_commands(t_cmd *cmds)
+{
+	t_cmd	*tmp;
+	int		i;
+
+	tmp = cmds;
+	i = 1;
+	while (tmp)
+	{
+		tmp->index = i;
+		i++;
+		tmp = tmp->next;
+	}
+}
+
 int	make_commands(t_executor *exec, t_source **source)
 {
 	int			cmd_len;
@@ -261,7 +311,7 @@ int	make_commands(t_executor *exec, t_source **source)
 		cmd_len = get_len(tmp);
 		if (cmd_len > 0)
 		{
-			new = new_cmd(&tmp, cmd_len);
+			new = new_cmd(&tmp, new, cmd_len);
 			if (!new)
 				return (1);
 			ft_cmdadd_back(&exec->commands, new);
@@ -269,10 +319,11 @@ int	make_commands(t_executor *exec, t_source **source)
 		else
 			tmp = tmp->next;
 	}
+	index_commands(exec->commands);
 	return (0);
 }
 
-void	free_executor(t_executor **exec)
+void	*free_executor(t_executor **exec)
 {
 	t_heredoc	*doctmp;
 	t_cmd		*cmdtmp;
@@ -295,9 +346,10 @@ void	free_executor(t_executor **exec)
 		(*exec)->commands = cmdtmp;
 	}
 	free(*exec);
+	return (NULL);
 }
 
-t_executor	*make_executor(t_source	*source)
+t_executor	*make_executor(t_source	*source, t_env *env)
 {
 	t_executor	*executor;
 
@@ -306,55 +358,15 @@ t_executor	*make_executor(t_source	*source)
 		return (NULL);
 	executor->input = 0;
 	executor->output = 0;
-	executor->append_mode = 0;
 	if (find_heredocs(executor, &source))
-	{
-		free_executor(&executor);
-		return (NULL);
-	}
+		return (free_executor(&executor));
+	if (place_env_var(source, env->head_var))
+		return (free_executor(&executor));
 	if (find_redirects(executor, &source))
-	{
-		free_executor(&executor);
-		return (NULL);
-	}
+		return (free_executor(&executor));
 	if (make_commands(executor, &source))
-	{
-		free_executor(&executor);
-		return (NULL);
-	}
+		return (free_executor(&executor));
 	return (executor);
-}
-
-void	print_executor(t_executor *exec)
-{
-	t_heredoc	*doctmp;
-	t_cmd		*cmdtmp;
-	int			i;
-
-	doctmp = exec->heredocs;
-	cmdtmp = exec->commands;
-	printf("%s\n", "Input:");
-	printf("\t%d\n", exec->input);
-	printf("%s\n", "Output:");
-	printf("\t%d\n", exec->output);
-	printf("\t%d\n", exec->append_mode);
-	printf("%s\n", "Heredocs:");
-	while (doctmp)
-	{
-		printf("\t%s\n", doctmp->str);
-		doctmp = doctmp->next;
-	}
-	printf("%s\n", "Commandes:");
-	while (cmdtmp)
-	{
-		i = 0;
-		while (cmdtmp->argv[i])
-		{
-			printf("\t%s\n", cmdtmp->argv[i]);
-			i++;
-		}
-		cmdtmp = cmdtmp->next;
-	}
 }
 
 void	ft_srcclear(t_source **head)
@@ -428,13 +440,13 @@ int	parse_and_execute(t_env *env, char *line_buffer)
 		ft_srcclear(&source);
 		return (1);
 	}
-	if (place_env_var(source, env->head_var))
+	if (remove_quotes(source))
 		return (1);
-	exec = make_executor(source);
+	exec = make_executor(source, env);
 	if (!exec)
 		return (1);
 	ft_srcclear(&source);
-	print_executor(exec);
+	execution(env, exec);
 	free_executor(&exec);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:48:03 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/20 15:15:19 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/25 10:55:26 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int	replace_needed(char *str)
 	tmp = str;
 	while (*tmp)
 	{
-		if (*tmp == '\'')
-			return (0);
 		if (*tmp == '$')
 			return (1);
 		tmp++;
@@ -136,7 +134,7 @@ int	place_env_var(t_source *source, t_var *head)
 	tmp = source;
 	while (tmp)
 	{
-		if (replace_needed(tmp->str))
+		if (tmp->expandable && replace_needed(tmp->str))
 		{
 			tmp->str = replace_var(tmp->str, head);
 			if (!tmp->str)

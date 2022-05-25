@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:19:41 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/20 15:16:12 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/25 11:11:13 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_source
 	char			*str;
 	enum e_type		type;
 	int				used;
+	int				expandable;
 	struct s_source	*next;
 }	t_source;
 
@@ -70,6 +71,11 @@ typedef struct s_cmd
 {
 	char			*path;
 	char			**argv;
+	pid_t			pid;
+	int				pipex[2];
+	int				index;
+	int				is_builtin;
+	struct s_cmd	*prev;
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -77,7 +83,6 @@ typedef struct s_executor
 {
 	int					input;
 	int					output;
-	int					append_mode;
 	struct s_heredoc	*heredocs;
 	struct s_cmd		*commands;
 }	t_executor;
@@ -99,5 +104,6 @@ int			validate_arg(char *arg);
 void		print_export(t_exp *head_exp);
 t_exp		*sort_export(t_exp *env);
 int			place_env_var(t_source *source, t_var *head);
+void		execution(t_env *env, t_executor *exec);
 
 #endif

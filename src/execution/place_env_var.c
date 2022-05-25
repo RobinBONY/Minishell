@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   place_env_var.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:48:03 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/25 13:40:47 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/05/25 16:59:50 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static char	*replace_string(char *str, int start, int len, char *replace)
 {
 	char	*new;
 
+	if (!replace)
+		return (str);
 	new = malloc((ft_strlen(str) - len + ft_strlen(replace))
 			+ 1 * sizeof(char));
 	if (!new)
@@ -55,7 +57,7 @@ static char	*last_exit(char *str, int start, int len)
 	return (result);
 }
 
-static char	*replace_var(char *str, t_var *head)
+char	*replace_var(char *str, t_var *head)
 {
 	int		len;
 	char	*tmp;
@@ -64,12 +66,18 @@ static char	*replace_var(char *str, t_var *head)
 
 	tmp = str;
 	len = 0;
+	if (!str)
+		return (NULL);
 	while (*tmp && *tmp != '$')
+	{
+		if (*tmp == '\'')
+			tmp = ft_strchr(tmp, '\'');
 		tmp++;
-	if (*(tmp + 1) == '?')
+	}
+	if (*(tmp + 1) && *(tmp + 1) == '?')
 		return (last_exit(str, str - tmp, 2));
 	len++;
-	while (tmp[len] && (ft_isalnum(tmp[len])))
+	while (tmp[len] && tmp[len] != '\'' && tmp[len] != ' ' && tmp[len] != '"')
 		len++;
 	if (len > 1)
 		return (replace_string(str, tmp - str, len,

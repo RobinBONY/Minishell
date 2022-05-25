@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 10:18:38 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/25 14:19:57 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/05/25 16:29:05 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static void	external_redirections(t_cmd *cmd, t_env *env, t_executor *exec)
 
 static void	execute_cmd(t_cmd *cmd, t_env *env, t_executor *exec)
 {
+	ft_heredoc(env->head_var, exec);
 	if (!cmd->prev || !cmd->next)
 	{
 		external_redirections(cmd, env, exec);
@@ -90,7 +91,8 @@ void	execution(t_env *env, t_executor *exec)
 		tmp = tmp->next;
 	}
 	tmp = exec->commands;
-	close_pipes_fromfirst(tmp);
+	if (ft_lstsize(exec->commands) > 1)
+		close_pipes_fromfirst(tmp);
 	while (tmp)
 	{
 		waitpid(tmp->pid, NULL, 0);

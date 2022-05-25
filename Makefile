@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+         #
+#    By: rbony <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/28 08:34:54 by rbony             #+#    #+#              #
-#    Updated: 2022/05/25 14:00:23 by alakhdar         ###   ########lyon.fr    #
+#    Updated: 2022/05/25 14:39:08 by rbony            ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCS = 	src/main.c	\
 		src/execution/place_env_var.c	\
 		src/execution/quotes.c	\
 		src/parsing/cmd.c	\
+		src/parsing/cmd_utils.c	\
 		src/parsing/executor.c	\
 		src/parsing/files_utils.c	\
 		src/parsing/files.c	\
@@ -46,7 +47,7 @@ HEADERS = 	minishell.h \
 			node.h \
 			executor.h
 
-CC = gcc #-g -fsanitize=address
+CC = gcc -g -fsanitize=address
 RM = rm -f
 
 FLAGS = -Wall -Wextra -Werror

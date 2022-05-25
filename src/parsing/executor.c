@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 13:11:42 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/25 14:15:59 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/05/25 14:33:49 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_executor	*make_executor(t_source	*source, t_env *env)
 		return (free_executor(&executor));
 	if (find_redirects(executor, &source))
 		return (free_executor(&executor));
-	if (make_commands(executor, &source))
+	if (make_commands(executor, &source, env))
 		return (free_executor(&executor));
 	return (executor);
 }

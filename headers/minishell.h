@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:19:41 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/25 13:51:46 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/05/25 17:07:37 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int			g_exit;
 
 /* Parsing */
 
-int			make_commands(t_executor *exec, t_source **source);
+int			make_commands(t_executor *exec, t_source **source, t_env *env);
 int			is_builtin(char *cmd);
 int			open_append(char *outfile);
 int			open_outfile(char *outfile);
@@ -109,6 +109,12 @@ void		ft_srcclear(t_source **head);
 void		assign_type(t_source *source);
 t_executor	*make_executor(t_source	*source, t_env *env);
 t_source	*make_source(char *str);
+void		find_all_path(t_var *env, t_cmd *cmd);
+int			ft_lstsize(t_cmd *cmd);
+char		*replace_var(char *str, t_var *head);
+int			count_quotes(char *str);
+char		*resize_str(char *str);
+int			remove_quotes_heredoc(t_heredoc *tmp);
 
 /* Execution */
 
@@ -116,7 +122,7 @@ void		error_cmd_not_found(char *cmd);
 void		execution(t_env *env, t_executor *exec);
 void		close_pipes_fromfirst(t_cmd *cmd);
 void		close_pipes_fromlast(t_cmd *cmd);
-int			ft_heredoc(char *input);
+void		ft_heredoc(t_var *env, t_executor *exec);
 int			open_pipes(t_cmd **cmd);
 int			place_env_var(t_source *source, t_var *head);
 int			replace_needed(char *str);

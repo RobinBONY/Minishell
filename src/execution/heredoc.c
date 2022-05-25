@@ -3,42 +3,69 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:12:29 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/25 13:35:41 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/05/25 17:07:25 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	ft_heredoc(char *input)
+static int	is_expand(t_heredoc *tmp)
 {
-	char	*limiter;
-	char	*heredoc;
-	int		fd;
-	int		fd_in;
+	if (!tmp)
+		return (1);
+	if (ft_strchr(tmp->str, '\'') || ft_strchr(tmp->str, '"'))
+	{
+		remove_quotes_heredoc(tmp);
+		return (0);
+	}
+	return (1);
+}
 
-	limiter = input;
-	fd = open(".heredoc", O_WRONLY | O_TRUNC | O_CREAT, 0664);
-	if (!fd)
-		exit(0);
-	while (1)
+static void	launch_heredoc(t_heredoc *tmp, t_var *env, int fd)
+{
+	int			expand;
+	char		*heredoc;
+
+	expand = is_expand(tmp);
+	while (tmp)
 	{
 		heredoc = readline(">> ");
 		if (!heredoc)
 			break ;
-		if (ft_strcmp(heredoc, limiter) == 0)
-			break ;
-		if (heredoc[0])
+		if (ft_strcmp(heredoc, tmp->str) == 0)
 		{
-			ft_putstr_fd(heredoc, fd);
+			tmp = tmp->next ;
+			if (!tmp)
+				return ;
+			expand = is_expand(tmp);
+		}
+		else if (heredoc[0])
+		{
+			if (expand)
+				ft_putstr_fd(replace_var(heredoc, env), fd);
+			else
+				ft_putstr_fd(heredoc, fd);
 			ft_putstr_fd("\n", fd);
 		}
 	}
+}
+
+void	ft_heredoc(t_var *env, t_executor *exec)
+{
+	int			fd;
+	int			expand;
+
+	fd = open(".heredoc", O_WRONLY | O_TRUNC | O_CREAT, 0664);
+	if (!fd)
+		exit(0);
+	launch_heredoc(exec->heredocs, env, fd);
 	close(fd);
-	fd_in = open(".heredoc", O_RDONLY);
-	return (fd_in);
+	fd = open(".heredoc", O_RDONLY);
+	if (exec->input == 0)
+		exec->input = fd;
 }
 
 //Expand les var d'environnement dans le heredoc

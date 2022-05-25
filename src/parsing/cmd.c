@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 13:10:13 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/25 13:42:15 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/05/25 15:33:51 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ static t_cmd	*new_cmd(t_source **source, t_cmd *prev, int len)
 	{
 		if ((*source)->used)
 		{
-			new->argv[i] = ft_strdup((*source)->str);
+			new->argv[i++] = ft_strdup((*source)->str);
 			(*source)->used = 0;
-			i++;
 		}
 		*source = (*source)->next;
 	}
 	new->argv[i] = NULL;
 	new->is_builtin = is_builtin(new->argv[0]);
+	new->path = ft_strdup(new->argv[0]);
 	new->next = NULL;
 	new->prev = prev;
 	return (new);
@@ -89,7 +89,7 @@ static void	index_commands(t_cmd *cmds)
 	}
 }
 
-int	make_commands(t_executor *exec, t_source **source)
+int	make_commands(t_executor *exec, t_source **source, t_env *env)
 {
 	int			cmd_len;
 	t_cmd		*new;
@@ -97,6 +97,7 @@ int	make_commands(t_executor *exec, t_source **source)
 
 	exec->commands = NULL;
 	tmp = *source;
+	new = NULL;
 	while (tmp)
 	{
 		cmd_len = get_len(tmp);
@@ -110,6 +111,7 @@ int	make_commands(t_executor *exec, t_source **source)
 		else
 			tmp = tmp->next;
 	}
+	find_all_path(env->head_var, exec->commands);
 	index_commands(exec->commands);
 	return (0);
 }

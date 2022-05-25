@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 11:12:01 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/25 12:29:19 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/25 14:16:36 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
+#include "../../headers/minishell.h"
+
+int	replace_needed(char *str)
+{
+	char	*tmp;
+
+	tmp = str;
+	while (*tmp)
+	{
+		if (*tmp == '\'')
+			tmp = ft_strchr(tmp, '\'');
+		if (*tmp == '$')
+			return (1);
+		tmp++;
+	}
+	return (0);
+}
 
 static int	count_quotes(char *str)
 {
@@ -21,7 +37,7 @@ static int	count_quotes(char *str)
 	{
 		if (*str == '\'' || *str == '"')
 			i++;
-		*str++;
+		str++;
 	}
 	return (i);
 }
@@ -36,7 +52,7 @@ static char	*resize_str(char *str)
 	j = 0;
 	new = malloc((ft_strlen(str) - count_quotes(str) + 1) * sizeof(char));
 	if (!new)
-		retrun (NULL);
+		return (NULL);
 	while (str[j])
 	{
 		if (str[j] != '\'' && str[j] != '"')

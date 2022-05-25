@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:19:41 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/25 13:03:24 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/05/25 13:51:46 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,22 +88,66 @@ typedef struct s_executor
 
 int			g_exit;
 
-void		free_tab(char **tab);
-int			parse_and_execute(t_env *env, char *line_buffer);
+/* Parsing */
+
+int			make_commands(t_executor *exec, t_source **source);
+int			is_builtin(char *cmd);
+int			open_append(char *outfile);
+int			open_outfile(char *outfile);
+int			open_infile(char *infile);
+int			find_heredocs(t_executor *exec, t_source **source);
+int			parse_error(t_source *head);
+int			not_interpreted(char *line);
+int			find_redirects(t_executor *exec, t_source **source);
+void		*free_executor(t_executor **exec);
+void		set_output(t_executor *exec, t_source *tmp, int mode);
+void		set_input(t_executor *exec, t_source *tmp);
+void		set_both(int infile, int outfile);
+void		set_outfile(t_cmd *cmd, int outfile);
+void		set_infile(t_cmd *cmd, int infile);
+void		ft_srcclear(t_source **head);
+void		assign_type(t_source *source);
+t_executor	*make_executor(t_source	*source, t_env *env);
 t_source	*make_source(char *str);
-t_var		*init_env(char **envp);
-char		*get_key(char *envp);
-char		*get_value(char *envp);
+
+/* Execution */
+
+void		error_cmd_not_found(char *cmd);
+void		execution(t_env *env, t_executor *exec);
+void		close_pipes_fromfirst(t_cmd *cmd);
+void		close_pipes_fromlast(t_cmd *cmd);
+int			ft_heredoc(char *input);
+int			open_pipes(t_cmd **cmd);
+int			place_env_var(t_source *source, t_var *head);
+int			replace_needed(char *str);
+int			remove_quotes(t_source *source);
+
+/* Builtins */
+
+int			ft_cd(char *args, t_var *head);
+int			ft_pwd(t_var *head);
+int			ft_echo(char **arg);
+int			check_new_line(char *str);
 int			print_env(t_var *head);
 int			is_occurring(char *envp);
-void		free_params(char **split);
-char		*get_var(t_var *head, char *key);
-t_exp		*init_export(char **envp);
 int			validate_arg(char *arg);
+int			list_is_sorted(t_exp *head);
+int			ft_unset(t_exp *head_exp, t_var *head_env, char *key);
+char		*get_key(char *envp);
+char		*get_value(char *envp);
+char		*get_var(t_var *head, char *key);
+void		free_params(char **split);
 void		print_export(t_exp *head_exp);
+void		swap_node(t_exp	**env);
+void		unset_env(t_var *head_env, char *key);
+void		unset_exp(t_exp *head_exp, char *key);
+void		handler(int signo);
+t_var		*init_env(char **envp);
+t_var		*append_to_list(t_var *head, char *envp);
+t_var		*create_node(char *envp);
+t_exp		*init_export(char **envp);
+t_exp		*append_to_exp(t_exp *head, char *envp);
+t_exp		*create_exp_node(char *envp);
 t_exp		*sort_export(t_exp *env);
-int			remove_quotes(t_source *source);
-int			place_env_var(t_source *source, t_var *head);
-void		execution(t_env *env, t_executor *exec);
 
 #endif

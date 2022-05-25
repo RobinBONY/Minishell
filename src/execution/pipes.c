@@ -1,41 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 13:46:55 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/25 13:31:18 by alakhdar         ###   ########lyon.fr   */
+/*   Created: 2022/05/25 13:30:47 by alakhdar          #+#    #+#             */
+/*   Updated: 2022/05/25 13:35:46 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-void	handler(int signo)
+void	close_pipes_fromlast(t_cmd *cmd)
 {
-	if (signo == SIGINT)
+	while (cmd->prev)
 	{
-		write(2, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 1);
-		rl_redisplay();
-		g_exit = 1;
+		cmd = cmd->prev;
+		close(cmd->pipex[0]);
+		close(cmd->pipex[1]);
 	}
-	if (signo == SIGUSR1)
-	{
-		printf("exit\n");
-		exit (1);
-	}
-	if (signo == SIGQUIT)
-		signal(SIGQUIT, SIG_DFL);
 }
 
-// void	proc_signal_handler(int signo)
-// {
-// 	if (signo == SIGINT)
-// 	{
-// 		printf("\n");
-// 		signal(SIGINT, proc_signal_handler);
-// 	}
-// }
+void	close_pipes_fromfirst(t_cmd *cmd)
+{
+	while (cmd->next)
+	{
+		cmd = cmd->next;
+		close(cmd->pipex[0]);
+		close(cmd->pipex[1]);
+	}
+}
+
+int	open_pipes(t_cmd **cmd)
+{
+	t_cmd	*tmp;
+
+	tmp = *cmd;
+	while (tmp)
+	{
+		if (pipe(tmp->pipex) == -1)
+		{
+			close_pipes_fromlast(tmp);
+			return (1);
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}

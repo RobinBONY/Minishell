@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   source.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 15:53:31 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/25 12:36:11 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/25 14:15:29 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
+#include "../../headers/minishell.h"
 
-t_source	*create_src_node(t_source *next, char *data)
+static t_source	*create_src_node(t_source *next, char *data)
 {
 	t_source	*new_node;
 
@@ -25,7 +25,7 @@ t_source	*create_src_node(t_source *next, char *data)
 	return (new_node);
 }
 
-void	insert_node_cmd(char **data, t_source *node)
+static void	insert_node_cmd(char **data, t_source *node)
 {
 	int			i;
 	t_source	*new;
@@ -40,10 +40,10 @@ void	insert_node_cmd(char **data, t_source *node)
 		node->next = new;
 		node = node->next;
 	}
-	free_tab(data);
+	free_params(data);
 }
 
-void	ft_lstadd_back(t_source **alst, t_source *new)
+static void	ft_lstadd_back(t_source **alst, t_source *new)
 {
 	t_source	*last;
 
@@ -60,7 +60,7 @@ void	ft_lstadd_back(t_source **alst, t_source *new)
 	last->next = new;
 }
 
-t_source	*make_list(char	**split)
+static t_source	*make_list(char	**split)
 {
 	t_source	*head;
 	t_source	*new;
@@ -94,7 +94,7 @@ t_source	*make_source(char *str)
 	source = make_list(split);
 	if (!source)
 		return (NULL);
-	free_tab(split);
+	free_params(split);
 	tmp = source;
 	while (tmp)
 	{

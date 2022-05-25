@@ -1,41 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   files.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 13:46:55 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/25 13:31:18 by alakhdar         ###   ########lyon.fr   */
+/*   Created: 2022/05/25 13:06:59 by alakhdar          #+#    #+#             */
+/*   Updated: 2022/05/25 13:36:13 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-void	handler(int signo)
+void	set_input(t_executor *exec, t_source *tmp)
 {
-	if (signo == SIGINT)
-	{
-		write(2, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 1);
-		rl_redisplay();
-		g_exit = 1;
-	}
-	if (signo == SIGUSR1)
-	{
-		printf("exit\n");
-		exit (1);
-	}
-	if (signo == SIGQUIT)
-		signal(SIGQUIT, SIG_DFL);
+	exec->input = open_infile(tmp->next->str);
+	tmp->used = 0;
+	tmp->next->used = 0;
 }
 
-// void	proc_signal_handler(int signo)
-// {
-// 	if (signo == SIGINT)
-// 	{
-// 		printf("\n");
-// 		signal(SIGINT, proc_signal_handler);
-// 	}
-// }
+void	set_output(t_executor *exec, t_source *tmp, int mode)
+{
+	if (mode)
+		exec->output = open_append(tmp->next->str);
+	else
+		exec->output = open_outfile(tmp->next->str);
+	tmp->used = 0;
+	tmp->next->used = 0;
+}

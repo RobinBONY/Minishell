@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:40:58 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/16 16:33:13 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/25 13:35:07 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,6 @@ int	ft_pwd(t_var *head)
 	if (getcwd(name, PATH_MAX) == NULL)
 		return (1);
 	printf("%s\n", name);
-	/*if (get_var(head, path) == NULL)
-	{
-		free(path);
-		return (1);
-	}
-	printf("%s\n", path);*/
 	return (0);
 }
 
@@ -69,8 +63,6 @@ int	ft_cd(char *args, t_var *head)
 	else
 		hold = cd_args(args);
 	if (hold == 1)
-		return (1);
-	if (ft_pwd(head) == 1)
 		return (1);
 	return (hold);
 }

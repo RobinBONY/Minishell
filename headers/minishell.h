@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:19:41 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/25 11:11:13 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/25 12:36:45 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ typedef struct s_source
 	char			*str;
 	enum e_type		type;
 	int				used;
-	int				expandable;
 	struct s_source	*next;
 }	t_source;
 
@@ -103,6 +102,7 @@ t_exp		*init_export(char **envp);
 int			validate_arg(char *arg);
 void		print_export(t_exp *head_exp);
 t_exp		*sort_export(t_exp *env);
+int			remove_quotes(t_source *source);
 int			place_env_var(t_source *source, t_var *head);
 void		execution(t_env *env, t_executor *exec);
 

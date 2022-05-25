@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:14:46 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/25 11:11:24 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/25 12:20:11 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -440,8 +440,6 @@ int	parse_and_execute(t_env *env, char *line_buffer)
 		ft_srcclear(&source);
 		return (1);
 	}
-	if (remove_quotes(source))
-		return (1);
 	exec = make_executor(source, env);
 	if (!exec)
 		return (1);

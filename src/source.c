@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 15:53:31 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/25 10:52:27 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/25 12:36:11 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_source	*create_src_node(t_source *next, char *data)
 		return (NULL);
 	new_node->str = ft_strdup(data);
 	new_node->used = 1;
-	new_node->expandable = 1;
 	new_node->next = next;
 	return (new_node);
 }

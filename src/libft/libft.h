@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 15:58:45 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/18 11:07:29 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 15:19:05 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ char		*ft_strdup(const char *src);
 char		**ft_cmd_split(const char *s);
 char		**ft_src_split(const char *s);
 int			ft_isoperator(char c);
+char		*ft_itoa(int n);
 
 #endif

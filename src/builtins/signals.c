@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:46:55 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/16 16:33:47 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/25 10:22:55 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,22 @@ void	handler(int signo)
 		rl_redisplay();
 		g_exit = 1;
 	}
-}
-
-void	proc_signal_handler(int signo)
-{
-	if (signo == SIGINT)
+	if (signo == SIGUSR1)
 	{
-		printf("\n");
-		signal(SIGINT, proc_signal_handler);
+		printf("exit\n");
+		exit (1);
+	}
+	if (signo == SIGQUIT)
+	{
+		signal(SIGQUIT, SIG_DFL);
 	}
 }
+
+// void	proc_signal_handler(int signo)
+// {
+// 	if (signo == SIGINT)
+// 	{
+// 		printf("\n");
+// 		signal(SIGINT, proc_signal_handler);
+// 	}
+// }

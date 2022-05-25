@@ -6,11 +6,23 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:14:46 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/20 15:30:50 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/05/25 10:04:09 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
+}
 
 void	free_tab(char **tab)
 {
@@ -449,9 +461,17 @@ int	main(int argc, char **argv, char **envp)
 	if (!env.head_exp)
 		return (1);
 	env.head_exp = sort_export(env.head_exp);
+	signal(SIGINT, handler);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		line_buffer = readline("Minishell2.0$> ");
+		if (line_buffer == NULL)
+		{
+			ft_putstr_fd("exit\n", 2);
+			free(line_buffer);
+			break ;
+		}
 		if (line_buffer && *line_buffer)
 		{
 			add_history(line_buffer);

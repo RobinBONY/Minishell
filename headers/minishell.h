@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:19:41 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/20 15:16:12 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/24 14:58:28 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,6 @@ int			validate_arg(char *arg);
 void		print_export(t_exp *head_exp);
 t_exp		*sort_export(t_exp *env);
 int			place_env_var(t_source *source, t_var *head);
+void		handler(int signo);
 
 #endif

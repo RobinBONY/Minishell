@@ -3,66 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   place_env_var.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:48:03 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/25 12:35:19 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/25 13:40:47 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
-
-int	replace_needed(char *str)
-{
-	char	*tmp;
-
-	tmp = str;
-	while (*tmp)
-	{
-		if (*tmp == '\'')
-			tmp = ft_strchr(tmp, '\'');
-		if (*tmp == '$')
-			return (1);
-		tmp++;
-	}
-	return (0);
-}
-
-char	*ft_strcat(char *dest, char *src)
-{
-	int	i;
-	int	next;
-
-	i = 0;
-	if (!src)
-		return (dest);
-	next = ft_strlen(dest);
-	while (src[i])
-	{
-		dest[i + next] = src[i];
-		i++;
-	}
-	dest[i + next] = src[i];
-	return (dest);
-}
-
-static char	*ft_strncat(char *dest, char *src, unsigned int nb)
-{
-	unsigned int	i;
-	unsigned int	src_len;
-	unsigned int	next;
-
-	next = ft_strlen(dest);
-	src_len = ft_strlen(src);
-	i = 0;
-	while (src[i] && i < nb)
-	{
-		dest[i + next] = src[i];
-		i++;
-	}
-	dest[i + next] = '\0';
-	return (dest);
-}
+#include "../../headers/minishell.h"
 
 static char	*replace_string(char *str, int start, int len, char *replace)
 {
@@ -80,7 +28,7 @@ static char	*replace_string(char *str, int start, int len, char *replace)
 	return (new);
 }
 
-char	*find_var(char *str, int len, t_var *head)
+static char	*find_var(char *str, int len, t_var *head)
 {
 	t_var	*tmp;
 
@@ -94,7 +42,7 @@ char	*find_var(char *str, int len, t_var *head)
 	return (NULL);
 }
 
-char	*last_exit(char *str, int start, int len)
+static char	*last_exit(char *str, int start, int len)
 {
 	char	*result;
 	char	*exit;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:12:29 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/25 17:07:25 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/26 15:33:29 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,17 @@ void	ft_heredoc(t_var *env, t_executor *exec)
 	int			expand;
 
 	fd = open(".heredoc", O_WRONLY | O_TRUNC | O_CREAT, 0664);
-	if (!fd)
-		exit(0);
+	if (fd == -1)
+		exit(1);
 	launch_heredoc(exec->heredocs, env, fd);
 	close(fd);
 	fd = open(".heredoc", O_RDONLY);
+	if (fd == -1)
+		exit (1);
 	if (exec->input == 0)
 		exec->input = fd;
+	if (unlink(".heredoc") == -1)
+		printf("Could not delete .heredoc\n");
 }
 
 //Expand les var d'environnement dans le heredoc

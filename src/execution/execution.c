@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 10:18:38 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/25 16:29:05 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/26 14:23:25 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static int	execbltin(t_cmd *cmd, t_env *env)
 		print_export(env->head_exp);
 	if (ft_strcmp(cmd->path, "unset") == 0)
 		ft_unset(env->head_exp, env->head_var, cmd->argv[1]);
+	if (ft_strcmp(cmd->path, "exit") == 0)
+		exit(1);
 	return (0);
 }
 

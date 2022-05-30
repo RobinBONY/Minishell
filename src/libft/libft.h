@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 15:58:45 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/25 13:27:50 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/05/30 12:59:59 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char		**ft_src_split(const char *s);
 int			ft_isoperator(char c);
 char		*ft_itoa(int n);
 void		ft_putstr_fd(char *s, int fd);
-char	    *ft_strncat(char *dest, char *src, unsigned int nb);
+char		*ft_strncat(char *dest, char *src, unsigned int nb);
+char		*ft_strjoin(const char *s1, const char *s2);
 
 #endif

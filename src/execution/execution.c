@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 10:18:38 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/26 14:23:25 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/05/30 16:13:00 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,26 @@ static int	execbltin(t_cmd *cmd, t_env *env)
 	if (ft_strcmp(cmd->path, "echo") == 0)
 		ft_echo(cmd->argv);
 	if (ft_strcmp(cmd->path, "cd") == 0)
-		ft_cd(cmd->path, env->head_var);
+		ft_cd(cmd->argv[1], env->head_var);
 	if (ft_strcmp(cmd->path, "pwd") == 0)
 		ft_pwd(env->head_var);
 	if (ft_strcmp(cmd->path, "env") == 0)
 		print_env(env->head_var);
 	if (ft_strcmp(cmd->path, "export") == 0)
-		print_export(env->head_exp);
+	{
+		if (cmd->argv[1] == 0)
+			print_export(env->head_exp);
+		else
+		{
+			append_to_exp(env->head_exp, cmd->argv[1]);
+			sort_export(env->head_exp);
+			append_to_list(env->head_var, cmd->argv[1]);
+		}
+	}
 	if (ft_strcmp(cmd->path, "unset") == 0)
 		ft_unset(env->head_exp, env->head_var, cmd->argv[1]);
 	if (ft_strcmp(cmd->path, "exit") == 0)
-		exit(1);
+		exit(0);
 	return (0);
 }
 
@@ -48,7 +57,6 @@ static void	external_redirections(t_cmd *cmd, t_env *env, t_executor *exec)
 
 static void	execute_cmd(t_cmd *cmd, t_env *env, t_executor *exec)
 {
-	ft_heredoc(env->head_var, exec);
 	if (!cmd->prev || !cmd->next)
 	{
 		external_redirections(cmd, env, exec);
@@ -73,15 +81,12 @@ static void	execute_cmd(t_cmd *cmd, t_env *env, t_executor *exec)
 	}
 }
 
-void	execution(t_env *env, t_executor *exec)
+static void	out_execution(t_env *env, t_executor *exec)
 {
 	t_cmd	*tmp;
 
-	if (ft_lstsize(exec->commands) > 1)
-	{
-		if (open_pipes(&exec->commands))
-			return ;
-	}
+	if (open_pipes(&exec->commands))
+		return ;
 	tmp = exec->commands;
 	while (tmp)
 	{
@@ -92,12 +97,31 @@ void	execution(t_env *env, t_executor *exec)
 			execute_cmd(tmp, env, exec);
 		tmp = tmp->next;
 	}
-	tmp = exec->commands;
-	if (ft_lstsize(exec->commands) > 1)
-		close_pipes_fromfirst(tmp);
+	close_pipes_fromfirst(tmp);
 	while (tmp)
 	{
 		waitpid(tmp->pid, NULL, 0);
 		tmp = tmp->next;
+	}
+}
+
+void	execution(t_env *env, t_executor *exec)
+{
+	t_cmd	*tmp;
+
+	tmp = exec->commands;
+	ft_heredoc(env->head_var, exec);
+	if (ft_lstsize(exec->commands) > 1)
+		out_execution (env, exec);
+	else if (tmp && tmp->is_local)
+		execbltin(tmp, env);
+	else if (tmp)
+	{
+		tmp->pid = fork();
+		if (tmp->pid < 0)
+			return ;
+		if (tmp->pid == 0)
+			execute_cmd(tmp, env, exec);
+		waitpid(tmp->pid, NULL, 0);
 	}
 }

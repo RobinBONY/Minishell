@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 13:13:29 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/25 16:39:56 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/30 13:22:56 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,29 +41,18 @@ static void	ft_docadd_back(t_heredoc **alst, t_heredoc *new)
 
 int	find_heredocs(t_executor *exec, t_source **source)
 {
-	t_source	*tmp;
 	t_heredoc	*new;
 
-	tmp = *source;
-	exec->heredocs = NULL;
-	while (tmp)
+	new = new_heredoc((*source)->next->str);
+	if (!new)
+		return (1);
+	ft_docadd_back(&exec->heredocs, new);
+	(*source)->used = 0;
+	(*source)->next->used = 0;
+	if (exec->input)
 	{
-		if (tmp->type == OPERATOR && tmp->used
-			&& ft_strcmp(tmp->str, "<<") == 0)
-		{
-			new = new_heredoc(tmp->next->str);
-			if (!new)
-				return (1);
-			ft_docadd_back(&exec->heredocs, new);
-			tmp->used = 0;
-			tmp->next->used = 0;
-			if (exec->input)
-			{
-				close(exec->input);
-				exec->input = 0;
-			}
-		}
-		tmp = tmp->next;
+		close(exec->input);
+		exec->input = 0;
 	}
 	return (0);
 }

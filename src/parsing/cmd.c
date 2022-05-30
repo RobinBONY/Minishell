@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 13:10:13 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/25 15:33:51 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/30 15:40:21 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int	make_commands(t_executor *exec, t_source **source, t_env *env)
 	t_cmd		*new;
 	t_source	*tmp;
 
-	exec->commands = NULL;
 	tmp = *source;
 	new = NULL;
 	while (tmp)
@@ -106,6 +105,7 @@ int	make_commands(t_executor *exec, t_source **source, t_env *env)
 			new = new_cmd(&tmp, new, cmd_len);
 			if (!new)
 				return (1);
+			new->is_local = is_local(new->argv[0], new->argv);
 			ft_cmdadd_back(&exec->commands, new);
 		}
 		else

@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 13:11:42 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/25 14:33:49 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/30 15:22:16 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,19 @@ int	is_builtin(char *cmd)
 	if (ft_strcmp(cmd, "env") == 0)
 		return (1);
 	if (ft_strcmp(cmd, "export") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "unset") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "exit") == 0)
+		return (1);
+	return (0);
+}
+
+int	is_local(char *cmd, char **argv)
+{
+	if (ft_strcmp(cmd, "cd") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "export") == 0 && argv[1])
 		return (1);
 	if (ft_strcmp(cmd, "unset") == 0)
 		return (1);
@@ -66,11 +79,11 @@ t_executor	*make_executor(t_source	*source, t_env *env)
 		return (NULL);
 	executor->input = 0;
 	executor->output = 0;
-	if (find_heredocs(executor, &source))
+	executor->heredocs = NULL;
+	executor->commands = NULL;
+	if (find_redirects(executor, &source, env))
 		return (free_executor(&executor));
 	if (place_env_var(source, env->head_var))
-		return (free_executor(&executor));
-	if (find_redirects(executor, &source))
 		return (free_executor(&executor));
 	if (make_commands(executor, &source, env))
 		return (free_executor(&executor));

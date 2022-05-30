@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:19:41 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/30 13:08:11 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/05/30 15:16:56 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_cmd
 	int				pipex[2];
 	int				index;
 	int				is_builtin;
+	int				is_local;
 	struct s_cmd	*prev;
 	struct s_cmd	*next;
 }	t_cmd;
@@ -92,16 +93,17 @@ int			g_exit;
 
 int			make_commands(t_executor *exec, t_source **source, t_env *env);
 int			is_builtin(char *cmd);
+int			is_local(char *cmd, char **argv);
 int			open_append(char *outfile);
 int			open_outfile(char *outfile);
 int			open_infile(char *infile);
 int			find_heredocs(t_executor *exec, t_source **source);
 int			parse_error(t_source *head);
 int			not_interpreted(char *line);
-int			find_redirects(t_executor *exec, t_source **source);
+int			find_redirects(t_executor *exec, t_source **source, t_env *env);
 void		*free_executor(t_executor **exec);
-void		set_output(t_executor *exec, t_source *tmp, int mode);
-void		set_input(t_executor *exec, t_source *tmp);
+void		set_output(t_executor *exec, t_source *tmp, int mode, t_env *env);
+void		set_input(t_executor *exec, t_source *tmp, t_env *env);
 void		set_both(int infile, int outfile);
 void		set_outfile(t_cmd *cmd, int outfile);
 void		set_infile(t_cmd *cmd, int infile);

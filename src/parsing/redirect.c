@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 13:19:37 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/25 13:36:25 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/05/30 14:53:02 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	find_redirects(t_executor *exec, t_source **source)
+int	find_redirects(t_executor *exec, t_source **source, t_env *env)
 {
 	t_source	*tmp;
 
@@ -20,14 +20,20 @@ int	find_redirects(t_executor *exec, t_source **source)
 	while (tmp)
 	{
 		if (tmp->type == OPERATOR && tmp->used
+			&& ft_strcmp(tmp->str, "<<") == 0)
+		{
+			if (find_heredocs(exec, source))
+				return (1);
+		}
+		if (tmp->type == OPERATOR && tmp->used
 			&& ft_strcmp(tmp->str, "<") == 0)
-			set_input(exec, tmp);
+			set_input(exec, tmp, env);
 		else if (tmp->type == OPERATOR && tmp->used
 			&& ft_strcmp(tmp->str, ">") == 0)
-			set_output(exec, tmp, 0);
+			set_output(exec, tmp, 0, env);
 		else if (tmp->type == OPERATOR && tmp->used
 			&& ft_strcmp(tmp->str, ">>") == 0)
-			set_output(exec, tmp, 1);
+			set_output(exec, tmp, 1, env);
 		tmp = tmp->next;
 	}
 	if (exec->input == -1 || exec->output == -1)

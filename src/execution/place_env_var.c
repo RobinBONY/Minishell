@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:48:03 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/25 16:59:50 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/30 16:07:37 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ char	*replace_var(char *str, t_var *head)
 
 	tmp = str;
 	len = 0;
-	if (!str)
-		return (NULL);
+	if (!str || (!ft_strchr(str, '$') && *str != '$'))
+		return (str);
 	while (*tmp && *tmp != '$')
 	{
 		if (*tmp == '\'')

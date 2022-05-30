@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:19:41 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/26 15:34:19 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/05/30 13:08:11 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,8 @@ void		error_cmd_not_found(char *cmd);
 void		execution(t_env *env, t_executor *exec);
 void		close_pipes_fromfirst(t_cmd *cmd);
 void		close_pipes_fromlast(t_cmd *cmd);
-void		ft_heredoc(t_var *env, t_executor *exec);
 void		error_exit(char *msg, int exit_code);
+int			ft_heredoc(t_var *env, t_executor *exec);
 int			open_pipes(t_cmd **cmd);
 int			place_env_var(t_source *source, t_var *head);
 int			replace_needed(char *str);

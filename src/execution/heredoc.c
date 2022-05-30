@@ -6,11 +6,19 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:12:29 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/26 15:33:29 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/05/30 14:38:38 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+void	handler_heredoc(int signo)
+{
+	if (signo == SIGINT)
+	{
+		exit (1);
+	}
+}
 
 static int	is_expand(t_heredoc *tmp)
 {
@@ -53,26 +61,23 @@ static void	launch_heredoc(t_heredoc *tmp, t_var *env, int fd)
 	}
 }
 
-void	ft_heredoc(t_var *env, t_executor *exec)
+int	ft_heredoc(t_var *env, t_executor *exec)
 {
 	int			fd;
 	int			expand;
 
+	signal(SIGINT, handler_heredoc);
 	fd = open(".heredoc", O_WRONLY | O_TRUNC | O_CREAT, 0664);
 	if (fd == -1)
-		exit(1);
+		return (1);
 	launch_heredoc(exec->heredocs, env, fd);
 	close(fd);
 	fd = open(".heredoc", O_RDONLY);
 	if (fd == -1)
-		exit (1);
+		return (1);
 	if (exec->input == 0)
 		exec->input = fd;
 	if (unlink(".heredoc") == -1)
 		printf("Could not delete .heredoc\n");
+	return (0);
 }
-
-//Expand les var d'environnement dans le heredoc
-// SI entre double quotes / sans quotes
-// Ne pas expand si simple quotes
-// Ne pas expand si quotes dans délimiteur

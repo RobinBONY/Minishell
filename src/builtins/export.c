@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 16:33:13 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/16 16:33:44 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/31 14:14:28 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_exp	*init_export(char **envp)
 	return (head);
 }
 
-void	print_export(t_exp *head_exp)
+int	print_export(t_exp *head_exp)
 {
 	t_exp	*cursor;
 
@@ -70,4 +70,5 @@ void	print_export(t_exp *head_exp)
 			printf("\n");
 		cursor = cursor->next;
 	}
+	return (0);
 }

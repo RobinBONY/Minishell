@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_src_split.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 13:12:29 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/20 14:58:58 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/31 13:55:28 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static size_t	ft_divlen(char *s)
 	{
 		if (ft_isoperator(*tmp))
 		{
+			if (*tmp == '|')
+				return (1);
 			while (*tmp && ft_isoperator(*tmp))
 				tmp++;
 			return (tmp - s);

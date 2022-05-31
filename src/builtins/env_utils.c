@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:25:05 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/16 16:33:33 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/31 11:46:59 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ char	*get_key(char *envp)
 	char	*tmp;
 
 	tmp = ft_strchr(envp, '=');
+	if (!tmp || *envp == '=')
+		return (ft_strdup(envp));
 	key = ft_substr(envp, 0, tmp - envp);
 	if (!key)
 		return (NULL);
@@ -48,6 +50,8 @@ char	*get_value(char *envp)
 	char	*tmp;
 
 	tmp = ft_strchr(envp, '=');
+	if (!tmp || *envp == '=')
+		return (NULL);
 	tmp++;
 	value = ft_substr(envp, tmp - envp, ft_strlen(tmp));
 	if (!value)

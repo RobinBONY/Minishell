@@ -6,7 +6,7 @@
 #    By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/03 09:27:22 by rbony             #+#    #+#              #
-#    Updated: 2022/05/25 13:28:14 by alakhdar         ###   ########lyon.fr    #
+#    Updated: 2022/05/31 11:10:42 by alakhdar         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,9 @@ SRCS = 	ft_strchr.c 	\
 		ft_isoperator.c	\
 		ft_itoa.c		\
 		ft_putstr_fd.c	\
-		ft_strncat.c
+		ft_strncat.c	\
+		ft_strjoin.c	\
+		ft_atoi.c
 
 OBJS = ${SRCS:.c=.o}
 

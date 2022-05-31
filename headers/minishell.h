@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:19:41 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/30 13:08:11 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/05/31 14:15:15 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_env
 {
 	struct s_var	*head_var;
 	struct s_exp	*head_exp;
+	char			**envp;
 }	t_env;
 
 typedef struct s_var
@@ -74,6 +75,7 @@ typedef struct s_cmd
 	int				pipex[2];
 	int				index;
 	int				is_builtin;
+	int				is_local;
 	struct s_cmd	*prev;
 	struct s_cmd	*next;
 }	t_cmd;
@@ -92,16 +94,17 @@ int			g_exit;
 
 int			make_commands(t_executor *exec, t_source **source, t_env *env);
 int			is_builtin(char *cmd);
+int			is_local(char *cmd, char **argv);
 int			open_append(char *outfile);
 int			open_outfile(char *outfile);
 int			open_infile(char *infile);
 int			find_heredocs(t_executor *exec, t_source **source);
 int			parse_error(t_source *head);
 int			not_interpreted(char *line);
-int			find_redirects(t_executor *exec, t_source **source);
+int			find_redirects(t_executor *exec, t_source **source, t_env *env);
 void		*free_executor(t_executor **exec);
-void		set_output(t_executor *exec, t_source *tmp, int mode);
-void		set_input(t_executor *exec, t_source *tmp);
+void		set_output(t_executor *exec, t_source *tmp, int mode, t_env *env);
+void		set_input(t_executor *exec, t_source *tmp, t_env *env);
 void		set_both(int infile, int outfile);
 void		set_outfile(t_cmd *cmd, int outfile);
 void		set_infile(t_cmd *cmd, int infile);
@@ -123,6 +126,7 @@ void		execution(t_env *env, t_executor *exec);
 void		close_pipes_fromfirst(t_cmd *cmd);
 void		close_pipes_fromlast(t_cmd *cmd);
 void		error_exit(char *msg, int exit_code);
+void		ft_exit(char *ex_no);
 int			ft_heredoc(t_var *env, t_executor *exec);
 int			open_pipes(t_cmd **cmd);
 int			place_env_var(t_source *source, t_var *head);
@@ -140,11 +144,11 @@ int			is_occurring(char *envp);
 int			validate_arg(char *arg);
 int			list_is_sorted(t_exp *head);
 int			ft_unset(t_exp *head_exp, t_var *head_env, char *key);
+int			print_export(t_exp *head_exp);
 char		*get_key(char *envp);
 char		*get_value(char *envp);
 char		*get_var(t_var *head, char *key);
 void		free_params(char **split);
-void		print_export(t_exp *head_exp);
 void		swap_node(t_exp	**env);
 void		unset_env(t_var *head_env, char *key);
 void		unset_exp(t_exp *head_exp, char *key);

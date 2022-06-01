@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 13:19:37 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/30 14:53:02 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/31 14:29:30 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	find_redirects(t_executor *exec, t_source **source, t_env *env)
 		if (tmp->type == OPERATOR && tmp->used
 			&& ft_strcmp(tmp->str, "<<") == 0)
 		{
-			if (find_heredocs(exec, source))
+			if (find_heredocs(exec, &tmp))
 				return (1);
 		}
 		if (tmp->type == OPERATOR && tmp->used

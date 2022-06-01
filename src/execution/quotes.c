@@ -6,17 +6,19 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 11:12:01 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/25 17:06:17 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/01 13:49:54 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	replace_needed(char *str)
+int	replace_needed(char *str, t_var *head)
 {
 	char	*tmp;
+	int		len;
 
 	tmp = str;
+	len = 0;
 	while (*tmp)
 	{
 		if (*tmp == '\'')

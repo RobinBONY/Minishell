@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:19:41 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/30 15:16:56 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/01 13:36:18 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_env
 {
 	struct s_var	*head_var;
 	struct s_exp	*head_exp;
+	char			**envp;
 }	t_env;
 
 typedef struct s_var
@@ -117,6 +118,7 @@ char		*replace_var(char *str, t_var *head);
 int			count_quotes(char *str);
 char		*resize_str(char *str);
 int			remove_quotes_heredoc(t_heredoc *tmp);
+char		*find_var(char *str, int len, t_var *head);
 
 /* Execution */
 
@@ -124,11 +126,12 @@ void		error_cmd_not_found(char *cmd);
 void		execution(t_env *env, t_executor *exec);
 void		close_pipes_fromfirst(t_cmd *cmd);
 void		close_pipes_fromlast(t_cmd *cmd);
-void		ft_heredoc(t_var *env, t_executor *exec);
 void		error_exit(char *msg, int exit_code);
+void		ft_exit(char *ex_no);
+int			ft_heredoc(t_var *env, t_executor *exec);
 int			open_pipes(t_cmd **cmd);
 int			place_env_var(t_source *source, t_var *head);
-int			replace_needed(char *str);
+int			replace_needed(char *str, t_var *head);
 int			remove_quotes(t_source *source);
 
 /* Builtins */
@@ -142,11 +145,11 @@ int			is_occurring(char *envp);
 int			validate_arg(char *arg);
 int			list_is_sorted(t_exp *head);
 int			ft_unset(t_exp *head_exp, t_var *head_env, char *key);
+int			print_export(t_exp *head_exp);
 char		*get_key(char *envp);
 char		*get_value(char *envp);
 char		*get_var(t_var *head, char *key);
 void		free_params(char **split);
-void		print_export(t_exp *head_exp);
 void		swap_node(t_exp	**env);
 void		unset_env(t_var *head_env, char *key);
 void		unset_exp(t_exp *head_exp, char *key);

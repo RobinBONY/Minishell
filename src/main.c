@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:14:46 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/25 13:36:46 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/01 09:58:54 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,29 @@ int	parse_and_execute(t_env *env, char *line_buffer)
 	return (0);
 }
 
+t_env	init(char **envp)
+{
+	t_env		env;
+
+	env.envp = envp;
+	env.head_var = init_env(envp);
+	env.head_exp = init_export(envp);
+	if (!env.head_exp)
+		return (env);
+	env.head_exp = sort_export(env.head_exp);
+	return (env);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_env		env;
 	char		*line_buffer;
 
-	env.head_var = init_env(envp);
-	env.head_exp = init_export(envp);
-	if (!env.head_exp)
-		return (1);
-	env.head_exp = sort_export(env.head_exp);
-	signal(SIGINT, handler);
-	signal(SIGQUIT, SIG_IGN);
+	env = init(envp);
 	while (1)
 	{
+		signal(SIGINT, handler);
+		signal(SIGQUIT, SIG_IGN);
 		line_buffer = readline("Minishell2.0$> ");
 		if (line_buffer == NULL)
 			break ;

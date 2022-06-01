@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 10:18:38 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/30 16:13:00 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/31 11:08:12 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ static void	out_execution(t_env *env, t_executor *exec)
 			execute_cmd(tmp, env, exec);
 		tmp = tmp->next;
 	}
+	tmp = exec->commands;
 	close_pipes_fromfirst(tmp);
 	while (tmp)
 	{

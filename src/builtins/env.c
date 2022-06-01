@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 10:30:39 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/16 15:34:02 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/31 11:39:05 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ t_var	*create_node(char *envp)
 		return (NULL);
 	new_env->key = get_key(envp);
 	new_env->value = get_value(envp);
+	if (!new_env->value)
+	{
+		free(new_env->key);
+		free(new_env);
+		return (NULL);
+	}
 	new_env->printable = is_occurring(envp);
 	new_env->next = NULL;
 	return (new_env);
@@ -35,6 +41,8 @@ t_var	*append_to_list(t_var *head, char *envp)
 	while (cursor->next != NULL)
 		cursor = cursor->next;
 	new_env = create_node(envp);
+	if (!new_env)
+		return (NULL);
 	cursor->next = new_env;
 	return (head);
 }

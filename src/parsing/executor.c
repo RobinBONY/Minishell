@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 13:11:42 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/30 15:22:16 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/31 11:11:41 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+void	ft_exit(char *ex_no)
+{
+	g_exit = ft_atoi(ex_no);
+	exit(ft_atoi(ex_no));
+}
 
 int	is_builtin(char *cmd)
 {

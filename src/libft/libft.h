@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 15:58:45 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/30 12:59:59 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/31 11:10:31 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ char		*ft_itoa(int n);
 void		ft_putstr_fd(char *s, int fd);
 char		*ft_strncat(char *dest, char *src, unsigned int nb);
 char		*ft_strjoin(const char *s1, const char *s2);
+int			ft_atoi(const char	*str);
 
 #endif

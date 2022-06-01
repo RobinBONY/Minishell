@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:46:55 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/30 13:43:40 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/05/31 11:25:38 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,4 @@ void	handler(int signo)
 	}
 	if (signo == SIGQUIT)
 		signal(SIGQUIT, SIG_DFL);
-}
-
-void	error_exit(char *msg, int exit_code)
-{
-	g_exit = exit_code;
-	ft_putstr_fd(msg, 1);
-	exit(exit_code);
 }

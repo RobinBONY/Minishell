@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:14:46 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/30 13:43:36 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/05/31 14:35:28 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,25 @@ int	parse_and_execute(t_env *env, char *line_buffer)
 	return (0);
 }
 
+t_env	init(char **envp)
+{
+	t_env		env;
+
+	env.envp = envp;
+	env.head_var = init_env(envp);
+	env.head_exp = init_export(envp);
+	if (!env.head_exp)
+		return (env);
+	env.head_exp = sort_export(env.head_exp);
+	return (env);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_env		env;
 	char		*line_buffer;
 
-	env.head_var = init_env(envp);
-	env.head_exp = init_export(envp);
-	if (!env.head_exp)
-		return (1);
-	env.head_exp = sort_export(env.head_exp);
+	env = init(envp);
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)

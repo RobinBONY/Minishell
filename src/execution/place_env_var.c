@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   place_env_var.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:48:03 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/30 16:07:37 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/05/31 11:23:23 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	*replace_var(char *str, t_var *head)
 		tmp++;
 	}
 	if (*(tmp + 1) && *(tmp + 1) == '?')
-		return (last_exit(str, str - tmp, 2));
+		return (last_exit(str, tmp - str, 2));
 	len++;
 	while (tmp[len] && tmp[len] != '\'' && tmp[len] != ' ' && tmp[len] != '"')
 		len++;

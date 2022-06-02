@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   place_env_var.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:48:03 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/31 11:23:23 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/01 13:55:44 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,17 @@
 static char	*replace_string(char *str, int start, int len, char *replace)
 {
 	char	*new;
+	int		boo;
 
+	boo = 0;
 	if (!replace)
-		return (str);
+	{
+		replace = malloc(1);
+		if (!replace)
+			return (NULL);
+		replace[0] = '\0';
+		boo = 1;
+	}
 	new = malloc((ft_strlen(str) - len + ft_strlen(replace))
 			+ 1 * sizeof(char));
 	if (!new)
@@ -27,10 +35,12 @@ static char	*replace_string(char *str, int start, int len, char *replace)
 	ft_strcat(new, replace);
 	ft_strcat(new, str + (start + len));
 	free(str);
+	if (boo)
+		free(replace);
 	return (new);
 }
 
-static char	*find_var(char *str, int len, t_var *head)
+char	*find_var(char *str, int len, t_var *head)
 {
 	t_var	*tmp;
 
@@ -77,7 +87,8 @@ char	*replace_var(char *str, t_var *head)
 	if (*(tmp + 1) && *(tmp + 1) == '?')
 		return (last_exit(str, tmp - str, 2));
 	len++;
-	while (tmp[len] && tmp[len] != '\'' && tmp[len] != ' ' && tmp[len] != '"')
+	while (tmp[len] && tmp[len] != '\'' && tmp[len] != ' ' && tmp[len] != '"'
+		&& tmp[len] != '$')
 		len++;
 	if (len > 1)
 		return (replace_string(str, tmp - str, len,
@@ -92,7 +103,7 @@ int	place_env_var(t_source *source, t_var *head)
 	tmp = source;
 	while (tmp)
 	{
-		if (replace_needed(tmp->str))
+		while (replace_needed(tmp->str, head))
 		{
 			tmp->str = replace_var(tmp->str, head);
 			if (!tmp->str)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:19:41 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/31 14:15:15 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/01 13:36:18 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ char		*replace_var(char *str, t_var *head);
 int			count_quotes(char *str);
 char		*resize_str(char *str);
 int			remove_quotes_heredoc(t_heredoc *tmp);
+char		*find_var(char *str, int len, t_var *head);
 
 /* Execution */
 
@@ -130,7 +131,7 @@ void		ft_exit(char *ex_no);
 int			ft_heredoc(t_var *env, t_executor *exec);
 int			open_pipes(t_cmd **cmd);
 int			place_env_var(t_source *source, t_var *head);
-int			replace_needed(char *str);
+int			replace_needed(char *str, t_var *head);
 int			remove_quotes(t_source *source);
 
 /* Builtins */

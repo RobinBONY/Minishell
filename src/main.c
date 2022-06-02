@@ -6,11 +6,22 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:14:46 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/31 16:35:00 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/02 14:44:29 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
+
+// static void	welcome(void)
+// {
+// 	printf("___  ____       _     _          _ _ \n");
+// 	printf("|  \\/  (_)     (_)   | |        | | |\n");
+// 	printf("| .  . |_ _ __  _ ___| |__   ___| | |\n");
+// 	printf("| |\\/| | | '_ \\| / __| '_ \\ / _ \\ | |\n");
+// 	printf("| |  | | | | | | \\__ \\ | | |  __/ | |\n");
+// 	printf("\\_|  |_/_|_| |_|_|___/_| |_|\\___|_|_|\n");
+// 	printf("\n");
+// }
 
 int	parse_and_execute(t_env *env, char *line_buffer)
 {
@@ -55,6 +66,7 @@ int	main(int argc, char **argv, char **envp)
 	t_env		env;
 	char		*line_buffer;
 
+	// welcome();
 	env = init(envp);
 	while (1)
 	{

@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:46:55 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/31 11:25:38 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/02 14:34:19 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,18 @@ void	handler(int signo)
 		rl_replace_line("", 1);
 		rl_redisplay();
 	}
-	if (signo == SIGUSR1)
+}
+
+void	handler_child(int signo)
+{
+	if (signo == SIGINT)
 	{
-		printf("exit\n");
-		exit (1);
+		write(2, "\n", 1);
+		rl_on_new_line();
 	}
 	if (signo == SIGQUIT)
+	{
+		g_exit = 3;
 		signal(SIGQUIT, SIG_DFL);
+	}
 }

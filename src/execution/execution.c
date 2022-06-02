@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 10:18:38 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/31 14:16:59 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/02 12:16:55 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ void	execution(t_env *env, t_executor *exec)
 		g_exit = execbltin(tmp, env);
 	else if (tmp)
 	{
+		signal(SIGINT, handler_child);
+		signal(SIGQUIT, SIG_DFL);
 		tmp->pid = fork();
 		if (tmp->pid < 0)
 			return ;

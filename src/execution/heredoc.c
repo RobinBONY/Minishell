@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:12:29 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/30 14:38:38 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/02 15:16:11 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ void	handler_heredoc(int signo)
 {
 	if (signo == SIGINT)
 	{
-		exit (1);
+		write(2, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
 }
 
@@ -66,18 +69,17 @@ int	ft_heredoc(t_var *env, t_executor *exec)
 	int			fd;
 	int			expand;
 
-	signal(SIGINT, handler_heredoc);
-	fd = open(".heredoc", O_WRONLY | O_TRUNC | O_CREAT, 0664);
+	fd = open("/tmp/.heredoc", O_WRONLY | O_TRUNC | O_CREAT, 0664);
 	if (fd == -1)
 		return (1);
 	launch_heredoc(exec->heredocs, env, fd);
 	close(fd);
-	fd = open(".heredoc", O_RDONLY);
+	fd = open("/tmp/.heredoc", O_RDONLY);
 	if (fd == -1)
 		return (1);
 	if (exec->input == 0)
 		exec->input = fd;
-	if (unlink(".heredoc") == -1)
+	if (unlink("/tmp/.heredoc") == -1)
 		printf("Could not delete .heredoc\n");
 	return (0);
 }

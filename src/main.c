@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:14:46 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/31 14:35:28 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/05/31 16:35:00 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ int	main(int argc, char **argv, char **envp)
 	char		*line_buffer;
 
 	env = init(envp);
-	signal(SIGINT, handler);
-	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
+		signal(SIGINT, handler);
+		signal(SIGQUIT, SIG_IGN);
 		line_buffer = readline("Minishell2.0$> ");
 		if (line_buffer == NULL)
 			break ;

@@ -1,31 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcat.c                                        :+:      :+:    :+:   */
+/*   signals_handlers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/10 08:53:03 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/03 11:10:32 by alakhdar         ###   ########lyon.fr   */
+/*   Created: 2022/04/20 13:46:55 by alakhdar          #+#    #+#             */
+/*   Updated: 2022/06/03 14:59:10 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../headers/minishell.h"
 
-char	*ft_strcat(char *dest, char *src)
+void	handler(int signo)
 {
-	int	i;
-	int	next;
-
-	i = 0;
-	if (!src)
-		return (dest);
-	next = ft_strlen(dest);
-	while (src[i])
+	if (signo == SIGINT)
 	{
-		dest[i + next] = src[i];
-		i++;
+		write(2, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		rl_redisplay();
 	}
-	dest[i + next] = '\0';
-	return (dest);
+}
+
+void	handler_child(int signo)
+{
+	if (signo == SIGINT)
+	{
+		write(2, "\n", 1);
+	}
+	if (signo == SIGQUIT)
+		write(2, "Quit: 3\n", 8);
+}
+
+void	handler_heredoc(int signo)
+{
+	if (signo == SIGINT)
+	{
+		write(2, "\n", 1);
+		exit(1);
+	}
 }

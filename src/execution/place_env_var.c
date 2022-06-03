@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:48:03 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/02 14:38:53 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/03 11:21:30 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,7 @@
 static char	*replace_string(char *str, int start, int len, char *replace)
 {
 	char	*new;
-	int		boo;
 
-	boo = 0;
-	if (!replace)
-	{
-		replace = malloc(1);
-		if (!replace)
-			return (NULL);
-		replace[0] = '\0';
-		boo = 1;
-	}
 	new = malloc((ft_strlen(str) - len + ft_strlen(replace))
 			+ 1 * sizeof(char));
 	if (!new)
@@ -35,26 +25,24 @@ static char	*replace_string(char *str, int start, int len, char *replace)
 	ft_strcat(new, replace);
 	ft_strcat(new, str + (start + len));
 	free(str);
-	if (boo)
-		free(replace);
 	return (new);
 }
 
-char	*find_var(char *str, int len, t_var *head)
+char	*find_var(char *str, t_var *head)
 {
 	t_var	*tmp;
 
 	tmp = head;
 	while (tmp)
 	{
-		if (tmp && ft_strncmp(str, tmp->key, len) == 0)
+		if (tmp && ft_strncmp(str, tmp->key, ft_strlen(tmp->key)) == 0)
 			return (tmp->value);
 		tmp = tmp->next;
 	}
 	return (NULL);
 }
 
-static char	*last_exit(char *str, int start, int len)
+static char	*last_exit(char *str, int start)
 {
 	char	*result;
 	char	*exit;
@@ -62,7 +50,7 @@ static char	*last_exit(char *str, int start, int len)
 	exit = ft_itoa(g_exit);
 	if (!exit)
 		return (NULL);
-	result = replace_string(str, start, len, exit);
+	result = replace_string(str, start, 2, exit);
 	free(exit);
 	return (result);
 }
@@ -71,12 +59,9 @@ char	*replace_var(char *str, t_var *head)
 {
 	int		len;
 	char	*tmp;
-	char	*replace;
-	char	*exit;
 
 	tmp = str;
-	len = 0;
-	if (!str || (!ft_strchr(str, '$') && *str != '$'))
+	if (!ft_strchr(str, '$') && *tmp != '$')
 		return (str);
 	while (*tmp && *tmp != '$')
 	{
@@ -84,15 +69,12 @@ char	*replace_var(char *str, t_var *head)
 			tmp = ft_strchr(tmp, '\'');
 		tmp++;
 	}
-	if (*(tmp + 1) && *(tmp + 1) == '?')
-		return (last_exit(str, tmp - str, 2));
-	len++;
-	while (tmp[len] && tmp[len] != '\'' && tmp[len] != ' ' && tmp[len] != '"'
-		&& tmp[len] != '$')
-		len++;
+	len = get_type(tmp);
+	if (len == -1)
+		return (last_exit(str, tmp - str));
 	if (len > 1)
 		return (replace_string(str, tmp - str, len,
-				find_var(tmp + 1, len - 1, head)));
+				find_var(tmp + 1, head)));
 	return (str);
 }
 
@@ -103,7 +85,7 @@ int	place_env_var(t_source *source, t_var *head)
 	tmp = source;
 	while (tmp)
 	{
-		if (replace_needed(tmp->str, head))
+		while (replace_needed(tmp->str, head))
 		{
 			tmp->str = replace_var(tmp->str, head);
 			if (!tmp->str)

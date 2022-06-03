@@ -6,33 +6,26 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:46:55 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/02 14:34:19 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/03 14:46:13 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-void	handler(int signo)
+void	main_signals(void)
 {
-	if (signo == SIGINT)
-	{
-		write(2, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 1);
-		rl_redisplay();
-	}
+	signal(SIGINT, handler);
+	signal(SIGQUIT, SIG_IGN);
 }
 
-void	handler_child(int signo)
+void	child_signals(void)
 {
-	if (signo == SIGINT)
-	{
-		write(2, "\n", 1);
-		rl_on_new_line();
-	}
-	if (signo == SIGQUIT)
-	{
-		g_exit = 3;
-		signal(SIGQUIT, SIG_DFL);
-	}
+	signal(SIGINT, handler_child);
+	signal(SIGQUIT, handler_child);
+}
+
+void	heredoc_signals(void)
+{
+	signal(SIGINT, handler_heredoc);
+	signal(SIGQUIT, SIG_IGN);
 }

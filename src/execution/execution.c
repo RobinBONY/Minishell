@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 10:18:38 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/02 12:16:55 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/03 16:18:50 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	external_redirections(t_cmd *cmd, t_env *env, t_executor *exec)
 		exit (execbltin(cmd, env));
 	else
 		execve(cmd->path, cmd->argv, env->envp);
-	perror("Error");
+	cmd_not_found(cmd->argv[0]);
 	exit(1);
 }
 
@@ -79,7 +79,7 @@ static void	execute_cmd(t_cmd *cmd, t_env *env, t_executor *exec)
 			exit(execbltin(cmd, env));
 		else
 			execve(cmd->path, cmd->argv, env->envp);
-		perror("Error");
+		cmd_not_found(cmd->argv[0]);
 		exit(1);
 	}
 }
@@ -93,6 +93,7 @@ static void	out_execution(t_env *env, t_executor *exec)
 	tmp = exec->commands;
 	while (tmp)
 	{
+		child_signals();
 		tmp->pid = fork();
 		if (tmp->pid < 0)
 			return ;
@@ -107,6 +108,7 @@ static void	out_execution(t_env *env, t_executor *exec)
 		waitpid(tmp->pid, &g_exit, 0);
 		tmp = tmp->next;
 	}
+	main_signals();
 }
 
 void	execution(t_env *env, t_executor *exec)
@@ -114,20 +116,21 @@ void	execution(t_env *env, t_executor *exec)
 	t_cmd	*tmp;
 
 	tmp = exec->commands;
-	ft_heredoc(env->head_var, exec);
+	if (ft_heredoc(env->head_var, exec))
+		return ;
 	if (ft_lstsize(exec->commands) > 1)
 		out_execution (env, exec);
 	else if (tmp && tmp->is_local)
 		g_exit = execbltin(tmp, env);
 	else if (tmp)
 	{
-		signal(SIGINT, handler_child);
-		signal(SIGQUIT, SIG_DFL);
+		child_signals();
 		tmp->pid = fork();
 		if (tmp->pid < 0)
 			return ;
 		if (tmp->pid == 0)
 			execute_cmd(tmp, env, exec);
 		waitpid(tmp->pid, &g_exit, 0);
+		main_signals();
 	}
 }

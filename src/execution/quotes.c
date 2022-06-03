@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 11:12:01 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/01 13:49:54 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/03 11:03:21 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
-
-int	replace_needed(char *str, t_var *head)
-{
-	char	*tmp;
-	int		len;
-
-	tmp = str;
-	len = 0;
-	while (*tmp)
-	{
-		if (*tmp == '\'')
-			tmp = ft_strchr(tmp, '\'');
-		if (*tmp == '$')
-			return (1);
-		tmp++;
-	}
-	return (0);
-}
 
 int	count_quotes(char *str)
 {

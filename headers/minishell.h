@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:19:41 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/02 12:06:16 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/03 16:22:30 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,8 @@ char		*replace_var(char *str, t_var *head);
 int			count_quotes(char *str);
 char		*resize_str(char *str);
 int			remove_quotes_heredoc(t_heredoc *tmp);
-char		*find_var(char *str, int len, t_var *head);
+char		*find_var(char *str, t_var *head);
+int			get_type(char *tmp);
 
 /* Execution */
 
@@ -153,8 +154,6 @@ void		free_params(char **split);
 void		swap_node(t_exp	**env);
 void		unset_env(t_var *head_env, char *key);
 void		unset_exp(t_exp *head_exp, char *key);
-void		handler(int signo);
-void		handler_child(int signo);
 t_var		*init_env(char **envp);
 t_var		*append_to_list(t_var *head, char *envp);
 t_var		*create_node(char *envp);
@@ -162,5 +161,21 @@ t_exp		*init_export(char **envp);
 t_exp		*append_to_exp(t_exp *head, char *envp);
 t_exp		*create_exp_node(char *envp);
 t_exp		*sort_export(t_exp *env);
+
+/* Signals */
+
+void		main_signals(void);
+void		child_signals(void);
+void		heredoc_signals(void);
+void		handler(int signo);
+void		handler_child(int signo);
+void		handler_heredoc(int signo);
+
+/* Errors */
+
+int			unmanaged_character_error(char c);
+int			cmd_not_found(char *str);
+int			unclosed_quote(char c);
+int			syntax_error(char c);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/28 08:34:54 by rbony             #+#    #+#              #
-#    Updated: 2022/06/02 10:47:45 by alakhdar         ###   ########lyon.fr    #
+#    Updated: 2022/06/03 16:15:56 by alakhdar         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,12 +20,15 @@ SRCS = 	src/main.c	\
 		src/builtins/export_utils.c	\
 		src/builtins/export.c	\
 		src/builtins/signals.c	\
+		src/builtins/signals_handlers.c	\
 		src/builtins/sort_export.c	\
 		src/builtins/unset.c	\
+		src/execution/error.c	\
 		src/execution/execution.c	\
 		src/execution/heredoc.c	\
 		src/execution/pipes.c	\
 		src/execution/place_env_var.c	\
+		src/execution/place_env_utils.c	\
 		src/execution/quotes.c	\
 		src/parsing/cmd.c	\
 		src/parsing/cmd_utils.c	\
@@ -41,11 +44,7 @@ SRCS = 	src/main.c	\
 OBJS = ${SRCS:.c=.o}
 
 HEADERS = 	minishell.h \
-			source.h \
-			scanner.h \
-			parser.h \
-			node.h \
-			executor.h
+			readline/include/readline.h
 
 CC = gcc -g -fsanitize=address
 RM = rm -f

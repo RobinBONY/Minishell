@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:40:58 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/30 15:44:44 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/06 16:57:24 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	ft_pwd(t_var *head)
 {
 	char	name[PATH_MAX];
-	char	*path;
 
 	if (getcwd(name, PATH_MAX) == NULL)
 		return (1);
@@ -23,22 +22,32 @@ int	ft_pwd(t_var *head)
 	return (0);
 }
 
-static int	cd_home(t_var *head)
+static int	cd_home(t_var *head_var, t_exp *head_exp)
 {
 	int		hold;
 	char	*path;
+	char	*tmp;
+	char	pwd[PATH_MAX];
 
-	path = get_var(head, "HOME");
+	path = get_var(head_var, "HOME");
 	if (path == NULL)
 		return (1);
 	hold = chdir(path);
+	if (getcwd(pwd, PATH_MAX) == NULL)
+		return (1);
+	tmp = ft_strjoin("PWD=", pwd);
+	replace_env(head_var, tmp);
+	replace_exp(head_exp, tmp);
+	free(tmp);
 	return (0);
 }
 
-static int	cd_args(char *args)
+static int	cd_args(char *args, t_var *head_var, t_exp *head_exp)
 {
 	int		hold;
 	char	*path;
+	char	*tmp;
+	char	pwd[PATH_MAX];
 
 	path = ft_strdup(args);
 	if (path == NULL)
@@ -49,20 +58,38 @@ static int	cd_args(char *args)
 		free(path);
 		return (1);
 	}
+	if (getcwd(pwd, PATH_MAX) == NULL)
+		return (1);
+	tmp = ft_strjoin("PWD=", pwd);
+	replace_env(head_var, tmp);
+	replace_exp(head_exp, tmp);
+	free(tmp);
 	free(path);
 	return (0);
 }
 
-int	ft_cd(char *args, t_var *head)
+void	change_oldpwd(t_var *head_var, t_exp *head_exp, char *pwd)
 {
-	int		hold;
+	char	*tmp;
 
-	hold = 0;
-	if (!args)
-		hold = cd_home(head);
-	else
-		hold = cd_args(args);
-	if (hold == 1)
+	tmp = ft_strjoin("OLDPWD=", pwd);
+	replace_env(head_var, tmp);
+	replace_exp(head_exp, tmp);
+	free(tmp);
+}
+
+int	ft_cd(char *args, t_var *head_var, t_exp *head_exp)
+{
+	char	pwd[PATH_MAX];
+	char	*tmp;
+
+	if (getcwd(pwd, PATH_MAX) == NULL)
 		return (1);
-	return (hold);
+	change_oldpwd(head_var, head_exp, pwd);
+	if (!args)
+		return (cd_home(head_var, head_exp));
+	else
+		return (cd_args(args, head_var, head_exp));
+	free(tmp);
+	return (1);
 }

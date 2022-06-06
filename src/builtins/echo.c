@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 11:28:49 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/16 16:33:21 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/06 15:19:02 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,34 +17,37 @@ int	check_new_line(char *str)
 	int	i;
 
 	i = 0;
-	if (str && str[i])
+	if (str[i] && str[i] == '-')
+		i++;
+	if (!str[i])
+		return (0);
+	while (str[i])
 	{
-		if (str[i] == '-' && str[i + 1] == 'n' && str[i + 2] == '\0')
+		if (str[i] != 'n')
 			return (0);
+		i++;
 	}
 	return (1);
 }
 
 int	ft_echo(char **arg)
 {
-	int	x;
 	int	i;
+	int	newline;
 
-	x = 1;
-	i = 0;
-	if (!check_new_line(arg[1]))
+	i = 1;
+	newline = 0;
+	while (arg[i] && check_new_line(arg[i]))
 	{
-		x = 2;
-		i = 1;
+		newline = 1;
+		i++;
 	}
-	while (arg[x])
+	while (arg[i])
 	{
-		printf("%s", arg[x]);
-		if (arg[x + 1] != NULL)
-			printf(" ");
-		x++;
+		printf("%s ", arg[i]);
+		i++;
 	}
-	if (!i)
+	if (!newline)
 		printf("\n");
 	return (0);
 }

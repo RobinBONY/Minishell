@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 10:18:38 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/03 16:18:50 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/06 16:08:09 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	execbltin(t_cmd *cmd, t_env *env)
 	if (ft_strcmp(cmd->path, "echo") == 0)
 		return (ft_echo(cmd->argv));
 	if (ft_strcmp(cmd->path, "cd") == 0)
-		return (ft_cd(cmd->argv[1], env->head_var));
+		return (ft_cd(cmd->argv[1], env->head_var, env->head_exp));
 	if (ft_strcmp(cmd->path, "pwd") == 0)
 		return (ft_pwd(env->head_var));
 	if (ft_strcmp(cmd->path, "env") == 0)
@@ -28,9 +28,9 @@ static int	execbltin(t_cmd *cmd, t_env *env)
 			return (print_export(env->head_exp));
 		else
 		{
-			append_to_exp(env->head_exp, cmd->argv[1]);
+			rep_or_app_exp(env->head_exp, cmd->argv[1]);
+			rep_or_app_env(env->head_var, cmd->argv[1]);
 			sort_export(env->head_exp);
-			append_to_list(env->head_var, cmd->argv[1]);
 			return (0);
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:12:29 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/03 14:57:58 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/06 14:39:43 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,24 +56,22 @@ int	ft_heredoc(t_var *env, t_executor *exec)
 	int			expand;
 	int			pid;
 
-	fd = open("/tmp/.heredoc", O_WRONLY | O_TRUNC | O_CREAT, 0664);
-	if (fd == -1)
-		return (1);
-	signal(SIGINT, SIG_IGN);
-	pid = fork();
-	if (pid < 0)
-		return (1);
-	else if (pid == 0)
-		launch_heredoc(exec->heredocs, env, fd);
-	waitpid(pid, &g_exit, 0);
-	main_signals();
-	if (g_exit)
-		return (1);
-	close(fd);
-	fd = open("/tmp/.heredoc", O_RDONLY);
-	if (fd == -1)
-		return (1);
-	if (exec->input == 0)
-		exec->input = fd;
+	if (exec->heredocs)
+	{
+		fd = open("/tmp/.heredoc", O_WRONLY | O_TRUNC | O_CREAT, 0664);
+		if (fd == -1)
+			return (1);
+		signal(SIGINT, SIG_IGN);
+		pid = fork();
+		if (pid < 0)
+			return (1);
+		else if (pid == 0)
+			launch_heredoc(exec->heredocs, env, fd);
+		waitpid(pid, &g_exit, 0);
+		main_signals();
+		if (g_exit)
+			return (1);
+		close(fd);
+	}
 	return (0);
 }

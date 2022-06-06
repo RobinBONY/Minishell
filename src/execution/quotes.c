@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 11:12:01 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/03 11:03:21 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/06 13:45:59 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,33 +20,50 @@ int	count_quotes(char *str)
 	while (*str)
 	{
 		if (*str == '\'' || *str == '"')
-			i++;
+		{
+			str = ft_strchr(str, *str);
+			i += 2;
+		}
 		str++;
 	}
 	return (i);
 }
 
+static void	resize_str_2(char *new, char *str)
+{
+	char	*tmp;
+	int		i;
+	int		quotes;
+
+	i = -1;
+	quotes = 0;
+	tmp = NULL;
+	while (str[++i])
+	{
+		if (str[i] && !tmp && (str[i] == '\'' || str[i] == '"'))
+		{
+			quotes++;
+			tmp = &str[i];
+		}
+		else if (str[i] && tmp && str[i] == *tmp)
+		{
+			quotes++;
+			tmp = NULL;
+		}
+		else
+			new[i - quotes] = str[i];
+	}
+	new[i - quotes] = '\0';
+}
+
 char	*resize_str(char *str)
 {
 	char	*new;
-	int		i;
-	int		j;
 
-	i = 0;
-	j = 0;
 	new = malloc((ft_strlen(str) - count_quotes(str) + 1) * sizeof(char));
 	if (!new)
 		return (NULL);
-	while (str[j])
-	{
-		if (str[j] != '\'' && str[j] != '"')
-		{
-			new[i] = str[j];
-			i++;
-		}
-		j++;
-	}
-	new[i] = '\0';
+	resize_str_2(new, str);
 	return (new);
 }
 

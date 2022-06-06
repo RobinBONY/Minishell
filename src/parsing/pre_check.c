@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pre_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 13:15:26 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/03 16:22:53 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/06 16:11:42 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,21 @@ int	parse_error(t_source *head)
 
 	node = head;
 	if (ft_strcmp(node->str, "|") == 0)
-		return (syntax_error('|'));
+		return (syntax_error("|"));
 	while (node->next)
 	{
 		if (node->next && node->type == OPERATOR
 			&& node->next->type == OPERATOR)
 		{
 			if (ft_strcmp(node->str, "|"))
-				return (syntax_error('|'));
+				return (syntax_error(node->str));
 			else if (ft_strcmp(node->str, "|") == 0
 				&& ft_strcmp(node->next->str, "|") == 0)
-				return (syntax_error('|'));
+				return (syntax_error(node->str));
 		}
 		node = node->next;
 	}
 	if (node->type == OPERATOR)
-		return (syntax_error(*node->str));
+		return (syntax_error(node->str));
 	return (0);
 }

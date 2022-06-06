@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:19:41 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/03 16:22:30 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/06 16:11:08 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,6 @@ void		handler_heredoc(int signo);
 int			unmanaged_character_error(char c);
 int			cmd_not_found(char *str);
 int			unclosed_quote(char c);
-int			syntax_error(char c);
+int			syntax_error(char *c);
 
 #endif

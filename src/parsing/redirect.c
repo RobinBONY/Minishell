@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 13:19:37 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/31 14:29:30 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/06 14:52:39 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+static int	check_redirects(t_executor *exec)
+{
+	if (exec->input == -1 || exec->output == -1)
+		return (1);
+	return (0);
+}
 
 int	find_redirects(t_executor *exec, t_source **source, t_env *env)
 {
@@ -24,6 +31,7 @@ int	find_redirects(t_executor *exec, t_source **source, t_env *env)
 		{
 			if (find_heredocs(exec, &tmp))
 				return (1);
+			exec->input = open_infile("/tmp/.heredoc");
 		}
 		if (tmp->type == OPERATOR && tmp->used
 			&& ft_strcmp(tmp->str, "<") == 0)
@@ -36,9 +44,7 @@ int	find_redirects(t_executor *exec, t_source **source, t_env *env)
 			set_output(exec, tmp, 1, env);
 		tmp = tmp->next;
 	}
-	if (exec->input == -1 || exec->output == -1)
-		return (1);
-	return (0);
+	return (check_redirects(exec));
 }
 
 void	set_infile(t_cmd *cmd, int infile)

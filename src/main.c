@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:14:46 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/03 16:26:23 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/06 17:33:19 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	parse_and_execute(t_env *env, char *line_buffer)
 t_env	init(char **envp)
 {
 	t_env		env;
+	int			fd;
 
 	env.envp = envp;
 	env.head_var = init_env(envp);
@@ -58,6 +59,9 @@ t_env	init(char **envp)
 	if (!env.head_exp)
 		return (env);
 	env.head_exp = sort_export(env.head_exp);
+	fd = open_outfile("/tmp/.heredoc");
+	if (fd)
+		close(fd);
 	return (env);
 }
 
@@ -66,12 +70,14 @@ int	main(int argc, char **argv, char **envp)
 	t_env		env;
 	char		*line_buffer;
 
-	main_signals();
 	welcome();
+	if (!*envp)
+		return (1);
+	main_signals();
 	env = init(envp);
 	while (1)
 	{
-		line_buffer = readline("Minishell2.0$> ");
+		line_buffer = readline("Minishell-3.5$ ");
 		if (line_buffer == NULL)
 			break ;
 		if (line_buffer && *line_buffer)
@@ -81,6 +87,7 @@ int	main(int argc, char **argv, char **envp)
 			free(line_buffer);
 		}
 	}
+	unlink("/tmp/.heredoc");
 	ft_putstr_fd("exit\n", 2);
 	free(line_buffer);
 	return (0);

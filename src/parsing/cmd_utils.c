@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:23:30 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/25 15:34:25 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/06 11:16:32 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static char	*find_cmd_path(char *cmd, char *env_path)
 void	find_all_path(t_var *env, t_cmd *cmd)
 {
 	char	*path;
+	char	*tmp;
 
 	path = find_path(env);
 	if (!path)
@@ -75,9 +76,12 @@ void	find_all_path(t_var *env, t_cmd *cmd)
 	{
 		if (cmd->is_builtin == 0)
 		{
-			cmd->path = find_cmd_path(cmd->argv[0], path);
-			if (!cmd->path)
-				cmd->path = ft_strdup(cmd->argv[0]);
+			tmp = find_cmd_path(cmd->path, path);
+			if (tmp)
+			{
+				free(cmd->path);
+				cmd->path = tmp;
+			}
 		}
 		cmd = cmd->next;
 	}

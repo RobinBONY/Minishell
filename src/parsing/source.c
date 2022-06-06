@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   source.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 15:53:31 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/25 14:15:29 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/06 09:40:09 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,11 @@ t_source	*make_source(char *str)
 
 	i = 0;
 	split = ft_cmd_split(str);
-	if (!split)
+	if (!split || !*split)
+	{
+		free_params(split);
 		return (NULL);
+	}
 	source = make_list(split);
 	if (!source)
 		return (NULL);

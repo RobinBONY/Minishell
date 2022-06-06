@@ -1,30 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   files.c                                            :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/25 13:06:59 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/06 14:47:15 by rbony            ###   ########lyon.fr   */
+/*   Created: 2022/06/06 16:17:33 by rbony             #+#    #+#             */
+/*   Updated: 2022/06/06 17:36:21 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-void	set_input(t_executor *exec, t_source *tmp, t_env *env)
-{	
-	exec->input = open_infile(replace_var(tmp->next->str, env->head_var));
-	tmp->used = 0;
-	tmp->next->used = 0;
+static int	is_numeric(char *str)
+{
+	while (*str)
+	{
+		if (!ft_isdigit(*str))
+			return (0);
+		str++;
+	}
+	return (1);
 }
 
-void	set_output(t_executor *exec, t_source *tmp, int mode, t_env *env)
+void	ft_exit(char *ex_no)
 {
-	if (mode)
-		exec->output = open_append(replace_var(tmp->next->str, env->head_var));
+	unlink("/tmp/.heredoc");
+	if (!ex_no)
+		exit(0);
+	if (is_numeric(ex_no))
+		exit(ft_atoi(ex_no));
 	else
-		exec->output = open_outfile(replace_var(tmp->next->str, env->head_var));
-	tmp->used = 0;
-	tmp->next->used = 0;
+	{
+		printf("%s\n", "exit");
+		printf("Minishell: exit: %s: numeric argument required\n", ex_no);
+		exit(255);
+	}
 }

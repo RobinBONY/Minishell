@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+         #
+#    By: rbony <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/28 08:34:54 by rbony             #+#    #+#              #
-#    Updated: 2022/06/03 16:15:56 by alakhdar         ###   ########lyon.fr    #
+#    Updated: 2022/06/06 16:23:19 by rbony            ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,14 +39,15 @@ SRCS = 	src/main.c	\
 		src/parsing/pre_check.c	\
 		src/parsing/redirect.c	\
 		src/parsing/source.c	\
-		src/parsing/source_utils.c
+		src/parsing/source_utils.c \
+		src/builtins/exit.c
 
 OBJS = ${SRCS:.c=.o}
 
 HEADERS = 	minishell.h \
 			readline/include/readline.h
 
-CC = gcc -g -fsanitize=address
+CC = gcc -g #-fsanitize=address
 RM = rm -f
 
 FLAGS = -Wall -Wextra -Werror

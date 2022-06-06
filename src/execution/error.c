@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:20:58 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/03 16:25:17 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/06 16:11:22 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int	unclosed_quote(char c)
 	return (1);
 }
 
-int	syntax_error(char c)
+int	syntax_error(char *c)
 {
-	printf("Minishell : syntax error near unexpected token \'%c\'\n", c);
+	printf("Minishell : syntax error near unexpected token \'%s\'\n", c);
 	g_exit = 258;
 	return (1);
 }

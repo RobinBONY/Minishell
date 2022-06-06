@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 11:28:49 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/06 15:19:02 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/06 19:06:25 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ int	ft_echo(char **arg)
 	}
 	while (arg[i])
 	{
-		printf("%s ", arg[i]);
+		printf("%s", arg[i]);
 		i++;
+		if (arg[i])
+			printf("%s", " ");
 	}
 	if (!newline)
 		printf("\n");

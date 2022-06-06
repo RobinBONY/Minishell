@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:12:29 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/06 14:39:43 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/06 18:32:39 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	ft_heredoc(t_var *env, t_executor *exec)
 		waitpid(pid, &g_exit, 0);
 		main_signals();
 		if (g_exit)
-			return (1);
+			return (g_exit);
 		close(fd);
 	}
 	return (0);

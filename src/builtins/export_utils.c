@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 10:37:00 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/16 16:33:41 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/06 16:34:08 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,75 @@ int	validate_arg(char *arg)
 		return (0);
 	else
 		return (1);
+}
+
+void	rep_or_app_env(t_var *head, char *str)
+{
+	t_var	*tmp;
+
+	tmp = head;
+	while (tmp)
+	{
+		if (ft_strncmp(str, tmp->key, ft_strlen(tmp->key)) == 0)
+		{
+			replace_env(head, str);
+			return ;
+		}
+		tmp = tmp->next;
+	}
+	append_to_list(head, str);
+}
+
+void	rep_or_app_exp(t_exp *head, char *str)
+{
+	t_exp	*tmp;
+
+	tmp = head;
+	while (tmp)
+	{
+		if (ft_strncmp(str, tmp->key, ft_strlen(tmp->key)) == 0)
+		{
+			replace_exp(head, str);
+			return ;
+		}
+		tmp = tmp->next;
+	}
+	append_to_exp(head, str);
+}
+
+void	replace_env(t_var *head, char *str)
+{
+	t_var	*tmp;
+
+	tmp = head;
+	while (tmp)
+	{
+		if (ft_strncmp(str, tmp->key, ft_strlen(tmp->key)) == 0)
+		{
+			if (tmp->value)
+				free(tmp->value);
+			if (str)
+				tmp->value = ft_strdup(get_value(str));
+			tmp->printable = is_occurring(str);
+		}
+		tmp = tmp->next;
+	}
+}
+
+void	replace_exp(t_exp *head, char *str)
+{
+	t_exp	*tmp;
+
+	tmp = head;
+	while (tmp)
+	{
+		if (ft_strncmp(str, tmp->key, ft_strlen(tmp->key)) == 0)
+		{
+			if (tmp->value)
+				free(tmp->value);
+			if (str)
+				tmp->value = ft_strdup(get_value(str));
+		}
+		tmp = tmp->next;
+	}
 }

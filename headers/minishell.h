@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:19:41 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/06 16:11:08 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/06 17:39:31 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int			remove_quotes(t_source *source);
 
 /* Builtins */
 
-int			ft_cd(char *args, t_var *head);
+int			ft_cd(char *args, t_var *head_env, t_exp *head_exp);
 int			ft_pwd(t_var *head);
 int			ft_echo(char **arg);
 int			check_new_line(char *str);
@@ -154,6 +154,10 @@ void		free_params(char **split);
 void		swap_node(t_exp	**env);
 void		unset_env(t_var *head_env, char *key);
 void		unset_exp(t_exp *head_exp, char *key);
+void		replace_exp(t_exp *head, char *str);
+void		replace_env(t_var *head, char *str);
+void		rep_or_app_env(t_var *head, char *str);
+void		rep_or_app_exp(t_exp *head, char *str);
 t_var		*init_env(char **envp);
 t_var		*append_to_list(t_var *head, char *envp);
 t_var		*create_node(char *envp);

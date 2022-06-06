@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 13:15:26 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/06 16:11:42 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/06 17:55:07 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,10 @@ int	parse_error(t_source *head)
 			&& node->next->type == OPERATOR)
 		{
 			if (ft_strcmp(node->str, "|"))
-				return (syntax_error(node->str));
+				return (syntax_error(node->next->str));
 			else if (ft_strcmp(node->str, "|") == 0
 				&& ft_strcmp(node->next->str, "|") == 0)
-				return (syntax_error(node->str));
+				return (syntax_error(node->next->str));
 		}
 		node = node->next;
 	}

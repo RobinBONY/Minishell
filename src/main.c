@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:14:46 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/06 17:33:19 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/06 17:46:21 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	main(int argc, char **argv, char **envp)
 	t_env		env;
 	char		*line_buffer;
 
-	welcome();
+	//welcome();
 	if (!*envp)
 		return (1);
 	main_signals();

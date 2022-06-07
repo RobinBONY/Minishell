@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:17:33 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/06 17:36:21 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/07 13:18:16 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@ void	ft_exit(char *ex_no)
 	if (!ex_no)
 		exit(0);
 	if (is_numeric(ex_no))
-		exit(ft_atoi(ex_no));
+		exit(ft_atol(ex_no));
 	else
 	{
 		printf("%s\n", "exit");
-		printf("Minishell: exit: %s: numeric argument required\n", ex_no);
+		printf("Minishell: exit: %s: numeric argument required\n",
+			ex_no);
 		exit(255);
 	}
 }

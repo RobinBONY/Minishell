@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 15:58:45 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/31 11:10:31 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/07 11:17:39 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ void		ft_putstr_fd(char *s, int fd);
 char		*ft_strncat(char *dest, char *src, unsigned int nb);
 char		*ft_strjoin(const char *s1, const char *s2);
 int			ft_atoi(const char	*str);
+long		ft_atol(const char *str);
 
 #endif

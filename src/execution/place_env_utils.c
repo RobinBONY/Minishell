@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 10:59:45 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/07 17:29:31 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/07 17:43:06 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,7 @@ int	get_type(char *tmp)
 	else
 	{
 		len++;
-		while (tmp[len] && tmp[len] != '\'' && tmp[len] != ' '
-			&& tmp[len] != '"' && tmp[len] != '$')
+		while (tmp[len] && ft_isalnum(tmp[len]))
 			len++;
 		return (len);
 	}

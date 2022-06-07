@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:40:58 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/07 10:58:25 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/07 13:19:29 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	ft_cd(char *args, t_var *head_var, t_exp *head_exp)
 	{
 		test = opendir(args);
 		if (!test)
-			printf("\033[91mNo such file or directory\n\033[0m");
+			perror("Error");
 		return (cd_args(args, head_var, head_exp));
 	}
 	free(tmp);

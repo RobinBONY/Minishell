@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:40:58 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/06 16:57:24 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/07 10:58:25 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int	ft_cd(char *args, t_var *head_var, t_exp *head_exp)
 {
 	char	pwd[PATH_MAX];
 	char	*tmp;
+	DIR		*test;
 
 	if (getcwd(pwd, PATH_MAX) == NULL)
 		return (1);
@@ -89,7 +90,12 @@ int	ft_cd(char *args, t_var *head_var, t_exp *head_exp)
 	if (!args)
 		return (cd_home(head_var, head_exp));
 	else
+	{
+		test = opendir(args);
+		if (!test)
+			printf("\033[91mNo such file or directory\n\033[0m");
 		return (cd_args(args, head_var, head_exp));
+	}
 	free(tmp);
 	return (1);
 }

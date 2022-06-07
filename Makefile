@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rbony <marvin@42.fr>                       +#+  +:+       +#+         #
+#    By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/28 08:34:54 by rbony             #+#    #+#              #
-#    Updated: 2022/06/06 16:23:19 by rbony            ###   ########lyon.fr    #
+#    Updated: 2022/06/07 16:54:30 by alakhdar         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ OBJS = ${SRCS:.c=.o}
 HEADERS = 	minishell.h \
 			readline/include/readline.h
 
-CC = gcc -g #-fsanitize=address
+CC = gcc -g -fsanitize=address
 RM = rm -f
 
 FLAGS = -Wall -Wextra -Werror
@@ -55,10 +55,10 @@ FLAGS = -Wall -Wextra -Werror
 all: lib ${NAME}
 
 $(NAME): ${OBJS}
-	${CC} ${OBJS} -lreadline -I./readline/include -L./readline/lib -lncurses src/libft/libft.a -o ${NAME}
+	${CC} ${FLAGS} ${OBJS} -lreadline -I./readline/include -L./readline/lib -lncurses src/libft/libft.a -o ${NAME}
 
 %.o : %.c ${HEADERS} Makefile
-	${CC} ${FLAGS} -c $< -o ${<:.c=.o}
+	${CC} -c $< -o ${<:.c=.o}
 
 clean:
 	${RM} ${OBJS}
@@ -70,7 +70,7 @@ fclean:	clean
 
 re:	fclean all
 
-lib:
+lib: src/libft/libft.h src/libft/Makefile
 	make -C src/libft
 
 .PHONY: all clean fclean re 

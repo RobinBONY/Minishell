@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:19:41 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/07 10:34:35 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/07 17:27:27 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,8 @@ int			print_export(t_exp *head_exp);
 char		*get_key(char *envp);
 char		*get_value(char *envp);
 char		*get_var(t_var *head, char *key);
+char		**dup_env(char **envp);
+void		shell_level(char **envp);
 void		free_params(char **split);
 void		swap_node(t_exp	**env);
 void		unset_env(t_var *head_env, char *key);

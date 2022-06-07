@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 13:10:13 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/30 15:40:21 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/07 13:48:43 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int	make_commands(t_executor *exec, t_source **source, t_env *env)
 			if (!new)
 				return (1);
 			new->is_local = is_local(new->argv[0], new->argv);
+			ft_tolower(new->path);
 			ft_cmdadd_back(&exec->commands, new);
 		}
 		else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   place_env_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 10:59:45 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/03 11:26:06 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/07 13:17:12 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ int	get_type(char *tmp)
 	else
 	{
 		len++;
-		while (tmp[len] && tmp[len] != '\'' && tmp[len] != ' '
-			&& tmp[len] != '"' && tmp[len] != '$')
+		while (tmp[len] && ft_isalnum(tmp[len]))
 			len++;
 		return (len);
 	}

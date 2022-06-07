@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 10:18:38 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/06 16:08:09 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/07 14:24:50 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	external_redirections(t_cmd *cmd, t_env *env, t_executor *exec)
 	else
 		execve(cmd->path, cmd->argv, env->envp);
 	cmd_not_found(cmd->argv[0]);
-	exit(1);
+	exit(127);
 }
 
 static void	execute_cmd(t_cmd *cmd, t_env *env, t_executor *exec)
@@ -80,7 +80,7 @@ static void	execute_cmd(t_cmd *cmd, t_env *env, t_executor *exec)
 		else
 			execve(cmd->path, cmd->argv, env->envp);
 		cmd_not_found(cmd->argv[0]);
-		exit(1);
+		exit(127);
 	}
 }
 
@@ -106,6 +106,8 @@ static void	out_execution(t_env *env, t_executor *exec)
 	while (tmp)
 	{
 		waitpid(tmp->pid, &g_exit, 0);
+		if (WIFEXITED(g_exit))
+			WEXITSTATUS(g_exit);
 		tmp = tmp->next;
 	}
 	main_signals();
@@ -131,6 +133,8 @@ void	execution(t_env *env, t_executor *exec)
 		if (tmp->pid == 0)
 			execute_cmd(tmp, env, exec);
 		waitpid(tmp->pid, &g_exit, 0);
+		if (WIFEXITED(g_exit))
+			g_exit = WEXITSTATUS(g_exit);
 		main_signals();
 	}
 }

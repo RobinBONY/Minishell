@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 11:28:49 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/06 19:06:25 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/07 13:39:02 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,19 @@ int	check_new_line(char *str)
 	return (1);
 }
 
+int	something_after(char **arg, int i)
+{
+	int	result;
+
+	result = 0;
+	while (arg[++i])
+	{
+		if (*arg[i] != '\0')
+			result = 1;
+	}
+	return (result);
+}
+
 int	ft_echo(char **arg)
 {
 	int	i;
@@ -45,9 +58,9 @@ int	ft_echo(char **arg)
 	while (arg[i])
 	{
 		printf("%s", arg[i]);
-		i++;
-		if (arg[i])
+		if (something_after(arg, i))
 			printf("%s", " ");
+		i++;
 	}
 	if (!newline)
 		printf("\n");

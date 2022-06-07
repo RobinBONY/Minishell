@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:20:58 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/07 10:29:39 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/07 13:13:54 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	cmd_not_found(char *str)
 
 int	unclosed_quote(char c)
 {
-	printf("\033[91mUnexpected EOF while looking for matching \'%c\'\n\033[0m",
+	printf("\033[91mUnexpected EOF while looking for matching `%c\'\n\033[0m",
 		c);
 	g_exit = -1;
 	return (1);

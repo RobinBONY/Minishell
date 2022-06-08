@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:19:41 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/07 10:34:35 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/08 14:38:37 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,48 +70,43 @@ typedef struct s_heredoc
 
 typedef struct s_cmd
 {
-	char			*path;
-	char			**argv;
-	pid_t			pid;
-	int				pipex[2];
-	int				index;
-	int				is_builtin;
-	int				is_local;
-	struct s_cmd	*prev;
-	struct s_cmd	*next;
-}	t_cmd;
-
-typedef struct s_executor
-{
+	char				*path;
+	char				**argv;
+	pid_t				pid;
+	int					pipex[2];
+	int					index;
+	int					is_builtin;
+	int					is_local;
 	int					input;
 	int					output;
 	struct s_heredoc	*heredocs;
-	struct s_cmd		*commands;
-}	t_executor;
+	struct s_cmd		*prev;
+	struct s_cmd		*next;
+}	t_cmd;
 
 int			g_exit;
 
 /* Parsing */
 
-int			make_commands(t_executor *exec, t_source **source, t_env *env);
+t_cmd		*make_command(t_source **source, t_env *env, t_cmd *prev);
 int			is_builtin(char *cmd);
 int			is_local(char *cmd, char **argv);
 int			open_append(char *outfile);
 int			open_outfile(char *outfile);
 int			open_infile(char *infile);
-int			find_heredocs(t_executor *exec, t_source **source);
+int			find_heredocs(t_cmd *cmd, t_source **source);
 int			parse_error(t_source *head);
 int			not_interpreted(char *line);
-int			find_redirects(t_executor *exec, t_source **source, t_env *env);
-void		*free_executor(t_executor **exec);
-void		set_output(t_executor *exec, t_source *tmp, int mode, t_env *env);
-void		set_input(t_executor *exec, t_source *tmp, t_env *env);
+int			find_redirects(t_cmd *cmd, t_source **source, t_env *env);
+void		*free_executor(t_cmd *cmd);
+void		set_output(t_cmd *cmd, t_source *tmp, int mode, t_env *env);
+void		set_input(t_cmd *cmd, t_source *tmp, t_env *env);
 void		set_both(int infile, int outfile);
 void		set_outfile(t_cmd *cmd, int outfile);
 void		set_infile(t_cmd *cmd, int infile);
 void		ft_srcclear(t_source **head);
 void		assign_type(t_source *source);
-t_executor	*make_executor(t_source	*source, t_env *env);
+t_cmd		*make_executor(t_source	*source, t_env *env);
 t_source	*make_source(char *str);
 void		find_all_path(t_var *env, t_cmd *cmd);
 int			ft_lstsize(t_cmd *cmd);
@@ -121,20 +116,35 @@ char		*resize_str(char *str);
 int			remove_quotes_heredoc(t_heredoc *tmp);
 char		*find_var(char *str, t_var *head);
 int			get_type(char *tmp);
+void		index_commands(t_cmd *cmds);
+void		ft_cmdadd_back(t_cmd **alst, t_cmd *new);
+void		ft_lstadd_front(t_source **alst, t_source *new);
+t_cmd		*ft_lstlast(t_cmd *cmd);
+void		ft_push(t_source **src, t_source **dest);
+int			set_cmd(t_source **source, t_cmd *new, t_cmd *prev, int len);
+int			check_redirects(t_cmd *exec);
+int			get_len(t_source *source);
+char		*last_exit(char *str, int start);
+char		*replace_string(char *str, int start, int len, char *replace);
 
 /* Execution */
 
 void		error_cmd_not_found(char *cmd);
-void		execution(t_env *env, t_executor *exec);
+void		execution(t_env *env, t_cmd *cmd);
 void		close_pipes_fromfirst(t_cmd *cmd);
 void		close_pipes_fromlast(t_cmd *cmd);
 void		error_exit(char *msg, int exit_code);
 void		ft_exit(char *ex_no);
-int			ft_heredoc(t_var *env, t_executor *exec);
+int			ft_heredoc(t_var *env, t_cmd *cmd);
 int			open_pipes(t_cmd **cmd);
 int			place_env_var(t_source *source, t_var *head);
 int			replace_needed(char *str, t_var *head);
 int			remove_quotes(t_source *source);
+void		ft_waitpid(t_cmd	*tmp);
+void		set_redirect_first(t_cmd *cmd);
+void		set_redirect_last(t_cmd *cmd);
+void		set_redirect(t_cmd *cmd);
+void		set_redirect_solobolo(t_cmd *cmd);
 
 /* Builtins */
 

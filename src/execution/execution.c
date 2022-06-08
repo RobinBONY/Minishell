@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 10:18:38 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/07 14:24:50 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/08 15:15:39 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,86 +41,75 @@ static int	execbltin(t_cmd *cmd, t_env *env)
 	return (0);
 }
 
-static void	external_redirections(t_cmd *cmd, t_env *env, t_executor *exec)
+static void	external_redirections(t_cmd *cmd, t_env *env)
 {
 	if (!cmd->prev && !cmd->next)
-		set_both(exec->input, exec->output);
+		set_redirect_solobolo(cmd);
 	else if (!cmd->prev)
-		set_infile(cmd, exec->input);
+		set_redirect_first(cmd);
 	else if (!cmd->next)
-		set_outfile(cmd, exec->output);
+		set_redirect_last(cmd);
 	if (cmd->is_builtin)
 		exit (execbltin(cmd, env));
 	else
 		execve(cmd->path, cmd->argv, env->envp);
-	cmd_not_found(cmd->argv[0]);
+	if (cmd->argv[0])
+		cmd_not_found(cmd->argv[0]);
 	exit(127);
 }
 
-static void	execute_cmd(t_cmd *cmd, t_env *env, t_executor *exec)
+static void	execute_cmd(t_cmd *cmd, t_env *env)
 {
 	if (!cmd->prev || !cmd->next)
 	{
-		external_redirections(cmd, env, exec);
+		external_redirections(cmd, env);
 	}
 	else
 	{
-		dup2(cmd->pipex[0], STDIN_FILENO);
-		dup2(cmd->next->pipex[1], STDOUT_FILENO);
-		close(cmd->pipex[1]);
-		close(cmd->next->pipex[0]);
-		close_pipes_fromfirst(cmd->next);
-		close_pipes_fromlast(cmd);
-		if (cmd->index == 2)
-			close(cmd->pipex[0]);
-		if (!cmd->path)
-			close(cmd->pipex[0]);
+		set_redirect(cmd);
 		if (cmd->is_builtin)
 			exit(execbltin(cmd, env));
 		else
 			execve(cmd->path, cmd->argv, env->envp);
-		cmd_not_found(cmd->argv[0]);
+		if (cmd->argv[0])
+			cmd_not_found(cmd->argv[0]);
 		exit(127);
 	}
 }
 
-static void	out_execution(t_env *env, t_executor *exec)
+static void	out_execution(t_env *env, t_cmd *exec)
 {
 	t_cmd	*tmp;
 
-	if (open_pipes(&exec->commands))
+	if (open_pipes(&exec))
 		return ;
-	tmp = exec->commands;
+	tmp = exec;
 	while (tmp)
 	{
 		child_signals();
 		tmp->pid = fork();
 		if (tmp->pid < 0)
-			return ;
+		{
+			printf("%s\n", "echec fork");
+			break ;
+		}
 		if (tmp->pid == 0)
-			execute_cmd(tmp, env, exec);
+			execute_cmd(tmp, env);
 		tmp = tmp->next;
 	}
-	tmp = exec->commands;
+	tmp = exec;
 	close_pipes_fromfirst(tmp);
-	while (tmp)
-	{
-		waitpid(tmp->pid, &g_exit, 0);
-		if (WIFEXITED(g_exit))
-			WEXITSTATUS(g_exit);
-		tmp = tmp->next;
-	}
+	ft_waitpid(tmp);
 	main_signals();
 }
 
-void	execution(t_env *env, t_executor *exec)
+void	execution(t_env *env, t_cmd *exec)
 {
 	t_cmd	*tmp;
 
-	tmp = exec->commands;
-	if (ft_heredoc(env->head_var, exec))
-		return ;
-	if (ft_lstsize(exec->commands) > 1)
+	tmp = exec;
+	g_exit = ft_heredoc(env->head_var, exec);
+	if (ft_lstsize(exec) > 1)
 		out_execution (env, exec);
 	else if (tmp && tmp->is_local)
 		g_exit = execbltin(tmp, env);
@@ -131,7 +120,7 @@ void	execution(t_env *env, t_executor *exec)
 		if (tmp->pid < 0)
 			return ;
 		if (tmp->pid == 0)
-			execute_cmd(tmp, env, exec);
+			execute_cmd(tmp, env);
 		waitpid(tmp->pid, &g_exit, 0);
 		if (WIFEXITED(g_exit))
 			g_exit = WEXITSTATUS(g_exit);

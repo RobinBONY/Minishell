@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   place_env_var.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:48:03 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/03 11:21:30 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/08 14:38:29 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-static char	*replace_string(char *str, int start, int len, char *replace)
+char	*replace_string(char *str, int start, int len, char *replace)
 {
 	char	*new;
 
@@ -42,7 +42,7 @@ char	*find_var(char *str, t_var *head)
 	return (NULL);
 }
 
-static char	*last_exit(char *str, int start)
+char	*last_exit(char *str, int start)
 {
 	char	*result;
 	char	*exit;

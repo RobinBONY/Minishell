@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 13:13:29 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/06 14:45:32 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/08 11:17:39 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	ft_docadd_back(t_heredoc **alst, t_heredoc *new)
 	last->next = new;
 }
 
-int	find_heredocs(t_executor *exec, t_source **source)
+int	find_heredocs(t_cmd *exec, t_source **source)
 {
 	t_heredoc	*new;
 

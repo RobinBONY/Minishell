@@ -6,20 +6,13 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 13:19:37 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/06 14:52:39 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/08 10:53:26 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-static int	check_redirects(t_executor *exec)
-{
-	if (exec->input == -1 || exec->output == -1)
-		return (1);
-	return (0);
-}
-
-int	find_redirects(t_executor *exec, t_source **source, t_env *env)
+int	find_redirects(t_cmd *exec, t_source **source, t_env *env)
 {
 	t_source	*tmp;
 
@@ -47,27 +40,39 @@ int	find_redirects(t_executor *exec, t_source **source, t_env *env)
 	return (check_redirects(exec));
 }
 
-void	set_infile(t_cmd *cmd, int infile)
+void	set_redirect_first(t_cmd *cmd)
 {
-	if (infile)
-		dup2(infile, STDIN_FILENO);
-	dup2(cmd->next->pipex[1], STDOUT_FILENO);
+	if (cmd->input)
+		dup2(cmd->input, STDIN_FILENO);
+	if (cmd->output)
+	{
+		dup2(cmd->output, STDOUT_FILENO);
+		close(cmd->next->pipex[1]);
+	}
+	else
+		dup2(cmd->next->pipex[1], STDOUT_FILENO);
 	close(cmd->next->pipex[0]);
 	close(cmd->pipex[0]);
 	close(cmd->pipex[1]);
 	close_pipes_fromfirst(cmd->next);
-	if (!cmd->path)
+	if (!cmd->is_builtin && access(cmd->path, X_OK) == -1)
 	{
-		close(infile);
+		close(cmd->input);
 		close(cmd->next->pipex[1]);
 	}
 }
 
-void	set_outfile(t_cmd *cmd, int outfile)
+void	set_redirect_last(t_cmd *cmd)
 {
-	if (outfile)
-		dup2(outfile, STDOUT_FILENO);
-	dup2(cmd->pipex[0], STDIN_FILENO);
+	if (cmd->output)
+		dup2(cmd->output, STDOUT_FILENO);
+	if (cmd->input)
+	{
+		dup2(cmd->input, STDIN_FILENO);
+		close(cmd->pipex[0]);
+	}
+	else
+		dup2(cmd->pipex[0], STDIN_FILENO);
 	close(cmd->pipex[1]);
 	close_pipes_fromlast(cmd);
 	if (cmd->index == 2)
@@ -76,10 +81,36 @@ void	set_outfile(t_cmd *cmd, int outfile)
 		close(cmd->pipex[0]);
 }
 
-void	set_both(int infile, int outfile)
+void	set_redirect(t_cmd *cmd)
 {
-	if (infile)
-		dup2(infile, STDIN_FILENO);
-	if (outfile)
-		dup2(outfile, STDOUT_FILENO);
+	if (cmd->input)
+	{
+		dup2(cmd->input, STDIN_FILENO);
+		close(cmd->pipex[0]);
+	}
+	else
+		dup2(cmd->pipex[0], STDIN_FILENO);
+	if (cmd->output)
+	{
+		dup2(cmd->output, STDOUT_FILENO);
+		close(cmd->next->pipex[1]);
+	}
+	else
+		dup2(cmd->next->pipex[1], STDOUT_FILENO);
+	close(cmd->pipex[1]);
+	close(cmd->next->pipex[0]);
+	close_pipes_fromfirst(cmd->next);
+	close_pipes_fromlast(cmd);
+	if (cmd->index == 2)
+		close(cmd->pipex[0]);
+	if (!cmd->is_builtin && access(cmd->path, X_OK) == -1)
+		close(cmd->pipex[0]);
+}
+
+void	set_redirect_solobolo(t_cmd *cmd)
+{
+	if (cmd->input)
+		dup2(cmd->input, STDIN_FILENO);
+	if (cmd->output)
+		dup2(cmd->output, STDOUT_FILENO);
 }

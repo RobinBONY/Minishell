@@ -6,11 +6,26 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:23:30 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/06 11:16:32 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/08 08:31:36 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+void	index_commands(t_cmd *cmds)
+{
+	t_cmd	*tmp;
+	int		i;
+
+	tmp = cmds;
+	i = 1;
+	while (tmp)
+	{
+		tmp->index = i;
+		i++;
+		tmp = tmp->next;
+	}
+}
 
 int	ft_lstsize(t_cmd *cmd)
 {

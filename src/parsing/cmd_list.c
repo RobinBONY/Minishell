@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.c                                         :+:      :+:    :+:   */
+/*   cmd_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 13:11:42 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/06 16:17:22 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/08 14:28:37 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	is_builtin(char *cmd)
 {
+	if (!cmd)
+		return (0);
 	if (ft_strcmp(cmd, "echo") == 0)
 		return (1);
 	if (ft_strcmp(cmd, "cd") == 0)
@@ -33,6 +35,8 @@ int	is_builtin(char *cmd)
 
 int	is_local(char *cmd, char **argv)
 {
+	if (!cmd)
+		return (0);
 	if (ft_strcmp(cmd, "cd") == 0)
 		return (1);
 	if (ft_strcmp(cmd, "export") == 0 && argv[1])
@@ -44,48 +48,71 @@ int	is_local(char *cmd, char **argv)
 	return (0);
 }
 
-void	*free_executor(t_executor **exec)
+int	get_len(t_source *source)
+{
+	int	i;
+
+	i = 0;
+	while (source)
+	{
+		if (source->used)
+			i++;
+		source = source->next;
+	}
+	return (i);
+}
+
+void	*free_executor(t_cmd *exec)
 {
 	t_heredoc	*doctmp;
 	t_cmd		*cmdtmp;
 
-	doctmp = (*exec)->heredocs;
-	cmdtmp = (*exec)->commands;
-	while ((*exec)->heredocs)
+	while (exec)
 	{
-		doctmp = (*exec)->heredocs->next;
-		free((*exec)->heredocs->str);
-		free((*exec)->heredocs);
-		(*exec)->heredocs = doctmp;
+		if (exec->input)
+			close(exec->input);
+		if (exec->output)
+			close(exec->output);
+		doctmp = exec->heredocs;
+		while (exec->heredocs)
+		{
+			doctmp = exec->heredocs->next;
+			free(exec->heredocs->str);
+			free(exec->heredocs);
+			exec->heredocs = doctmp;
+		}
+		cmdtmp = exec->next;
+		free(exec->path);
+		free_params(exec->argv);
+		free(exec);
+		exec = cmdtmp;
 	}
-	while ((*exec)->commands)
-	{
-		cmdtmp = (*exec)->commands->next;
-		free((*exec)->commands->path);
-		free_params((*exec)->commands->argv);
-		free((*exec)->commands);
-		(*exec)->commands = cmdtmp;
-	}
-	free(*exec);
 	return (NULL);
 }
 
-t_executor	*make_executor(t_source	*source, t_env *env)
+t_cmd	*make_executor(t_source	*source, t_env *env)
 {
-	t_executor	*executor;
+	t_cmd		*executor;
+	t_source	*tmp;
 
-	executor = malloc(sizeof(t_executor));
+	executor = NULL;
+	tmp = NULL;
+	while (source)
+	{
+		while (source && ft_strcmp(source->str, "|"))
+			ft_push(&source, &tmp);
+		if (source)
+		{
+			source->used = 0;
+			ft_push(&source, &tmp);
+		}
+		ft_cmdadd_back(&executor, make_command(&tmp, env,
+				ft_lstlast(executor)));
+		ft_srcclear(&tmp);
+	}
+	find_all_path(env->head_var, executor);
+	index_commands(executor);
 	if (!executor)
 		return (NULL);
-	executor->input = 0;
-	executor->output = 0;
-	executor->heredocs = NULL;
-	executor->commands = NULL;
-	if (find_redirects(executor, &source, env))
-		return (free_executor(&executor));
-	if (place_env_var(source, env->head_var))
-		return (free_executor(&executor));
-	if (make_commands(executor, &source, env))
-		return (free_executor(&executor));
 	return (executor);
 }

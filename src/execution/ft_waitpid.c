@@ -1,41 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals_handlers.c                                 :+:      :+:    :+:   */
+/*   ft_waitpid.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 13:46:55 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/08 15:19:20 by rbony            ###   ########lyon.fr   */
+/*   Created: 2022/06/08 10:08:52 by rbony             #+#    #+#             */
+/*   Updated: 2022/06/08 10:48:42 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-void	handler(int signo)
+void	ft_waitpid(t_cmd	*tmp)
 {
-	if (signo == SIGINT)
+	while (tmp)
 	{
-		write(2, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 1);
-		rl_redisplay();
+		waitpid(tmp->pid, &g_exit, 0);
+		if (WIFEXITED(g_exit))
+			WEXITSTATUS(g_exit);
+		tmp = tmp->next;
 	}
 }
 
-void	handler_child(int signo)
+int	check_redirects(t_cmd *exec)
 {
-	if (signo == SIGINT)
-		write(2, "\n", 1);
-	if (signo == SIGQUIT)
-		write(2, "Quit: 3\n", 8);
-}
-
-void	handler_heredoc(int signo)
-{
-	if (signo == SIGINT)
-	{
-		write(2, "\n", 1);
-		exit(1);
-	}
+	if (exec->input == -1 || exec->output == -1)
+		return (1);
+	return (0);
 }

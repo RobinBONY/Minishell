@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:14:46 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/07 14:29:54 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/08 13:32:01 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	welcome(void)
 int	parse_and_execute(t_env *env, char *line_buffer)
 {
 	t_source	*source;
-	t_executor	*exec;
+	t_cmd		*exec;
 
 	if (not_interpreted(line_buffer))
 		return (1);
@@ -42,9 +42,8 @@ int	parse_and_execute(t_env *env, char *line_buffer)
 	exec = make_executor(source, env);
 	if (!exec)
 		return (1);
-	ft_srcclear(&source);
 	execution(env, exec);
-	free_executor(&exec);
+	free_executor(exec);
 	return (0);
 }
 

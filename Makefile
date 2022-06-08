@@ -6,7 +6,7 @@
 #    By: rbony <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/28 08:34:54 by rbony             #+#    #+#              #
-#    Updated: 2022/06/06 16:23:19 by rbony            ###   ########lyon.fr    #
+#    Updated: 2022/06/08 11:25:09 by rbony            ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,9 +30,10 @@ SRCS = 	src/main.c	\
 		src/execution/place_env_var.c	\
 		src/execution/place_env_utils.c	\
 		src/execution/quotes.c	\
+		src/execution/ft_waitpid.c	\
 		src/parsing/cmd.c	\
 		src/parsing/cmd_utils.c	\
-		src/parsing/executor.c	\
+		src/parsing/cmd_list.c	\
 		src/parsing/files_utils.c	\
 		src/parsing/files.c	\
 		src/parsing/heredoc_utils.c	\
@@ -40,6 +41,7 @@ SRCS = 	src/main.c	\
 		src/parsing/redirect.c	\
 		src/parsing/source.c	\
 		src/parsing/source_utils.c \
+		src/parsing/make_cmd.c	\
 		src/builtins/exit.c
 
 OBJS = ${SRCS:.c=.o}
@@ -47,7 +49,7 @@ OBJS = ${SRCS:.c=.o}
 HEADERS = 	minishell.h \
 			readline/include/readline.h
 
-CC = gcc -g #-fsanitize=address
+CC = gcc -g -fsanitize=address
 RM = rm -f
 
 FLAGS = -Wall -Wextra -Werror

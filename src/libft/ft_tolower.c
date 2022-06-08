@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 13:22:50 by rbony             #+#    #+#             */
-/*   Updated: 2022/05/11 15:06:50 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/08 13:49:45 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	ft_tolower(char *str)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return ;
 	while (str[i])
 	{
 		if (str[i] >= 'A' && str[i] <= 'Z')

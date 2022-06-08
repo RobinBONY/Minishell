@@ -6,7 +6,7 @@
 #    By: rbony <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/28 08:34:54 by rbony             #+#    #+#              #
-#    Updated: 2022/06/08 11:25:09 by rbony            ###   ########lyon.fr    #
+#    Updated: 2022/06/08 15:55:33 by rbony            ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,10 +57,10 @@ FLAGS = -Wall -Wextra -Werror
 all: lib ${NAME}
 
 $(NAME): ${OBJS}
-	${CC} ${OBJS} -lreadline -I./readline/include -L./readline/lib -lncurses src/libft/libft.a -o ${NAME}
+	${CC} ${FLAGS} ${OBJS} -lreadline -I./readline/include -L./readline/lib -lncurses src/libft/libft.a -o ${NAME}
 
 %.o : %.c ${HEADERS} Makefile
-	${CC} ${FLAGS} -c $< -o ${<:.c=.o}
+	${CC} -c $< -o ${<:.c=.o}
 
 clean:
 	${RM} ${OBJS}
@@ -72,7 +72,7 @@ fclean:	clean
 
 re:	fclean all
 
-lib:
+lib: src/libft/libft.h src/libft/Makefile
 	make -C src/libft
 
 .PHONY: all clean fclean re 

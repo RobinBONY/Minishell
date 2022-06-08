@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:14:46 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/08 13:32:01 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/08 15:55:07 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,11 @@ t_env	init(char **envp)
 	t_env		env;
 	int			fd;
 
-	env.envp = envp;
-	env.head_var = init_env(envp);
-	env.head_exp = init_export(envp);
+	env.envp = dup_env(envp);
+	if (!env.envp)
+		return (env);
+	env.head_var = init_env(env.envp);
+	env.head_exp = init_export(env.envp);
 	if (!env.head_exp)
 		return (env);
 	env.head_exp = sort_export(env.head_exp);

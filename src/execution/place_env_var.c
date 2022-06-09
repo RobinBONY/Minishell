@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:48:03 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/08 14:38:29 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 13:10:28 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,17 @@ char	*replace_var(char *str, t_var *head)
 {
 	int		len;
 	char	*tmp;
+	int		expand;
 
 	tmp = str;
+	expand = 1;
 	if (!ft_strchr(str, '$') && *tmp != '$')
 		return (str);
 	while (*tmp && *tmp != '$')
 	{
-		if (*tmp == '\'')
+		if (*tmp == '"')
+			expand *= -1;
+		if (*tmp == '\'' && expand == 1)
 			tmp = ft_strchr(tmp, '\'');
 		tmp++;
 	}

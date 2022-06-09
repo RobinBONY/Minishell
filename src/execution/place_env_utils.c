@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   place_env_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 10:59:45 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/07 17:43:06 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 13:13:19 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,16 @@ int	replace_needed(char *str, t_var *head)
 {
 	char	*tmp;
 	int		len;
+	int		expand;
 
 	tmp = str;
 	len = 0;
+	expand = 1;
 	while (*tmp)
 	{
-		if (*tmp == '\'')
+		if (*tmp == '"')
+			expand *= -1;
+		if (*tmp == '\'' && expand == 1)
 			tmp = ft_strchr(tmp, '\'');
 		if (*tmp == '$')
 			return (ft_isalnum(*(tmp + 1)) || *(tmp + 1) == '?');

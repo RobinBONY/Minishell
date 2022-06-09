@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:17:33 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/07 13:18:16 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 13:01:40 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_exit(char *ex_no)
 	if (!ex_no)
 		exit(0);
 	if (is_numeric(ex_no))
-		exit(ft_atol(ex_no));
+		exit(ft_atol(ex_no) % 256);
 	else
 	{
 		printf("%s\n", "exit");

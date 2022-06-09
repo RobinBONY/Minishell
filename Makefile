@@ -6,7 +6,7 @@
 #    By: rbony <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/28 08:34:54 by rbony             #+#    #+#              #
-#    Updated: 2022/06/08 15:55:33 by rbony            ###   ########lyon.fr    #
+#    Updated: 2022/06/09 13:20:12 by rbony            ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ OBJS = ${SRCS:.c=.o}
 HEADERS = 	minishell.h \
 			readline/include/readline.h
 
-CC = gcc -g -fsanitize=address
+CC = gcc #-g -fsanitize=address
 RM = rm -f
 
 FLAGS = -Wall -Wextra -Werror

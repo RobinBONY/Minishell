@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:12:29 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/08 15:29:50 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 13:19:35 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,15 @@ static char	*replace_var_heredoc(char *str, t_var *head)
 	return (str);
 }
 
+static void	print_doc(char *heredoc, t_var *env, int fd, int expand)
+{
+	if (expand)
+		ft_putstr_fd(replace_var_heredoc(heredoc, env), fd);
+	else
+		ft_putstr_fd(heredoc, fd);
+	ft_putstr_fd("\n", fd);
+}
+
 static void	launch_heredoc(t_heredoc *tmp, t_var *env, int fd)
 {
 	int			expand;
@@ -61,13 +70,8 @@ static void	launch_heredoc(t_heredoc *tmp, t_var *env, int fd)
 			expand = is_expand(tmp);
 		}
 		else if (heredoc[0])
-		{
-			if (expand)
-				ft_putstr_fd(replace_var_heredoc(heredoc, env), fd);
-			else
-				ft_putstr_fd(heredoc, fd);
-			ft_putstr_fd("\n", fd);
-		}
+			print_doc(heredoc, env, fd, expand);
+		free(heredoc);
 	}
 	exit(0);
 }

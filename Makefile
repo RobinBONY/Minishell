@@ -6,7 +6,7 @@
 #    By: rbony <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/28 08:34:54 by rbony             #+#    #+#              #
-#    Updated: 2022/06/09 13:49:00 by rbony            ###   ########lyon.fr    #
+#    Updated: 2022/06/09 14:59:59 by rbony            ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,18 +46,16 @@ SRCS = 	src/main.c	\
 
 OBJS = ${SRCS:.c=.o}
 
-HEADERS = 	minishell.h \
+HEADERS = 	headers/minishell.h \
 			readline/include/readline.h
 
-CC = gcc #-g -fsanitize=address
+CC = gcc -Wall -Wextra -Werror #-g -fsanitize=address
 RM = rm -f
-
-FLAGS = -Wall -Wextra -Werror
 
 all: lib ${NAME}
 
 $(NAME): ${OBJS}
-	${CC} ${FLAGS} ${OBJS} -lreadline -I./readline/include -L./readline/lib -lncurses src/libft/libft.a -o ${NAME}
+	${CC} ${OBJS} -lreadline -I./readline/include -L./readline/lib -lncurses src/libft/libft.a -o ${NAME}
 
 %.o : %.c ${HEADERS} Makefile
 	${CC} -c $< -o ${<:.c=.o}
@@ -72,7 +70,7 @@ fclean:	clean
 
 re:	fclean all
 
-lib: src/libft/libft.h src/libft/Makefile
+lib:
 	make -C src/libft
 
 .PHONY: all clean fclean re 

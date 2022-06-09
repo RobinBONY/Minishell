@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 10:18:38 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/09 10:38:57 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 15:03:07 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	execbltin(t_cmd *cmd, t_env *env)
 	if (ft_strcmp(cmd->path, "cd") == 0)
 		return (ft_cd(cmd->argv[1], env->head_var, env->head_exp));
 	if (ft_strcmp(cmd->path, "pwd") == 0)
-		return (ft_pwd(env->head_var));
+		return (ft_pwd());
 	if (ft_strcmp(cmd->path, "env") == 0)
 		return (print_env(env->head_var));
 	if (ft_strcmp(cmd->path, "export") == 0)
@@ -86,7 +86,7 @@ static void	out_execution(t_env *env, t_cmd *exec)
 	tmp = exec;
 	while (tmp)
 	{
-		child_signals();
+		child_signals(tmp->path);
 		tmp->pid = fork();
 		if (tmp->pid < 0)
 		{
@@ -117,7 +117,7 @@ void	execution(t_env *env, t_cmd *exec)
 		g_exit = execbltin(tmp, env);
 	else if (tmp)
 	{
-		child_signals();
+		child_signals(tmp->path);
 		tmp->pid = fork();
 		if (tmp->pid < 0)
 			return ;

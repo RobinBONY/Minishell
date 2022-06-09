@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 09:37:39 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/09 11:27:33 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 15:05:36 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,7 @@ t_cmd	*make_command(t_source **source, t_env *env, t_cmd *prev)
 		if (set_cmd(&tmp, new, prev, len))
 			return (free_executor(new));
 	}
+	else
+		return (NULL);
 	return (new);
 }

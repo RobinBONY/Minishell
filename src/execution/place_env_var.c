@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:48:03 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/09 13:48:37 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 15:04:09 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	place_env_var(t_source *source, t_var *head)
 	tmp = source;
 	while (tmp)
 	{
-		while (replace_needed(tmp->str, head))
+		while (replace_needed(tmp->str))
 		{
 			tmp->str = replace_var(tmp->str, head);
 			if (!tmp->str)

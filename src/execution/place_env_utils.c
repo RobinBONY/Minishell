@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 10:59:45 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/09 13:48:48 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 15:04:02 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	shell_level(char **envp)
 	free(buff_key);
 }
 
-int	replace_needed(char *str, t_var *head)
+int	replace_needed(char *str)
 {
 	char	*tmp;
 	int		len;

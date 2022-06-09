@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:19:41 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/09 10:45:52 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 15:03:48 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void		ft_exit(char *ex_no);
 int			ft_heredoc(t_var *env, t_cmd *cmd);
 int			open_pipes(t_cmd **cmd);
 int			place_env_var(t_source *source, t_var *head);
-int			replace_needed(char *str, t_var *head);
+int			replace_needed(char *str);
 int			remove_quotes(t_source *source);
 void		ft_waitpid(t_cmd	*tmp);
 void		set_redirect_first(t_cmd *cmd);
@@ -149,7 +149,7 @@ void		set_redirect_solobolo(t_cmd *cmd);
 /* Builtins */
 
 int			ft_cd(char *args, t_var *head_env, t_exp *head_exp);
-int			ft_pwd(t_var *head);
+int			ft_pwd(void);
 int			ft_echo(char **arg);
 int			check_new_line(char *str);
 int			print_env(t_var *head);
@@ -182,7 +182,7 @@ t_exp		*sort_export(t_exp *env);
 /* Signals */
 
 void		main_signals(void);
-void		child_signals(void);
+void		child_signals(char *path);
 void		heredoc_signals(void);
 void		handler(int signo);
 void		handler_child(int signo);

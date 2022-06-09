@@ -3,24 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
+/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:14:46 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/09 10:42:16 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 15:02:03 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-static void	welcome(void)
+static void	welcome(int argc, char **argv)
 {
-	printf("\033[92m___  ____       _     _          _ _ \033[0m\n");
-	printf("\033[92m|  \\/  (_)     (_)   | |        | | |\033[0m\n");
-	printf("\033[92m| .  . |_ _ __  _ ___| |__   ___| | |\033[0m\n");
-	printf("\033[92m| |\\/| | | '_ \\| / __| '_ \\ / _ \\ | |\033[0m\n");
-	printf("\033[92m| |  | | | | | | \\__ \\ | | |  __/ | |\033[0m\n");
-	printf("\033[92m\\_|  |_/_|_| |_|_|___/_| |_|\\___|_|_|\033[0m\n");
-	printf("\n");
+	if (argc && *argv)
+	{
+		printf("\033[92m___  ____       _     _          _ _ \033[0m\n");
+		printf("\033[92m|  \\/  (_)     (_)   | |        | | |\033[0m\n");
+		printf("\033[92m| .  . |_ _ __  _ ___| |__   ___| | |\033[0m\n");
+		printf("\033[92m| |\\/| | | '_ \\| / __| '_ \\ / _ \\ | |\033[0m\n");
+		printf("\033[92m| |  | | | | | | \\__ \\ | | |  __/ | |\033[0m\n");
+		printf("\033[92m\\_|  |_/_|_| |_|_|___/_| |_|\\___|_|_|\033[0m\n");
+		printf("\n");
+	}
 }
 
 void	handler(int signo)
@@ -83,7 +86,7 @@ int	main(int argc, char **argv, char **envp)
 	t_env		env;
 	char		*line_buffer;
 
-	welcome();
+	welcome(argc, argv);
 	if (!*envp)
 		return (1);
 	main_signals();
@@ -97,8 +100,8 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(line_buffer);
 			parse_and_execute(&env, line_buffer);
-			free(line_buffer);
 		}
+		free(line_buffer);
 	}
 	unlink("/tmp/.heredoc");
 	ft_putstr_fd("exit\n", 2);

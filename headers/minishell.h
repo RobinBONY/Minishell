@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:19:41 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/08 15:55:00 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/08 16:35:58 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ void		set_redirect_first(t_cmd *cmd);
 void		set_redirect_last(t_cmd *cmd);
 void		set_redirect(t_cmd *cmd);
 void		set_redirect_solobolo(t_cmd *cmd);
+void		seum_exit(void);
 
 /* Builtins */
 

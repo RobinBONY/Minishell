@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:12:29 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/08 15:29:50 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/08 16:36:42 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,6 @@ int	ft_heredoc(t_var *env, t_cmd *exec)
 			waitpid(pid, &g_exit, 0);
 			main_signals();
 			close(fd);
-			if (WIFEXITED(g_exit))
-				return (WEXITSTATUS(g_exit));
 		}
 		exec = exec->next;
 	}

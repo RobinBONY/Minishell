@@ -3,31 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   signals_handlers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:46:55 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/09 09:26:59 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 10:41:46 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-void	handler(int signo)
+void	handler_child(int signo)
 {
 	if (signo == SIGINT)
 	{
 		write(2, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 1);
-		rl_redisplay();
-		g_exit = 1;
 	}
-}
-
-void	handler_child(int signo)
-{
-	if (signo == SIGINT)
-		write(2, "\n", 1);
 	if (signo == SIGQUIT)
 		write(2, "Quit: 3\n", 8);
 }

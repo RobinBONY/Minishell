@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 10:59:45 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/09 13:13:19 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 13:48:48 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,24 @@ char	**dup_env(char **envp)
 void	shell_level(char **envp)
 {
 	int		tmp;
+	char	*buff_key;
+	char	*buff_value;
+	char	*buff_itoa;
 
 	tmp = 0;
-	if (ft_strncmp(get_key(*envp), "SHLVL", ft_strlen("SHLVL")) == 0)
+	buff_key = get_key(*envp);
+	if (ft_strncmp(buff_key, "SHLVL", ft_strlen("SHLVL")) == 0)
 	{
-		tmp = ft_atoi(get_value(*envp));
+		buff_value = get_value(*envp);
+		tmp = ft_atoi(buff_value);
+		free(buff_value);
 		tmp += 1;
 		free(*envp);
-		*envp = ft_strjoin("SHLVL=", ft_itoa(tmp));
+		buff_itoa = ft_itoa(tmp);
+		*envp = ft_strjoin("SHLVL=", buff_itoa);
+		free(buff_itoa);
 	}
+	free(buff_key);
 }
 
 int	replace_needed(char *str, t_var *head)

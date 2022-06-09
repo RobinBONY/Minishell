@@ -6,7 +6,7 @@
 /*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 10:18:38 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/08 15:15:39 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 09:57:57 by rbony            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static void	out_execution(t_env *env, t_cmd *exec)
 		tmp->pid = fork();
 		if (tmp->pid < 0)
 		{
-			printf("%s\n", "echec fork");
+			printf("%s\n", "fork: Resource temporarily unavailable");
 			break ;
 		}
 		if (tmp->pid == 0)
@@ -98,6 +98,8 @@ static void	out_execution(t_env *env, t_cmd *exec)
 		tmp = tmp->next;
 	}
 	tmp = exec;
+	close(tmp->pipex[0]);
+	close(tmp->pipex[1]);
 	close_pipes_fromfirst(tmp);
 	ft_waitpid(tmp);
 	main_signals();
@@ -122,7 +124,9 @@ void	execution(t_env *env, t_cmd *exec)
 		if (tmp->pid == 0)
 			execute_cmd(tmp, env);
 		waitpid(tmp->pid, &g_exit, 0);
-		if (WIFEXITED(g_exit))
+		if (g_exit == 2 || g_exit == 3)
+			g_exit += 128;
+		else if (WIFEXITED(g_exit))
 			g_exit = WEXITSTATUS(g_exit);
 		main_signals();
 	}

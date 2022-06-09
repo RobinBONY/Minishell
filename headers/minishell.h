@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:19:41 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/08 16:35:58 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 10:45:52 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+# include "../readline/include/readline/readline.h"
+# include "../readline/include/readline/history.h"
 # include <limits.h>
 # include <sys/types.h>
 # include <signal.h>
@@ -145,7 +145,6 @@ void		set_redirect_first(t_cmd *cmd);
 void		set_redirect_last(t_cmd *cmd);
 void		set_redirect(t_cmd *cmd);
 void		set_redirect_solobolo(t_cmd *cmd);
-void		seum_exit(void);
 
 /* Builtins */
 

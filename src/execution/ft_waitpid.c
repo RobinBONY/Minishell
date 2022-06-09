@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 10:08:52 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/08 16:37:31 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 10:39:16 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ void	ft_waitpid(t_cmd	*tmp)
 	while (tmp)
 	{
 		waitpid(tmp->pid, &g_exit, 0);
-		seum_exit();
+		if (g_exit == 2 || g_exit == 3)
+			g_exit += 128;
+		else if (WIFEXITED(g_exit))
+			WEXITSTATUS(g_exit);
 		tmp = tmp->next;
 	}
 }

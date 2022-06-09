@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:40:58 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/07 13:19:29 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 13:44:21 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	change_oldpwd(t_var *head_var, t_exp *head_exp, char *pwd)
 int	ft_cd(char *args, t_var *head_var, t_exp *head_exp)
 {
 	char	pwd[PATH_MAX];
-	char	*tmp;
 	DIR		*test;
 
 	if (getcwd(pwd, PATH_MAX) == NULL)
@@ -94,8 +93,9 @@ int	ft_cd(char *args, t_var *head_var, t_exp *head_exp)
 		test = opendir(args);
 		if (!test)
 			perror("Error");
+		else
+			closedir(test);
 		return (cd_args(args, head_var, head_exp));
 	}
-	free(tmp);
 	return (1);
 }

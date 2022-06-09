@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 10:33:01 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/05/16 16:33:54 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 13:34:12 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ void	unset_exp(t_exp *head_exp, char *key)
 	if (cursor != NULL && ft_strcmp(cursor->key, key) == 0)
 	{
 		head_exp = cursor->next;
+		free(cursor->key);
+		if (cursor->value)
+			free(cursor->value);
 		free(cursor);
 		return ;
 	}
@@ -32,6 +35,9 @@ void	unset_exp(t_exp *head_exp, char *key)
 	if (cursor == NULL)
 		return ;
 	prev->next = cursor->next;
+	free(cursor->key);
+	if (cursor->value)
+		free(cursor->value);
 	free(cursor);
 }
 
@@ -44,6 +50,9 @@ void	unset_env(t_var *head_env, char *key)
 	if (cursor != NULL && ft_strcmp(cursor->key, key) == 0)
 	{
 		head_env = cursor->next;
+		free(cursor->key);
+		if (cursor->value)
+			free(cursor->value);
 		free(cursor);
 		return ;
 	}
@@ -55,6 +64,9 @@ void	unset_env(t_var *head_env, char *key)
 	if (cursor == NULL)
 		return ;
 	prev->next = cursor->next;
+	free(cursor->key);
+	if (cursor->value)
+		free(cursor->value);
 	free(cursor);
 }
 

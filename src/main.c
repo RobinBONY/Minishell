@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbony <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:14:46 by rbony             #+#    #+#             */
-/*   Updated: 2022/06/08 15:55:07 by rbony            ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 10:42:16 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,18 @@ static void	welcome(void)
 	printf("\033[92m| |  | | | | | | \\__ \\ | | |  __/ | |\033[0m\n");
 	printf("\033[92m\\_|  |_/_|_| |_|_|___/_| |_|\\___|_|_|\033[0m\n");
 	printf("\n");
+}
+
+void	handler(int signo)
+{
+	if (signo == SIGINT)
+	{
+		write(2, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		rl_redisplay();
+		g_exit = 1;
+	}
 }
 
 int	parse_and_execute(t_env *env, char *line_buffer)

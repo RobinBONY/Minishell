@@ -6,7 +6,7 @@
 /*   By: alakhdar <<marvin@42.fr>>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 10:37:00 by alakhdar          #+#    #+#             */
-/*   Updated: 2022/06/06 16:34:08 by alakhdar         ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 13:24:05 by alakhdar         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	rep_or_app_exp(t_exp *head, char *str)
 void	replace_env(t_var *head, char *str)
 {
 	t_var	*tmp;
+	char	*buff;
 
 	tmp = head;
 	while (tmp)
@@ -75,7 +76,12 @@ void	replace_env(t_var *head, char *str)
 			if (tmp->value)
 				free(tmp->value);
 			if (str)
-				tmp->value = ft_strdup(get_value(str));
+			{
+				buff = get_value(str);
+				tmp->value = ft_strdup(buff);
+				if (buff)
+					free(buff);
+			}
 			tmp->printable = is_occurring(str);
 		}
 		tmp = tmp->next;
@@ -85,6 +91,7 @@ void	replace_env(t_var *head, char *str)
 void	replace_exp(t_exp *head, char *str)
 {
 	t_exp	*tmp;
+	char	*buff;
 
 	tmp = head;
 	while (tmp)
@@ -94,7 +101,12 @@ void	replace_exp(t_exp *head, char *str)
 			if (tmp->value)
 				free(tmp->value);
 			if (str)
-				tmp->value = ft_strdup(get_value(str));
+			{
+				buff = get_value(str);
+				tmp->value = ft_strdup(buff);
+				if (buff)
+					free(buff);
+			}
 		}
 		tmp = tmp->next;
 	}
